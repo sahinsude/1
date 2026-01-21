@@ -1,36 +1,132 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <title>Kamera Test</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kamera Testi - Basit ve Güvenli</title>
   <style>
-    body { background: #111; color: #fff; font-family: Arial; text-align: center; padding: 50px; }
-    video { width: 640px; height: 480px; border: 3px solid #0f0; margin: 20px; }
-    button { padding: 15px 40px; font-size: 24px; background: #00aa00; color: white; border: none; cursor: pointer; }
-    button:hover { background: #00ff00; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      height: 100vh;
+      background: linear-gradient(135deg, #0a001f, #1c0038);
+      color: #e0e0ff;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+    .container {
+      max-width: 700px;
+      padding: 40px;
+      background: rgba(20, 0, 40, 0.6);
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+    }
+    h1 {
+      font-size: 3.2rem;
+      margin-bottom: 20px;
+      color: #a78bfa;
+    }
+    p {
+      font-size: 1.3rem;
+      margin: 20px 0;
+      line-height: 1.6;
+      color: #d1d5ff;
+    }
+    .video-container {
+      margin: 30px 0;
+      border: 3px solid #6b46c1;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #000;
+      width: 100%;
+      max-width: 640px;
+      aspect-ratio: 4/3;
+    }
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    button {
+      padding: 18px 60px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: white;
+      background: linear-gradient(45deg, #7c3aed, #a78bfa);
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 8px 25px rgba(124,58,237,0.4);
+    }
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(124,58,237,0.6);
+    }
+    .status {
+      margin-top: 20px;
+      font-size: 1.1rem;
+      color: #bbb;
+    }
+    .indicator {
+      margin-top: 15px;
+      font-size: 1rem;
+      color: #ff6b6b;
+    }
   </style>
 </head>
 <body>
-  <h1>Kamera ve Mikrofon Testi</h1>
-  <p>Butona basınca Chrome izin soracak. "Allow" dersen açılır.</p>
-  <button onclick="start()">KAMERA + MİKROFON AÇ</button>
-  <br>
-  <video id="video" autoplay playsinline muted></video>
+
+  <div class="container">
+    <h1>Kameranı Hazırla</h1>
+    <p>Bu test için kameranı ve mikrofonunu kısa süreliğine kullanacağız.<br>
+       Sadece seninle etkileşim kurmak için — başka hiçbir şey kaydetmiyoruz.</p>
+    
+    <button id="startBtn">Kamerayı Başlat</button>
+    
+    <div class="video-container">
+      <video id="video" autoplay playsinline muted></video>
+    </div>
+    
+    <div class="status" id="status">Henüz başlamadı...</div>
+    <div class="indicator" id="indicator"></div>
+  </div>
 
   <script>
-    async function start() {
+    const video = document.getElementById('video');
+    const btn = document.getElementById('startBtn');
+    const status = document.getElementById('status');
+    const indicator = document.getElementById('indicator');
+
+    btn.addEventListener('click', async () => {
+      btn.disabled = true;
+      status.textContent = "İzin bekleniyor...";
+
       try {
-        const stream = await navigator.mediaDevices.getUserMedia({ 
-          video: true, 
-          audio: true 
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: "user" },  // Ön kamera tercihi
+          audio: true
         });
-        document.getElementById('video').srcObject = stream;
-        console.log("Başarılı! Erişim alındı.");
+
+        video.srcObject = stream;
+        status.textContent = "Bağlantı başarılı! Kameran aktif.";
+        indicator.textContent = "Chrome'un adres çubuğunda kamera/mikrofon simgesi görünecek (güvenlik için). İstediğin zaman durdurabilirsin.";
+
+        // Opsiyonel: 30 sn sonra durdur vs. ama şimdilik açık bırak
       } catch (err) {
         console.error("Hata:", err);
-        alert("İzin verilmedi veya hata: " + err.message);
+        status.textContent = "Erişim sağlanamadı.";
+        indicator.textContent = err.name === 'NotAllowedError' 
+          ? "İzin vermedin veya tarayıcı blokladı. Ayarlardan kontrol et."
+          : "Başka bir hata: " + err.message;
+        btn.disabled = false;
       }
-    }
+    });
   </script>
 </body>
 </html>
