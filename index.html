@@ -2,47 +2,35 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <title>AGAPATOR SAHO V3</title>
+  <title>Kamera Test</title>
   <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      background: #120018;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Segoe UI', sans-serif;
-      overflow: hidden;
-    }
-    .message {
-      font-size: 72px;
-      font-weight: bold;
-      color: #b400ff;
-      text-align: center;
-      text-shadow: 0 0 20px rgba(180, 0, 255, 0.9);
-      animation: pulse 1.5s infinite alternate;
-    }
-    @keyframes pulse {
-      0% { transform: scale(1); opacity: 0.8; }
-      100% { transform: scale(1.1); opacity: 1; }
-    }
-    .haha {
-      font-size: 48px;
-      margin-top: 40px;
-      color: #ff00ff;
-    }
+    body { background: #111; color: #fff; font-family: Arial; text-align: center; padding: 50px; }
+    video { width: 640px; height: 480px; border: 3px solid #0f0; margin: 20px; }
+    button { padding: 15px 40px; font-size: 24px; background: #00aa00; color: white; border: none; cursor: pointer; }
+    button:hover { background: #00ff00; }
   </style>
 </head>
 <body>
-  <div>
-    <div class="message">SIKTIR GIT</div>
-    <div class="haha">HAHA 😂😂😂</div>
-  </div>
+  <h1>Kamera ve Mikrofon Testi</h1>
+  <p>Butona basınca Chrome izin soracak. "Allow" dersen açılır.</p>
+  <button onclick="start()">KAMERA + MİKROFON AÇ</button>
+  <br>
+  <video id="video" autoplay playsinline muted></video>
 
-  <audio autoplay loop>
-    <source src="https://raw.githubusercontent.com/Berkay311111111/agapator-saho/main/33.mp3" type="audio/mpeg">
-  </audio>
+  <script>
+    async function start() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ 
+          video: true, 
+          audio: true 
+        });
+        document.getElementById('video').srcObject = stream;
+        console.log("Başarılı! Erişim alındı.");
+      } catch (err) {
+        console.error("Hata:", err);
+        alert("İzin verilmedi veya hata: " + err.message);
+      }
+    }
+  </script>
 </body>
 </html>
