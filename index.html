@@ -7,42 +7,75 @@
     <style>
         /* GENEL AYARLAR */
         * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; font-family: 'Comic Sans MS', cursive, sans-serif; }
-        body { background: #ffe6f2; color: #ff3399; overflow: hidden; height: 100vh; width: 100vw; display: flex; flex-direction: column; }
-        .screen { display: none; height: 100%; width: 100%; padding: 20px; align-items: center; justify-content: center; flex-direction: column; text-align: center; }
+        body { background: #ffe6f2; color: #ff3399; overflow: hidden; height: 100vh; width: 100vw; display: flex; flex-direction: column; position: relative; }
+        
+        /* SÜREKLİ ARKA PLAN KALP YAĞMURU */
+        .ambient-heart {
+            position: absolute; pointer-events: none; color: #ff99cc; opacity: 0.6;
+            animation: floatUp 6s linear forwards; z-index: 1; font-size: 14px;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(105vh) translateX(0) scale(0.5); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(-10vh) translateX(50px) scale(1.2); opacity: 0; }
+        }
+
+        .screen { display: none; height: 100%; width: 100%; padding: 20px; align-items: center; justify-content: center; flex-direction: column; text-align: center; z-index: 5; }
         .active { display: flex; }
         
-        /* HELLO KITTY MASKOT */
+        /* CANLI VE DİNAMİK HELLO KITTY KATMANI */
         #hello-kitty {
-            position: absolute; width: 100px; height: 100px; z-index: 9999; cursor: grab;
-            background-image: url('https://upload.wikimedia.org/wikipedia/en/0/05/Hello_kitty_character_portrait.png'); 
-            background-size: contain; background-repeat: no-repeat; background-position: center;
-            transition: filter 0.2s, transform 0.2s; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));
-            left: 50%; top: 20%; transform: translate(-50%, -50%);
+            position: absolute; width: 120px; height: 120px; z-index: 9999; cursor: grab;
+            left: 50%; top: 25%; transform: translate(-50%, -50%);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            animation: kittyIdle 3s ease-in-out infinite;
+            transition: filter 0.3s, transform 0.1s ease;
         }
-        #hello-kitty:active { cursor: grabbing; }
+        #hello-kitty:active { cursor: grabbing; animation: none; transform: translate(-50%, -50%) scale(1.1) skewX(-5deg); }
+        
+        /* Kitty Parçaları (Emoji & CSS Tabanlı Dinamik Yapı) */
+        .kitty-body { font-size: 4.5rem; position: relative; display: inline-block; line-height: 1; }
+        .kitty-overlay { position: absolute; left: 50%; transform: translateX(-50%); font-size: 1.8rem; pointer-events: none; width: 100%; text-align: center; transition: all 0.2s; }
+        .kitty-hat { top: -15px; z-index: 3; }
+        .kitty-clothes { bottom: -5px; font-size: 2.2rem; z-index: 2; }
+        .kitty-accessory { bottom: -10px; right: -20px; font-size: 1.6rem; z-index: 4; left: auto; transform: none; }
 
-        /* GİRİŞ EKRANI (KAÇAN BUTON) */
+        /* KİTTY ANİMASYONLARI */
+        @keyframes kittyIdle {
+            0%, 100% { transform: translate(-50%, -50%) translateY(0) rotate(0deg); }
+            50% { transform: translate(-50%, -50%) translateY(-12px) rotate(2deg); }
+        }
+        /* Fare Yaklaştığında / Sevildiğinde Tetiklenen Sınıflar */
+        .kitty-near { transform: translate(-50%, -50%) scale(1.05); filter: drop-shadow(0 0 10px #ffb3d9); }
+        .kitty-cuddle { animation: kittyHeartbeat 0.6s infinite alternate !important; filter: drop-shadow(0 0 20px #ff3399); }
+        @keyframes kittyHeartbeat {
+            0% { transform: translate(-50%, -50%) scale(1.1) rotate(-3deg); }
+            100% { transform: translate(-50%, -50%) scale(1.2) rotate(3deg); }
+        }
+
+        /* GİRİŞ EKRANI */
         h1 { font-size: 2.5rem; margin-bottom: 30px; text-shadow: 2px 2px #ffb3d9; z-index: 10; }
         .btn-container { position: relative; width: 100%; height: 200px; display: flex; justify-content: center; align-items: center; }
-        button { padding: 15px 30px; font-size: 1.5rem; border: none; border-radius: 30px; cursor: pointer; color: white; font-weight: bold; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
-        #btn-yes { background: #ff4da6; z-index: 10; margin-right: 20px;}
+        button { padding: 15px 30px; font-size: 1.5rem; border: none; border-radius: 30px; cursor: pointer; color: white; font-weight: bold; box-shadow: 0 5px 15px rgba(0,0,0,0.2); z-index: 10; }
+        #btn-yes { background: #ff4da6; margin-right: 20px;}
         #btn-no { background: #666; transition: top 0.1s, left 0.1s; position: relative;}
 
-        /* PARTICLE EFEKTLERİ */
+        /* PATLAMA EFEKTLERİ */
         .particle { position: absolute; pointer-events: none; animation: fall 3s linear forwards; font-size: 24px; z-index: 999; }
         @keyframes fall { 0% { transform: translateY(-50px) rotate(0deg); opacity: 1; } 100% { transform: translateY(100vh) rotate(360deg); opacity: 0; } }
 
         /* MOD EKRANI */
-        .mood-scale { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 20px; max-width: 400px; }
-        .mood-btn { background: #ff99cc; padding: 10px 15px; font-size: 1.2rem; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
+        .mood-scale { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 20px; max-width: 400px; z-index: 10; }
+        .mood-btn { background: #ff99cc; padding: 10px 15px; font-size: 1.2rem; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; transition: 0.3s; color: white; box-shadow: none; }
         .mood-btn:hover { background: #ff3399; transform: scale(1.2); }
-        #mood-message { margin-top: 20px; font-size: 1.5rem; font-weight: bold; min-height: 60px; color: #cc0066; }
+        #mood-message { margin-top: 20px; font-size: 1.5rem; font-weight: bold; min-height: 60px; color: #cc0066; z-index: 10; }
 
         /* ANA PANO (TABLAR) */
         nav { display: flex; width: 100%; background: #ffb3d9; padding: 10px; justify-content: space-around; border-radius: 0 0 20px 20px; position: absolute; top: 0; left: 0; z-index: 100; box-shadow: 0 4px 10px rgba(0,0,0,0.1);}
         nav div { cursor: pointer; font-weight: bold; font-size: 1.1rem; padding: 5px 10px; transition: 0.2s;}
         nav div:hover { transform: scale(1.1); color: white;}
-        .tab-content { display: none; width: 100%; height: 100%; padding-top: 70px; padding-bottom: 20px; overflow-y: auto; }
+        .tab-content { display: none; width: 100%; height: 100%; padding-top: 180px; padding-bottom: 20px; overflow-y: auto; z-index: 5; }
         .tab-active { display: block; }
 
         /* GÖREVLER (TODO) */
@@ -55,21 +88,22 @@
         .video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; max-width: 600px; margin: 0 auto; }
         video { width: 100%; border-radius: 15px; border: 3px solid #ff4da6; }
 
-        /* GİYDİRME EKRANI DETAYLARI */
-        .dressup-wrapper { display: flex; flex-direction: column; align-items: center; gap: 15px; height: 100%; overflow-y: auto;}
-        .avatar-display { width: 250px; height: 250px; border: 4px dashed #ff4da6; border-radius: 20px; background: white; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; transition: background 0.5s; font-size: 4rem;}
-        .avatar-details { position: absolute; bottom: -40px; font-size: 1rem; font-weight: bold; color: #cc0066; width: 100%; text-align: center;}
-        
-        .wardrobe-categories { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 20px;}
-        .category-box { background: white; padding: 15px; border-radius: 15px; width: 160px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);}
-        .category-box h3 { font-size: 1rem; margin-bottom: 10px; border-bottom: 2px solid #ffb3d9; padding-bottom: 5px;}
-        .wardrobe-item { background: #ffe6f2; margin-bottom: 8px; padding: 8px; border-radius: 8px; cursor: pointer; text-align: center; font-size: 0.9rem; transition: 0.2s;}
+        /* GİYDİRME EKRANI SETLERİ */
+        .dressup-wrapper { display: flex; flex-direction: column; align-items: center; gap: 15px; height: 100%; }
+        .wardrobe-categories { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 10px; max-width: 600px;}
+        .category-box { background: white; padding: 12px; border-radius: 15px; width: 135px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);}
+        .category-box h3 { font-size: 0.9rem; margin-bottom: 8px; border-bottom: 2px solid #ffb3d9; padding-bottom: 3px;}
+        .wardrobe-item { background: #ffe6f2; margin-bottom: 6px; padding: 6px; border-radius: 8px; cursor: pointer; text-align: center; font-size: 0.8rem; transition: 0.2s;}
         .wardrobe-item:hover { background: #ff4da6; color: white; transform: scale(1.05);}
     </style>
 </head>
 <body>
 
-    <div id="hello-kitty"></div>
+    <div id="hello-kitty">
+        <div class="kitty-overlay kitty-hat" id="k-hat"></div>
+        <div class="kitty-body" id="k-face">🐱</div>
+        <div class="kitty-overlay kitty-clothes" id="k-clothes">👗</div> <div class="kitty-overlay kitty-accessory" id="k-accessory"></div>
+    </div>
 
     <div id="screen-login" class="screen active">
         <h1>Beni seviyor musun KARICIM? ❤️</h1>
@@ -110,35 +144,30 @@
         </div>
 
         <div id="tab-dressup" class="tab-content">
-            <h2>Kitty'i Giydir</h2>
+            <h2>Kitty'i Canlı Giydir</h2>
+            <p style="font-size: 0.85rem; margin-bottom: 10px;">(Yukarıdaki Kitty'e dikkat et, anında giyiniyor!)</p>
             <div class="dressup-wrapper">
-                
-                <div class="avatar-display" id="avatar-display">
-                    <span id="avatar-pet">🐱</span>
-                    <div class="avatar-details" id="avatar-details">Stil Bekleniyor...</div>
-                </div>
-
                 <div class="wardrobe-categories">
                     <div class="category-box">
                         <h3>Başlık / Şapka 👒</h3>
-                        <div class="wardrobe-item" onclick="dressKitty('hat', 'Kırmızı Kurdele 🎀')">Kırmızı Kurdele 🎀</div>
-                        <div class="wardrobe-item" onclick="dressKitty('hat', 'Kral Tacı 👑')">Kral Tacı 👑</div>
-                        <div class="wardrobe-item" onclick="dressKitty('hat', 'Hasır Şapka 👒')">Hasır Şapka 👒</div>
-                        <div class="wardrobe-item" onclick="dressKitty('hat', 'Çıkar ❌')">Hiçbiri ❌</div>
+                        <div class="wardrobe-item" onclick="dressKitty('hat', '🎀')">Kurdele 🎀</div>
+                        <div class="wardrobe-item" onclick="dressKitty('hat', '👑')">Kral Tacı 👑</div>
+                        <div class="wardrobe-item" onclick="dressKitty('hat', '👒')">Hasır Şapka 👒</div>
+                        <div class="wardrobe-item" onclick="dressKitty('hat', '')">Çıkar ❌</div>
                     </div>
                     <div class="category-box">
                         <h3>Kıyafet 👗</h3>
-                        <div class="wardrobe-item" onclick="dressKitty('clothes', 'Pembe Elbise 👗')">Pembe Elbise 👗</div>
-                        <div class="wardrobe-item" onclick="dressKitty('clothes', 'Pijama 👘')">Pijama 👘</div>
-                        <div class="wardrobe-item" onclick="dressKitty('clothes', 'Kışlık Kazak 🧥')">Kışlık Kazak 🧥</div>
-                        <div class="wardrobe-item" onclick="dressKitty('clothes', 'Çıkar ❌')">Hiçbiri ❌</div>
+                        <div class="wardrobe-item" onclick="dressKitty('clothes', '👗')">Pembe Elbise 👗</div>
+                        <div class="wardrobe-item" onclick="dressKitty('clothes', '👘')">Pijama 👘</div>
+                        <div class="wardrobe-item" onclick="dressKitty('clothes', '🧥')">Kışlık Kazak 🧥</div>
+                        <div class="wardrobe-item" onclick="dressKitty('clothes', '')">Çıkar ❌</div>
                     </div>
                     <div class="category-box">
                         <h3>Aksesuar 👓</h3>
-                        <div class="wardrobe-item" onclick="dressKitty('accessory', 'Güneş Gözlüğü 🕶️')">Güneş Gözlüğü 🕶️</div>
-                        <div class="wardrobe-item" onclick="dressKitty('accessory', 'Sihirli Değnek 🪄')">Sihirli Değnek 🪄</div>
-                        <div class="wardrobe-item" onclick="dressKitty('accessory', 'Kahve Fincanı ☕')">Kahve ☕</div>
-                        <div class="wardrobe-item" onclick="dressKitty('accessory', 'Çıkar ❌')">Hiçbiri ❌</div>
+                        <div class="wardrobe-item" onclick="dressKitty('accessory', '🕶️')">Gözlük 🕶️</div>
+                        <div class="wardrobe-item" onclick="dressKitty('accessory', '🪄')">Değnek 🪄</div>
+                        <div class="wardrobe-item" onclick="dressKitty('accessory', '☕')">Kahve ☕</div>
+                        <div class="wardrobe-item" onclick="dressKitty('accessory', '')">Çıkar ❌</div>
                     </div>
                     <div class="category-box">
                         <h3>Mekan 🏞️</h3>
@@ -148,16 +177,28 @@
                         <div class="wardrobe-item" onclick="dressKitty('bg', '#e6ccff')">Gece Kulübü 🪩</div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 
     <script>
-        // SENİN CLOUDFLARE TÜNEL LİNKİN SABİTLENDİ 🚀
+        // TÜNEL LİNKİN SABİTLENDİ
         const API_URL = "https://directed-livecam-jacket-meets.trycloudflare.com"; 
 
-        // 1. KAÇAN BUTON MANTIĞI (TÜM EKRANDA)
+        // 1. SÜREKLİ ARKA PLAN HAFİF KALP YAĞMURU MANTIĞI
+        const heartEmojis = ['💖', '💗', '💕', '🌸', '✨'];
+        setInterval(() => {
+            let heart = document.createElement('div');
+            heart.classList.add('ambient-heart');
+            heart.innerText = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            // Hafif sağa sola dağılsın diye random süre
+            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 7000);
+        }, 400); // her 400ms'de bir hafifçe bir kalp yükselir
+
+        // 2. KAÇAN BUTON MANTIĞI
         const btnNo = document.getElementById('btn-no');
         const btnYes = document.getElementById('btn-yes');
 
@@ -176,13 +217,13 @@
         btnNo.addEventListener('click', moveButton);
 
         btnYes.addEventListener('click', () => {
-            createParticles('🌸', 50); createParticles('❤️', 50);
+            createParticles('🌸', 40); createParticles('❤️', 40);
             document.getElementById('screen-login').classList.remove('active');
             document.getElementById('screen-mood').classList.add('active');
-            kittyReact('happy');
+            kittyReact(8); // Girişte mutlu başlasın
         });
 
-        // 2. PARÇACIK (PARTICLE) EFEKTİ
+        // Tıklamalarda fırlayan büyük partiküller
         function createParticles(emoji, count) {
             for(let i=0; i<count; i++) {
                 let particle = document.createElement('div');
@@ -195,14 +236,15 @@
             }
         }
 
-        // 3. SÜRÜKLENEBİLİR HELLO KITTY
+        // 3. SÜRÜKLENEBİLİR VE ETKİLEŞİMLİ HELLO KITTY
         const kitty = document.getElementById('hello-kitty');
         let isDragging = false;
+        let currentMoodScore = 7; // Varsayılan yüz ifadesi puanı
 
         const startDrag = (e) => {
             isDragging = true;
-            kittyReact('surprised');
-            kitty.style.transform = "translate(-50%, -50%) scale(1.1)"; 
+            document.getElementById('k-face').innerText = '🙀'; // Sürüklerken şaşırma ifadesi
+            kitty.style.animation = 'none';
         };
 
         const onDrag = (e) => {
@@ -218,8 +260,8 @@
         const stopDrag = () => {
             if(isDragging) {
                 isDragging = false;
-                kittyReact('normal');
-                kitty.style.transform = "translate(-50%, -50%) scale(1)";
+                kitty.style.animation = 'kittyIdle 3s ease-in-out infinite';
+                applyMoodFace(currentMoodScore); // Eski mod yüzüne geri dönsün
             }
         };
 
@@ -230,11 +272,58 @@
         document.addEventListener('touchmove', onDrag, {passive: false});
         document.addEventListener('touchend', stopDrag);
 
-        function kittyReact(state) {
-            if(state === 'happy') kitty.style.filter = "drop-shadow(0 0 15px red) hue-rotate(30deg)";
-            else if(state === 'sad') kitty.style.filter = "grayscale(80%) drop-shadow(2px 4px 6px black)";
-            else if(state === 'surprised') kitty.style.filter = "drop-shadow(0 0 20px yellow)";
-            else kitty.style.filter = "drop-shadow(2px 4px 6px rgba(0,0,0,0.3))";
+        // FARE MESAFE TAKİBİ (Proximity Detektörü)
+        document.addEventListener('mousemove', (e) => {
+            if (isDragging) return;
+            
+            // Kitty'nin merkez koordinatlarını al
+            const kittyRect = kitty.getBoundingClientRect();
+            const kittyX = kittyRect.left + kittyRect.width / 2;
+            const kittyY = kittyRect.top + kittyRect.height / 2;
+            
+            // Fare ile arasındaki mesafeyi hesapla (Pisagor)
+            const distance = Math.hypot(e.clientX - kittyX, e.clientY - kittyY);
+            
+            if (distance < 50) {
+                // Üstüne geldiğinde sarılma/sevgi modu
+                kitty.classList.add('kitty-cuddle');
+                kitty.classList.remove('kitty-near');
+                document.getElementById('k-face').innerText = '🥰'; // Sevgi yüzü
+                if(Math.random() < 0.1) { // Arada minik sevimli kalpler çıkarsın yerinde
+                    let miniHeart = document.createElement('div');
+                    miniHeart.classList.add('particle');
+                    miniHeart.innerText = '💖';
+                    miniHeart.style.left = (kittyRect.left + Math.random()*40) + 'px';
+                    miniHeart.style.top = kittyRect.top + 'px';
+                    miniHeart.style.animationDuration = '1.5s';
+                    document.body.appendChild(miniHeart);
+                    setTimeout(() => miniHeart.remove(), 1500);
+                }
+            } else if (distance < 160) {
+                // Yaklaştığında merak/ilgi modu
+                kitty.classList.add('kitty-near');
+                kitty.classList.remove('kitty-cuddle');
+                document.getElementById('k-face').innerText = '😺';
+            } else {
+                // Uzaklaştığında normal moda veya seçili mod yüzüne dön
+                kitty.classList.remove('kitty-near', 'kitty-cuddle');
+                applyMoodFace(currentMoodScore);
+            }
+        });
+
+        // Moda göre yüz şeklini değiştiren yardımcı fonksiyon
+        function applyMoodFace(score) {
+            const faceEl = document.getElementById('k-face');
+            if(score <= 4) faceEl.innerText = '🥺';       // Üzgün Kitty
+            else if(score <= 7) faceEl.innerText = '🐱';  // Normal/Tatlı Kitty
+            else faceEl.innerText = '🤩';                 // Aşırı Mutlu/Enerjik Kitty
+        }
+
+        function kittyReact(score) {
+            applyMoodFace(score);
+            if(score <= 4) kitty.style.filter = "grayscale(50%) drop-shadow(2px 4px 6px black)";
+            else if(score <= 7) kitty.style.filter = "drop-shadow(2px 4px 6px rgba(0,0,0,0.3))";
+            else kitty.style.filter = "drop-shadow(0 0 15px #ff3399) hue-rotate(10deg)";
         }
 
         // 4. MOD SEÇİMİ VE MOTİVASYON SÖZLERİ
@@ -252,11 +341,12 @@
             btn.className = 'mood-btn';
             btn.innerText = i;
             btn.onclick = () => {
+                currentMoodScore = i; // Global skoru güncelle ki yüz ifadesi korunsun
                 let moodCat = i <= 4 ? 'low' : (i <= 7 ? 'mid' : 'high');
                 let randomMsg = messages[moodCat][Math.floor(Math.random() * messages[moodCat].length)];
                 moodMessage.innerText = randomMsg;
                 
-                if(i <= 4) kittyReact('sad'); else kittyReact('happy');
+                kittyReact(i);
                 createParticles(i <= 4 ? '🥺' : '✨', 20);
                 
                 document.getElementById('btn-continue').style.display = 'block';
@@ -268,6 +358,9 @@
         document.getElementById('btn-continue').onclick = () => {
             document.getElementById('screen-mood').classList.remove('active');
             document.getElementById('screen-dashboard').classList.add('active');
+            // Dashboard açıldığında Kitty'yi ekranın sağ üst köşesine kibarca kaydıralım ki menüyü kapatmasın
+            kitty.style.left = '85vw';
+            kitty.style.top = '85px';
             loadFromServer();
         };
 
@@ -279,7 +372,6 @@
 
         // 6. GÖREVLER (TO-DO) YÖNETİMİ
         const tasks = ["Kahvaltı 🍳", "Öğle Yemeği 🥗", "Dışarı Çıkma 🚶‍♀️", "Ders Çalışma 📚", "Spor Yapma 💪", "Bana Fotoğraf Atma 📸", "Su İçme 💧", "Kitap Okuma 📖", "Film İzleme 🍿", "Cilt Bakımı ✨", "Kahve İçme ☕", "Müzik Dinleme 🎵", "Arkadaşlarla Görüşme 👯‍♀️", "Oda Toplama 🧹", "Günü Değerlendirme 🌙"];
-        
         let userTasks = {};
 
         function renderTasks() {
@@ -300,34 +392,29 @@
         function toggleTask(index) {
             userTasks[index] = !userTasks[index];
             renderTasks();
-            if(userTasks[index]) { createParticles('✅', 10); kittyReact('happy'); setTimeout(()=>kittyReact('normal'), 1000); }
+            if(userTasks[index]) { 
+                createParticles('✅', 10); 
+                document.getElementById('k-face').innerText = '🥰';
+                setTimeout(()=>applyMoodFace(currentMoodScore), 1200); 
+            }
             saveToServer({ tasks: userTasks });
         }
 
-        // 7. GİYDİRME OYUNU
-        let avatarState = { hat: '', clothes: '', accessory: '', bg: 'white' };
+        // 7. CANLI GİYDİRME SİSTEMİ
+        let avatarState = { hat: '', clothes: '👗', accessory: '', bg: '#ffe6f2' }; // Varsayılan pembe elbise açık
         
         function dressKitty(category, item) {
-            if(item.includes('Çıkar')) avatarState[category] = '';
-            else avatarState[category] = item;
-            
+            avatarState[category] = item;
             updateAvatarUI();
             saveToServer({ avatar: avatarState });
         }
 
         function updateAvatarUI() {
-            const display = document.getElementById('avatar-display');
-            const details = document.getElementById('avatar-details');
-            
-            display.style.background = avatarState.bg || 'white';
-            
-            let htmlStr = `Şu anki Tarz:<br>`;
-            if(avatarState.hat) htmlStr += `${avatarState.hat} <br>`;
-            if(avatarState.clothes) htmlStr += `${avatarState.clothes} <br>`;
-            if(avatarState.accessory) htmlStr += `${avatarState.accessory}`;
-            if(!avatarState.hat && !avatarState.clothes && !avatarState.accessory) htmlStr = "Tarz Bekleniyor...";
-            
-            details.innerHTML = htmlStr;
+            // Kıyafet ve aksesuarları doğrudan EKRANDA GEZİNEN Kitty'e giydiriyoruz!
+            document.getElementById('k-hat').innerText = avatarState.hat || '';
+            document.getElementById('k-clothes').innerText = avatarState.clothes || '';
+            document.getElementById('k-accessory').innerText = avatarState.accessory || '';
+            document.body.style.background = avatarState.bg || '#ffe6f2';
         }
 
         // 8. SUNUCU İLE İLETİŞİM (FETCH)
@@ -346,6 +433,10 @@
                 const res = await fetch(`${API_URL}/load`);
                 const data = await res.json();
                 
+                if(data.mood) {
+                    currentMoodScore = data.mood;
+                    kittyReact(currentMoodScore);
+                }
                 if(data.tasks) userTasks = data.tasks;
                 if(data.avatar) { 
                     avatarState = { ...avatarState, ...data.avatar }; 
@@ -358,7 +449,7 @@
             }
         }
         
-        // 10 saniyede bir verileri arkada kontrol et
+        // 10 saniyede bir arkadaki canlı değişiklikleri çek (Canlı Senkronizasyon)
         setInterval(() => {
             if(document.getElementById('screen-dashboard').classList.contains('active')) {
                 loadFromServer();
