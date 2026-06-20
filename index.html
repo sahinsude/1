@@ -17,7 +17,7 @@
             background-image: url('https://upload.wikimedia.org/wikipedia/en/0/05/Hello_kitty_character_portrait.png'); 
             background-size: contain; background-repeat: no-repeat; background-position: center;
             transition: filter 0.2s, transform 0.2s; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));
-            left: 50%; top: 20%; transform: translate(-50%, -50%); /* Başlangıç konumu */
+            left: 50%; top: 20%; transform: translate(-50%, -50%);
         }
         #hello-kitty:active { cursor: grabbing; }
 
@@ -154,16 +154,16 @@
     </div>
 
     <script>
-        // SUNUCU ADRESİ: Tunnel kullansan da lokalde olsan da otomatik çalışır.
-        const API_URL = window.location.origin; 
+        // SENİN CLOUDFLARE TÜNEL LİNKİN SABİTLENDİ 🚀
+        const API_URL = "https://directed-livecam-jacket-meets.trycloudflare.com"; 
 
         // 1. KAÇAN BUTON MANTIĞI (TÜM EKRANDA)
         const btnNo = document.getElementById('btn-no');
         const btnYes = document.getElementById('btn-yes');
 
         const moveButton = () => {
-            btnNo.style.position = 'fixed'; // Ekrana göre sabitler, div içinden kurtarır
-            const maxX = window.innerWidth - btnNo.clientWidth - 20; // 20px güvenlik payı
+            btnNo.style.position = 'fixed';
+            const maxX = window.innerWidth - btnNo.clientWidth - 20;
             const maxY = window.innerHeight - btnNo.clientHeight - 20;
             const newX = Math.max(0, Math.random() * maxX);
             const newY = Math.max(0, Math.random() * maxY);
@@ -171,10 +171,9 @@
             btnNo.style.top = `${newY}px`;
         };
 
-        // Fare ve Dokunma tepkileri
         btnNo.addEventListener('mouseover', moveButton);
         btnNo.addEventListener('touchstart', (e) => { e.preventDefault(); moveButton(); }, {passive: false});
-        btnNo.addEventListener('click', moveButton); // Ne olur ne olmaz tıklamayı denerse kaçsın
+        btnNo.addEventListener('click', moveButton);
 
         btnYes.addEventListener('click', () => {
             createParticles('🌸', 50); createParticles('❤️', 50);
@@ -196,20 +195,19 @@
             }
         }
 
-        // 3. SÜRÜKLENEBİLİR HELLO KITTY (YENİ VE HATASIZ)
+        // 3. SÜRÜKLENEBİLİR HELLO KITTY
         const kitty = document.getElementById('hello-kitty');
         let isDragging = false;
 
         const startDrag = (e) => {
             isDragging = true;
             kittyReact('surprised');
-            // Elementin tam ortasından tutmak için ufak bir offset sıfırlaması
             kitty.style.transform = "translate(-50%, -50%) scale(1.1)"; 
         };
 
         const onDrag = (e) => {
             if (!isDragging) return;
-            e.preventDefault(); // Sayfa kaymasını engeller
+            e.preventDefault();
             let clientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
             let clientY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
             
@@ -225,11 +223,9 @@
             }
         };
 
-        // Mouse Events
         kitty.addEventListener('mousedown', startDrag);
         document.addEventListener('mousemove', onDrag);
         document.addEventListener('mouseup', stopDrag);
-        // Touch Events
         kitty.addEventListener('touchstart', startDrag, {passive: false});
         document.addEventListener('touchmove', onDrag, {passive: false});
         document.addEventListener('touchend', stopDrag);
@@ -264,7 +260,7 @@
                 createParticles(i <= 4 ? '🥺' : '✨', 20);
                 
                 document.getElementById('btn-continue').style.display = 'block';
-                saveToServer({ mood: i }); // Sunucuya kaydet
+                saveToServer({ mood: i });
             };
             moodScale.appendChild(btn);
         }
@@ -272,7 +268,7 @@
         document.getElementById('btn-continue').onclick = () => {
             document.getElementById('screen-mood').classList.remove('active');
             document.getElementById('screen-dashboard').classList.add('active');
-            loadFromServer(); // Serverdan verileri çek
+            loadFromServer();
         };
 
         // 5. ANA PANO VE TAB GEÇİŞLERİ
@@ -362,7 +358,7 @@
             }
         }
         
-        // Periyodik olarak verileri kontrol et ki o başka cihazda yaparsa sende de güncellensin (10 saniyede bir)
+        // 10 saniyede bir verileri arkada kontrol et
         setInterval(() => {
             if(document.getElementById('screen-dashboard').classList.contains('active')) {
                 loadFromServer();
