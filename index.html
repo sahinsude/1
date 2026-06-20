@@ -1,132 +1,305 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Kamera Testi - Basit ve Güvenli</title>
-  <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body {
-      height: 100vh;
-      background: linear-gradient(135deg, #0a001f, #1c0038);
-      color: #e0e0ff;
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      overflow: hidden;
-    }
-    .container {
-      max-width: 700px;
-      padding: 40px;
-      background: rgba(20, 0, 40, 0.6);
-      border-radius: 20px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-    }
-    h1 {
-      font-size: 3.2rem;
-      margin-bottom: 20px;
-      color: #a78bfa;
-    }
-    p {
-      font-size: 1.3rem;
-      margin: 20px 0;
-      line-height: 1.6;
-      color: #d1d5ff;
-    }
-    .video-container {
-      margin: 30px 0;
-      border: 3px solid #6b46c1;
-      border-radius: 12px;
-      overflow: hidden;
-      background: #000;
-      width: 100%;
-      max-width: 640px;
-      aspect-ratio: 4/3;
-    }
-    video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    button {
-      padding: 18px 60px;
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: white;
-      background: linear-gradient(45deg, #7c3aed, #a78bfa);
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: all 0.3s;
-      box-shadow: 0 8px 25px rgba(124,58,237,0.4);
-    }
-    button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 15px 35px rgba(124,58,237,0.6);
-    }
-    .status {
-      margin-top: 20px;
-      font-size: 1.1rem;
-      color: #bbb;
-    }
-    .indicator {
-      margin-top: 15px;
-      font-size: 1rem;
-      color: #ff6b6b;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sude & Şahin</title>
+    <style>
+        /* GENEL AYARLAR */
+        * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; font-family: 'Comic Sans MS', cursive, sans-serif; }
+        body { background: #ffe6f2; color: #ff3399; overflow: hidden; height: 100vh; width: 100vw; display: flex; flex-direction: column; }
+        .screen { display: none; height: 100%; width: 100%; padding: 20px; align-items: center; justify-content: center; flex-direction: column; text-align: center; }
+        .active { display: flex; }
+        
+        /* HELLO KITTY MASKOT */
+        #hello-kitty {
+            position: absolute; width: 100px; height: 100px; z-index: 9999; cursor: grab;
+            background-image: url('https://upload.wikimedia.org/wikipedia/en/0/05/Hello_kitty_character_portrait.png'); /* Buraya kendi Hello Kitty görselini koyabilirsin */
+            background-size: contain; background-repeat: no-repeat;
+            transition: transform 0.2s; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));
+        }
+        #hello-kitty:active { cursor: grabbing; transform: scale(1.1); }
+
+        /* GİRİŞ EKRANI (KAÇAN BUTON) */
+        h1 { font-size: 2.5rem; margin-bottom: 30px; text-shadow: 2px 2px #ffb3d9; }
+        .btn-container { position: relative; width: 300px; height: 200px; display: flex; justify-content: center; align-items: center; }
+        button { padding: 15px 30px; font-size: 1.5rem; border: none; border-radius: 30px; cursor: pointer; color: white; font-weight: bold; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        #btn-yes { background: #ff4da6; z-index: 10; position: absolute; left: 20px; }
+        #btn-no { background: #666; position: absolute; right: 20px; transition: top 0.2s, left 0.2s; }
+
+        /* PARTICLE EFEKTLERİ */
+        .particle { position: absolute; pointer-events: none; animation: fall 3s linear forwards; font-size: 24px; }
+        @keyframes fall { 0% { transform: translateY(-50px) rotate(0deg); opacity: 1; } 100% { transform: translateY(100vh) rotate(360deg); opacity: 0; } }
+
+        /* MOD EKRANI */
+        .mood-scale { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 20px; max-width: 400px; }
+        .mood-btn { background: #ff99cc; padding: 10px 15px; font-size: 1.2rem; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
+        .mood-btn:hover { background: #ff3399; transform: scale(1.2); }
+        #mood-message { margin-top: 20px; font-size: 1.5rem; font-weight: bold; min-height: 60px; color: #cc0066; }
+
+        /* ANA PANO (TABLAR) */
+        nav { display: flex; width: 100%; background: #ffb3d9; padding: 10px; justify-content: space-around; border-radius: 0 0 20px 20px; position: absolute; top: 0; left: 0; z-index: 100; }
+        nav div { cursor: pointer; font-weight: bold; font-size: 1.2rem; padding: 5px 10px; }
+        .tab-content { display: none; width: 100%; height: 100%; padding-top: 60px; overflow-y: auto; }
+        .tab-active { display: block; }
+
+        /* GÖREVLER (TODO) */
+        .todo-list { max-width: 500px; margin: 0 auto; text-align: left; background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .todo-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid #ffe6f2; }
+        .todo-item.done span { text-decoration: line-through; color: #aaa; }
+        .todo-btn { padding: 5px 10px; background: #ff4da6; font-size: 1rem; border-radius: 10px; }
+
+        /* ANILAR (VİDEOLAR) */
+        .video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; max-width: 600px; margin: 0 auto; }
+        video { width: 100%; border-radius: 15px; border: 3px solid #ff4da6; }
+
+        /* GİYDİRME */
+        .dressup-container { display: flex; justify-content: center; align-items: flex-start; gap: 20px; margin-top: 20px; }
+        .wardrobe { background: white; padding: 15px; border-radius: 15px; max-height: 60vh; overflow-y: auto; width: 150px; }
+        .wardrobe-item { background: #ffe6f2; margin-bottom: 10px; padding: 10px; border-radius: 10px; cursor: pointer; text-align: center; }
+        .avatar-display { width: 200px; height: 300px; border: 3px dashed #ff4da6; border-radius: 20px; background: white; display: flex; align-items: center; justify-content: center; position: relative; }
+    </style>
 </head>
 <body>
 
-  <div class="container">
-    <h1>Kameranı Hazırla</h1>
-    <p>Bu test için kameranı ve mikrofonunu kısa süreliğine kullanacağız.<br>
-       Sadece seninle etkileşim kurmak için — başka hiçbir şey kaydetmiyoruz.</p>
-    
-    <button id="startBtn">Kamerayı Başlat</button>
-    
-    <div class="video-container">
-      <video id="video" autoplay playsinline muted></video>
+    <div id="hello-kitty"></div>
+
+    <div id="screen-login" class="screen active">
+        <h1>Beni seviyor musun KARICIM? ❤️</h1>
+        <div class="btn-container">
+            <button id="btn-yes">Evet 🥰</button>
+            <button id="btn-no">Hayır 😒</button>
+        </div>
     </div>
-    
-    <div class="status" id="status">Henüz başlamadı...</div>
-    <div class="indicator" id="indicator"></div>
-  </div>
 
-  <script>
-    const video = document.getElementById('video');
-    const btn = document.getElementById('startBtn');
-    const status = document.getElementById('status');
-    const indicator = document.getElementById('indicator');
+    <div id="screen-mood" class="screen">
+        <h1>Bugün modun nasıl bebeğim?</h1>
+        <div class="mood-scale" id="mood-scale"></div>
+        <div id="mood-message"></div>
+        <button id="btn-continue" style="display:none; margin-top:20px; background:#ff4da6;">Planlarımıza Geçelim 🚀</button>
+    </div>
 
-    btn.addEventListener('click', async () => {
-      btn.disabled = true;
-      status.textContent = "İzin bekleniyor...";
+    <div id="screen-dashboard" class="screen">
+        <nav>
+            <div onclick="switchTab('todo')">Görevler 📝</div>
+            <div onclick="switchTab('memories')">Anılarımız 🎥</div>
+            <div onclick="switchTab('dressup')">Giydirme 👗</div>
+        </nav>
 
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: "user" },  // Ön kamera tercihi
-          audio: true
+        <div id="tab-todo" class="tab-content tab-active">
+            <h2>Bugün Neler Yapıyoruz?</h2>
+            <p style="margin-bottom:15px; font-size:0.9rem;">(Her 24 saatte bir yenilenir!)</p>
+            <div class="todo-list" id="todo-list"></div>
+        </div>
+
+        <div id="tab-memories" class="tab-content">
+            <h2>Güzel Anılarımız ❤️</h2>
+            <div class="video-grid">
+                <video src="" controls></video>
+                <video src="" controls></video>
+                <video src="" controls></video>
+                <video src="" controls></video>
+            </div>
+        </div>
+
+        <div id="tab-dressup" class="tab-content">
+            <h2>Kitty'i Giydir</h2>
+            <div class="dressup-container">
+                <div class="wardrobe" id="wardrobe-colors">
+                    <h3>Renk/Makyaj</h3>
+                    <div class="wardrobe-item" onclick="dressKitty('color', 'Pembe')">Pembe Ton</div>
+                    <div class="wardrobe-item" onclick="dressKitty('color', 'Mavi')">Mavi Ton</div>
+                    </div>
+                <div class="avatar-display" id="avatar-display">
+                    <p>Kitty Burada Duracak</p>
+                    </div>
+                <div class="wardrobe" id="wardrobe-clothes">
+                    <h3>Kıyafet</h3>
+                    <div class="wardrobe-item" onclick="dressKitty('clothes', 'Elbise 1')">Kırmızı Elbise</div>
+                    <div class="wardrobe-item" onclick="dressKitty('clothes', 'Şapka 1')">Kurdele</div>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = "http://localhost:3000"; // Sunucu adresi
+
+        // 1. KAÇAN BUTON MANTIĞI
+        const btnNo = document.getElementById('btn-no');
+        const btnYes = document.getElementById('btn-yes');
+
+        const moveButton = () => {
+            const container = document.querySelector('.btn-container');
+            const maxX = container.clientWidth - btnNo.clientWidth;
+            const maxY = container.clientHeight - btnNo.clientHeight;
+            const newX = Math.random() * maxX;
+            const newY = Math.random() * maxY;
+            btnNo.style.left = `${newX}px`;
+            btnNo.style.top = `${newY}px`;
+        };
+
+        btnNo.addEventListener('mouseover', moveButton);
+        btnNo.addEventListener('touchstart', (e) => { e.preventDefault(); moveButton(); });
+
+        btnYes.addEventListener('click', () => {
+            createParticles('🌸', 50); createParticles('❤️', 50);
+            document.getElementById('screen-login').classList.remove('active');
+            document.getElementById('screen-mood').classList.add('active');
+            kittyReact('happy');
         });
 
-        video.srcObject = stream;
-        status.textContent = "Bağlantı başarılı! Kameran aktif.";
-        indicator.textContent = "Chrome'un adres çubuğunda kamera/mikrofon simgesi görünecek (güvenlik için). İstediğin zaman durdurabilirsin.";
+        // 2. PARÇACIK (PARTICLE) EFEKTİ
+        function createParticles(emoji, count) {
+            for(let i=0; i<count; i++) {
+                let particle = document.createElement('div');
+                particle.classList.add('particle');
+                particle.innerText = emoji;
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                document.body.appendChild(particle);
+                setTimeout(() => particle.remove(), 4000);
+            }
+        }
 
-        // Opsiyonel: 30 sn sonra durdur vs. ama şimdilik açık bırak
-      } catch (err) {
-        console.error("Hata:", err);
-        status.textContent = "Erişim sağlanamadı.";
-        indicator.textContent = err.name === 'NotAllowedError' 
-          ? "İzin vermedin veya tarayıcı blokladı. Ayarlardan kontrol et."
-          : "Başka bir hata: " + err.message;
-        btn.disabled = false;
-      }
-    });
-  </script>
+        // 3. SÜRÜKLENEBİLİR HELLO KITTY
+        const kitty = document.getElementById('hello-kitty');
+        let isDragging = false, currentX, currentY, initialX, initialY, xOffset = 0, yOffset = 0;
+
+        function dragStart(e) {
+            initialX = e.type === "touchstart" ? e.touches[0].clientX - xOffset : e.clientX - xOffset;
+            initialY = e.type === "touchstart" ? e.touches[0].clientY - yOffset : e.clientY - yOffset;
+            if (e.target === kitty) isDragging = true;
+        }
+        function dragEnd() { isDragging = false; kittyReact('normal'); }
+        function drag(e) {
+            if (isDragging) {
+                e.preventDefault();
+                currentX = e.type === "touchmove" ? e.touches[0].clientX - initialX : e.clientX - initialX;
+                currentY = e.type === "touchmove" ? e.touches[0].clientY - initialY : e.clientY - initialY;
+                xOffset = currentX; yOffset = currentY;
+                setTranslate(currentX, currentY, kitty);
+                kittyReact('surprised'); // Sürüklenirken tepki
+            }
+        }
+        function setTranslate(xPos, yPos, el) { el.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`; }
+
+        document.addEventListener("touchstart", dragStart, {passive: false});
+        document.addEventListener("touchend", dragEnd);
+        document.addEventListener("touchmove", drag, {passive: false});
+        document.addEventListener("mousedown", dragStart);
+        document.addEventListener("mouseup", dragEnd);
+        document.addEventListener("mousemove", drag);
+
+        // Kitty Tepkileri (Görselleri Değiştir)
+        function kittyReact(state) {
+            // Not: Gerçekte farklı PNG dosyaları kullanmalısın (örn: kitty_happy.png)
+            // Örnek olarak filter ve dönüşümler uyguluyoruz.
+            if(state === 'happy') kitty.style.filter = "drop-shadow(0 0 15px red) hue-rotate(30deg)";
+            else if(state === 'sad') kitty.style.filter = "grayscale(80%) drop-shadow(2px 4px 6px black)";
+            else if(state === 'surprised') kitty.style.transform = "scale(1.2)";
+            else { kitty.style.filter = "drop-shadow(2px 4px 6px rgba(0,0,0,0.3))"; kitty.style.transform = "scale(1)"; }
+        }
+
+        // 4. MOD SEÇİMİ VE MOTİVASYON SÖZLERİ
+        const moodScale = document.getElementById('mood-scale');
+        const moodMessage = document.getElementById('mood-message');
+        
+        // Şahin, buradaki dizilere her puan için 15 farklı söz ekleyebilirsin. Örnek olarak 3'er tane ekledim.
+        const messages = {
+            low: ["Bugün biraz yorgunsun sanırım, ben buradayım bebeğim ❤️", "Kötü hissetsen de sana sarılmak için sabırsızlanıyorum! 🥺", "Ne olursa olsun senin arkandayım karıcım."],
+            mid: ["Fena değiliz! Gününü daha da güzelleştireceğim 💖", "Sakin bir gün, seni seviyorum! 🌸", "Bugün modumuz standart ama aşkımız efsane!"],
+            high: ["İşte benim enerjik karım! Seni böyle görmek harika 🔥", "Bugün dünyayı fethedecek gibisin bebeğim! 😍", "Gülüşün güneşi bile kıskandırıyor!"]
+        };
+
+        for(let i=0; i<=10; i++) {
+            let btn = document.createElement('button');
+            btn.className = 'mood-btn';
+            btn.innerText = i;
+            btn.onclick = () => {
+                let moodCat = i <= 4 ? 'low' : (i <= 7 ? 'mid' : 'high');
+                let randomMsg = messages[moodCat][Math.floor(Math.random() * messages[moodCat].length)];
+                moodMessage.innerText = randomMsg;
+                
+                if(i <= 4) kittyReact('sad'); else kittyReact('happy');
+                createParticles(i <= 4 ? '🥺' : '✨', 20);
+                
+                document.getElementById('btn-continue').style.display = 'block';
+                saveToServer({ mood: i }); // Sunucuya kaydet
+            };
+            moodScale.appendChild(btn);
+        }
+
+        document.getElementById('btn-continue').onclick = () => {
+            document.getElementById('screen-mood').classList.remove('active');
+            document.getElementById('screen-dashboard').classList.add('active');
+            loadFromServer(); // Serverdan verileri çek
+        };
+
+        // 5. ANA PANO VE TAB GEÇİŞLERİ
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('tab-active'));
+            document.getElementById('tab-' + tabId).classList.add('tab-active');
+        }
+
+        // 6. GÖREVLER (TO-DO) YÖNETİMİ
+        const tasks = ["Kahvaltı 🍳", "Öğle Yemeği 🥗", "Dışarı Çıkma 🚶‍♀️", "Ders Çalışma 📚", "Spor Yapma 💪", "Bana Fotoğraf Atma 📸", "Su İçme 💧", "Kitap Okuma 📖", "Film İzleme 🍿", "Cilt Bakımı ✨", "Kahve İçme ☕", "Müzik Dinleme 🎵", "Arkadaşlarla Görüşme 👯‍♀️", "Oda Toplama 🧹", "Günü Değerlendirme 🌙"];
+        
+        let userTasks = {};
+
+        function renderTasks() {
+            const list = document.getElementById('todo-list');
+            list.innerHTML = '';
+            tasks.forEach((task, index) => {
+                const isDone = userTasks[index] || false;
+                const div = document.createElement('div');
+                div.className = `todo-item ${isDone ? 'done' : ''}`;
+                div.innerHTML = `
+                    <span>${task}</span>
+                    <button class="todo-btn" onclick="toggleTask(${index})">${isDone ? 'Geri Al' : 'Yaptım'}</button>
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        function toggleTask(index) {
+            userTasks[index] = !userTasks[index];
+            renderTasks();
+            if(userTasks[index]) { createParticles('✅', 10); kittyReact('happy'); setTimeout(()=>kittyReact('normal'), 1000); }
+            saveToServer({ tasks: userTasks });
+        }
+
+        // 7. GİYDİRME OYUNU
+        let avatarState = { color: '', clothes: '' };
+        function dressKitty(category, item) {
+            avatarState[category] = item;
+            document.getElementById('avatar-display').innerHTML = `<p style="position:absolute; top:10px;">Şu an giyilen:<br>Renk: ${avatarState.color}<br>Kıyafet: ${avatarState.clothes}</p>`;
+            saveToServer({ avatar: avatarState });
+        }
+
+        // 8. SUNUCU İLE İLETİŞİM (FETCH)
+        async function saveToServer(data) {
+            try {
+                await fetch(`${API_URL}/save`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+            } catch (err) { console.log("Sunucuya bağlanılamadı, yerel çalışıyor."); }
+        }
+
+        async function loadFromServer() {
+            try {
+                const res = await fetch(`${API_URL}/load`);
+                const data = await res.json();
+                if(data.tasks) userTasks = data.tasks;
+                if(data.avatar) { avatarState = data.avatar; dressKitty('', ''); }
+                renderTasks();
+            } catch (err) { 
+                console.log("Sunucu bulunamadı, varsayılan görevler yükleniyor.");
+                renderTasks();
+            }
+        }
+    </script>
 </body>
 </html>
