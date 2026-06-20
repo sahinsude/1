@@ -1,993 +1,451 @@
 <!DOCTYPE html>
-
 <html lang="tr">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
     <title>Sude & Şahin - Kodlu Sürüm</title>
-
     <style>
-
         /* GENEL AYARLAR */
-
         * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; font-family: 'Comic Sans MS', cursive, sans-serif; outline: none; }
-
         body { background: #ffe6f2; color: #ff3399; overflow: hidden; height: 100vh; width: 100vw; display: flex; flex-direction: column; }
-
         .screen { display: none; height: 100%; width: 100%; padding: 20px; align-items: center; justify-content: center; flex-direction: column; text-align: center; position: absolute; top: 0; left: 0;}
-
         .active { display: flex; z-index: 10; }
-
         
-
         /* --- DAHA TATLI & ORANTILI HELLO KITTY ÇİZİMİ --- */
-
-        .kitty-container {
-
-            position: relative; width: 120px; height: 145px; cursor: grab;
-
-            transition: transform 0.1s ease-out, filter 0.3s;
-
-            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.2));
-
-            z-index: 9999;
-
-        }
-
+        .kitty-container { position: relative; width: 120px; height: 145px; cursor: grab; transition: transform 0.1s ease-out, filter 0.3s; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.2)); z-index: 9999; }
         .kitty-container:active { cursor: grabbing; }
 
-
-
-        /* Vücut Parçaları (Ortak) */
-
         .k-part { position: absolute; background: white; border: 3px solid #111; }
-
-
-
-        /* Kulaklar (Daha minik ve yuvarlak) */
-
         .k-ear { width: 28px; height: 28px; top: 8px; border-radius: 8px; z-index: 1;}
-
         .k-ear.left { left: 16px; transform: rotate(-25deg); border-top-left-radius: 12px;}
-
         .k-ear.right { right: 16px; transform: rotate(25deg); border-top-right-radius: 12px;}
 
-
-
-        /* Kafa (Daha tatlı, oval) */
-
         .k-head { width: 100px; height: 72px; top: 15px; left: 10px; border-radius: 50% / 45%; z-index: 3; }
-
-        
-
-        /* Yüz Detayları */
-
         .k-eye { position: absolute; width: 7px; height: 11px; background: #111; border-radius: 50%; top: 35px; border: none;}
-
         .k-eye.left { left: 20px; }
-
         .k-eye.right { right: 20px; }
-
-        
-
         .k-nose { position: absolute; width: 10px; height: 7px; background: #ffcc00; border: 2px solid #111; border-radius: 50%; top: 43px; left: 45px; }
-
         
-
         .k-whisker { position: absolute; width: 18px; height: 2px; background: #111; border-radius: 2px; border: none;}
-
         .k-w-l1 { top: 34px; left: -2px; transform: rotate(15deg); }
-
         .k-w-l2 { top: 42px; left: -4px; }
-
         .k-w-l3 { top: 50px; left: -2px; transform: rotate(-15deg); }
-
         .k-w-r1 { top: 34px; right: -2px; transform: rotate(-15deg); }
-
         .k-w-r2 { top: 42px; right: -4px; }
-
         .k-w-r3 { top: 50px; right: -2px; transform: rotate(15deg); }
 
-
-
-        /* Kollar (Daha minik ve yumuşak) */
-
         .k-arm { width: 18px; height: 32px; top: 80px; border-radius: 10px; z-index: 4; transition: background 0.3s;}
-
         .k-arm.left { left: 18px; transform: rotate(45deg); }
-
         .k-arm.right { right: 18px; transform: rotate(-45deg); }
 
-
-
-        /* Ayaklar (Daha tombul) */
-
         .k-foot { width: 26px; height: 16px; top: 120px; border-radius: 12px 12px 8px 8px; z-index: 1;}
-
         .k-foot.left { left: 28px; }
-
         .k-foot.right { right: 28px; }
 
-
-
-        /* Gövde (Torso - Daha ufak) */
-
         .k-torso { width: 54px; height: 42px; top: 82px; left: 33px; border-radius: 20px 20px 10px 10px; z-index: 2; transition: background 0.3s;}
-
-        
-
-        /* Şapka / Aksesuar Konteyneri */
-
         .k-hat { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 5; pointer-events: none;}
 
-
-
-        /* --- KIYAFET VE STİL KATMANLARI --- */
-
-
-
-        /* 1. Şapkalar / Başlıklar */
-
         .style-kurdele .k-hat::before { content: '🎀'; position: absolute; font-size: 38px; top: -12px; right: 0px; transform: rotate(15deg); }
-
         .style-tac .k-hat::before { content: '👑'; position: absolute; font-size: 35px; top: -20px; left: 32px; }
-
         .style-hasir .k-hat::before { content: '👒'; position: absolute; font-size: 45px; top: -22px; left: 28px; }
 
-
-
-        /* 2. Kıyafetler (Gövde ve Kolların Rengi Değişir) */
-
         .style-elbise .k-torso { background: #ff99cc; border-bottom: 5px solid #ff3399; border-radius: 20px 20px 5px 5px;}
-
         .style-elbise .k-arm { background: #ff99cc; }
-
         .style-elbise .k-torso::after { content: '👗'; position: absolute; font-size: 20px; bottom: 2px; left: 17px; opacity: 0.6; }
 
-
-
         .style-pijama .k-torso { background: #ccf2ff; border-bottom: 3px dashed #66ccff;}
-
         .style-pijama .k-arm { background: #ccf2ff; }
-
         .style-pijama .k-torso::after { content: '🌙'; position: absolute; font-size: 16px; top: 12px; left: 19px; opacity: 0.6; }
 
-
-
         .style-kazak .k-torso { background: #ff6666; border-radius: 12px; }
-
         .style-kazak .k-arm { background: #ff6666; }
-
         .style-kazak .k-torso::after { content: '🧶'; position: absolute; font-size: 16px; top: 12px; left: 19px; opacity: 0.6; }
 
-
-
-        /* ARAYÜZ TASARIMLARI */
-
         h1 { font-size: 2rem; margin-bottom: 30px; text-shadow: 2px 2px #ffb3d9; z-index: 10; padding: 0 10px;}
-
         .btn-container { position: relative; width: 100%; height: 150px; display: flex; justify-content: center; align-items: center; z-index: 10; }
-
         button { padding: 12px 25px; font-size: 1.3rem; border: none; border-radius: 30px; cursor: pointer; color: white; font-weight: bold; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: transform 0.1s; }
-
         button:active { transform: scale(0.95); }
-
         #btn-yes { background: #ff4da6; margin-right: 20px;}
-
         #btn-no { background: #888; position: absolute; transition: left 0.3s ease-out, top 0.3s ease-out; }
 
-
-
         .particle { position: absolute; pointer-events: none; animation: fall 3s linear forwards; z-index: 9999; }
-
         @keyframes fall { 0% { transform: translateY(-50px) rotate(0deg); opacity: 1; } 100% { transform: translateY(100vh) rotate(360deg); opacity: 0; } }
 
-
-
         .mood-scale { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 15px; max-width: 350px; }
-
         .mood-btn { background: #ff99cc; padding: 0; font-size: 1.1rem; border-radius: 50%; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; transition: 0.2s; border: 2px solid transparent;}
-
         .mood-btn:hover { background: #ff3399; transform: scale(1.1); border-color: white;}
-
         #mood-message { margin: 20px 0; font-size: 1.3rem; font-weight: bold; min-height: 50px; color: #cc0066; padding: 0 15px;}
 
-
-
         nav { display: flex; width: 100%; background: #ffb3d9; padding: 8px; justify-content: space-around; border-radius: 0 0 15px 15px; position: absolute; top: 0; left: 0; z-index: 100; box-shadow: 0 4px 10px rgba(0,0,0,0.1);}
-
         nav div { cursor: pointer; font-weight: bold; font-size: 1rem; padding: 5px 8px; transition: 0.2s; border-radius: 10px;}
-
         nav div:hover, nav div.active-tab { background: rgba(255,255,255,0.3); color: #ff3399;}
-
         
-
         .tab-content { display: none; width: 100%; height: 100%; padding-top: 65px; padding-bottom: 20px; overflow-y: auto; }
-
         .tab-active { display: block; }
-
         h2 { font-size: 1.6rem; margin-bottom: 10px; color: #ff3399;}
 
-
-
         .todo-list { max-width: 450px; margin: 0 auto; text-align: left; background: white; padding: 15px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-
         .todo-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #ffe6f2; }
-
         .todo-item:last-child { border-bottom: none; }
-
         .todo-item.done span { text-decoration: line-through; color: #bbb; }
-
         .todo-btn { padding: 4px 10px; background: #ff4da6; font-size: 0.9rem; border-radius: 10px;}
 
-
-
         .video-grid { display: grid; grid-template-columns: 1fr; gap: 15px; max-width: 400px; margin: 0 auto; padding: 0 10px;}
-
         video { width: 100%; border-radius: 15px; border: 3px solid #ff4da6; background: #333; height: 180px; object-fit: cover;}
 
-
-
         .dressup-wrapper { display: flex; flex-direction: column; align-items: center; gap: 15px; height: 100%; }
-
-        .avatar-display { 
-
-            width: 240px; height: 240px; border: 4px dashed #ff4da6; border-radius: 20px; background: white; 
-
-            display: flex; flex-direction: column; align-items: center; justify-content: center; 
-
-            position: relative; transition: background 0.3s;
-
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
-
-        }
-
-        
-
+        .avatar-display { width: 240px; height: 240px; border: 4px dashed #ff4da6; border-radius: 20px; background: white; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; transition: background 0.3s; box-shadow: inset 0 0 20px rgba(0,0,0,0.05); }
         #dressup-kitty-static .kitty-container { transform: scale(1.3); cursor: default; pointer-events: none; }
-
-
-
         .avatar-details { margin-top: 20px; font-size: 0.9rem; font-weight: bold; color: #cc0066; width: 100%; text-align: center;}
-
         
-
         .wardrobe-categories { display: flex; flex-direction: row; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 10px; width: 100%; max-width: 500px; overflow-y: auto; padding: 5px;}
-
         .category-box { background: white; padding: 10px; border-radius: 12px; flex: 1 1 140px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid #ffe6f2;}
-
         .category-box h3 { font-size: 0.9rem; margin-bottom: 8px; border-bottom: 2px solid #ffb3d9; padding-bottom: 3px;}
-
         .wardrobe-item { background: #ffe6f2; margin-bottom: 5px; padding: 6px; border-radius: 8px; cursor: pointer; text-align: center; font-size: 0.8rem; transition: 0.2s; border: 1px solid transparent;}
-
         .wardrobe-item:hover { background: #ff4da6; color: white; transform: translateY(-2px);}
-
         .wardrobe-item.active-item { background: #ff3399; color: white; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.2);}
-
     </style>
-
 </head>
-
 <body>
 
-
-
-    <!-- Başlangıçta hiçbir class verilmedi, JS sunucudan çekip atayacak -->
-
     <div id="hello-kitty-draggable" class="kitty-container" style="position: absolute; left: 50%; top: 20%; transform: translate(-50%, -50%);">
-
         <div class="k-part k-ear left"></div>
-
         <div class="k-part k-ear right"></div>
-
-        
-
         <div class="k-part k-foot left"></div>
-
         <div class="k-part k-foot right"></div>
-
-        
-
         <div class="k-part k-arm left"></div>
-
         <div class="k-part k-arm right"></div>
-
-        
-
         <div class="k-part k-torso"></div>
-
-        
-
         <div class="k-part k-head">
-
             <div class="k-hat"></div>
-
             <div class="k-eye left"></div>
-
             <div class="k-eye right"></div>
-
             <div class="k-nose"></div>
-
             <div class="k-whisker k-w-l1"></div>
-
             <div class="k-whisker k-w-l2"></div>
-
             <div class="k-whisker k-w-l3"></div>
-
             <div class="k-whisker k-w-r1"></div>
-
             <div class="k-whisker k-w-r2"></div>
-
             <div class="k-whisker k-w-r3"></div>
-
         </div>
-
     </div>
-
-
-
-    <!-- EKRANLAR -->
 
     <div id="screen-login" class="screen active">
-
         <h1>Beni seviyor musun KARICIM? ❤️</h1>
-
         <div class="btn-container">
-
             <button id="btn-yes">Evet 🥰</button>
-
             <button id="btn-no">Hayır 😒</button>
-
         </div>
-
     </div>
-
-
 
     <div id="screen-mood" class="screen">
-
         <h1>Bugün modun nasıl bebeğim?</h1>
-
         <div class="mood-scale" id="mood-scale"></div>
-
         <div id="mood-message"></div>
-
         <button id="btn-continue" style="display:none; margin-top:10px; background:#ff4da6; font-size:1.1rem; padding: 10px 20px;">Planlarımıza Geçelim 🚀</button>
-
     </div>
-
-
 
     <div id="screen-dashboard" class="screen">
-
         <nav id="main-nav">
-
             <div onclick="switchTab('todo')" id="nav-todo" class="active-tab">Görevler 📝</div>
-
             <div onclick="switchTab('memories')" id="nav-memories">Anılarımız 🎥</div>
-
             <div onclick="switchTab('dressup')" id="nav-dressup">Giydirme 👗</div>
-
         </nav>
 
-
-
         <div id="tab-todo" class="tab-content tab-active">
-
             <h2>Bugün Neler Yapıyoruz?</h2>
-
             <div class="todo-list" id="todo-list"></div>
-
         </div>
-
-
 
         <div id="tab-memories" class="tab-content">
-
             <h2>Güzel Anılarımız ❤️</h2>
-
             <div class="video-grid">
-
                 <video src="" controls poster="https://via.placeholder.com/400x180.png?text=Anı+Video+1"></video>
-
                 <video src="" controls poster="https://via.placeholder.com/400x180.png?text=Anı+Video+2"></video>
-
             </div>
-
         </div>
-
-
 
         <div id="tab-dressup" class="tab-content">
-
             <h2>Kitty'i Giydir</h2>
-
             <div class="dressup-wrapper">
-
                 <div class="avatar-display" id="avatar-display">
-
                     <div id="dressup-kitty-static"></div>
-
                     <div class="avatar-details" id="avatar-details">Tarz Bekleniyor...</div>
-
                 </div>
-
-
 
                 <div class="wardrobe-categories">
-
                     <div class="category-box">
-
                         <h3>Şapka 👒</h3>
-
                         <div class="wardrobe-item" onclick="dressKitty('hat', 'style-kurdele', 'Kurdele 🎀')">Kurdele 🎀</div>
-
                         <div class="wardrobe-item" onclick="dressKitty('hat', 'style-tac', 'Kral Tacı 👑')">Taç 👑</div>
-
                         <div class="wardrobe-item" onclick="dressKitty('hat', 'style-hasir', 'Hasır Şapka 👒')">Şapka 👒</div>
-
                         <div class="wardrobe-item" onclick="dressKitty('hat', '', 'Yok ❌')">Çıkar ❌</div>
-
                     </div>
-
                     <div class="category-box">
-
                         <h3>Kıyafet 👗</h3>
-
                         <div class="wardrobe-item" onclick="dressKitty('clothes', 'style-elbise', 'Pembe Elbise 👗')">Elbise 👗</div>
-
                         <div class="wardrobe-item" onclick="dressKitty('clothes', 'style-pijama', 'Pijama 👘')">Pijama 👘</div>
-
                         <div class="wardrobe-item" onclick="dressKitty('clothes', 'style-kazak', 'Kışlık Kazak 🧥')">Kazak 🧥</div>
-
                         <div class="wardrobe-item" onclick="dressKitty('clothes', '', 'Çıplak ❌')">Çıkar ❌</div>
-
                     </div>
-
                     <div class="category-box">
-
                         <h3>Mekan 🏞️</h3>
-
                         <div class="wardrobe-item" onclick="dressKitty('bg', '#ffe6f2', 'Pembe Oda')">Oda 🌸</div>
-
                         <div class="wardrobe-item" onclick="dressKitty('bg', '#b3e6ff', 'Mavi Gökyüzü')">Gökyüzü ☁️</div>
-
                         <div class="wardrobe-item" onclick="dressKitty('bg', '#d9ffb3', 'Piknik')">Piknik 🍃</div>
-
                         <div class="wardrobe-item" onclick="dressKitty('bg', 'white', 'Sade')">Sade ❌</div>
-
                     </div>
-
                 </div>
-
             </div>
-
         </div>
-
     </div>
 
-
-
     <script>
-
-      const API_URL = "https://directed-livecam-jacket-meets.trycloudflare.com";
-
-
+        // SUNUCU URL'Sİ: Node.js server nerede çalışıyorsa buraya o gelir
+        const API_URL = "https://guardian-toner-logged-dosage.trycloudflare.com";
 
         // DOM Klonlamaları
-
         const draggableKitty = document.getElementById('hello-kitty-draggable');
-
         const staticKittyContainer = document.getElementById('dressup-kitty-static');
-
         staticKittyContainer.innerHTML = draggableKitty.outerHTML;
-
         staticKittyContainer.querySelector('.kitty-container').id = 'hello-kitty-static';
-
         const staticKitty = document.getElementById('hello-kitty-static');
-
         const avatarDisplay = document.getElementById('avatar-display');
 
-
-
         // SALLAMA EFEKTİ
-
         let lastMouseX = 0, lastMouseY = 0, isHovering = false;
-
         document.addEventListener('mousemove', (e) => {
-
             if (isHovering && !isDragging) {
-
                 let speed = Math.abs(e.clientX - lastMouseX) + Math.abs(e.clientY - lastMouseY);
-
                 let shake = speed > 20 ? (Math.sin(Date.now() / 50) * 5) : 0;
-
                 draggableKitty.style.transform = `translate(-50%, -50%) rotate(${shake}deg) scale(1.05)`;
-
             }
-
             lastMouseX = e.clientX; lastMouseY = e.clientY;
-
         });
-
-
 
         draggableKitty.addEventListener('mouseover', () => { isHovering = true; draggableKitty.style.filter = "drop-shadow(0 0 15px #ffb3d9)"; });
-
         draggableKitty.addEventListener('mouseout', () => {
-
             isHovering = false;
-
             if (!isDragging) {
-
                 draggableKitty.style.transform = "translate(-50%, -50%) rotate(0deg) scale(1)";
-
                 draggableKitty.style.filter = "drop-shadow(2px 4px 6px rgba(0,0,0,0.2))";
-
             }
-
         });
-
-
 
         // KAÇAN BUTON
-
         const btnNo = document.getElementById('btn-no');
-
         const btnYes = document.getElementById('btn-yes');
-
         let noClicks = 0;
 
-
-
         const moveButton = () => {
-
             const container = document.querySelector('#screen-login .btn-container').getBoundingClientRect();
-
             const minX = -50, maxX = container.width - 50, minY = -20, maxY = container.height;
-
             btnNo.style.position = 'absolute';
-
             btnNo.style.left = `${Math.random() * (maxX - minX) + minX}px`;
-
             btnNo.style.top = `${Math.random() * (maxY - minY) + minY}px`;
-
             btnNo.style.transform = `rotate(${(Math.random() - 0.5) * 20}deg)`;
-
             noClicks++;
-
             if(noClicks > 4) { btnNo.innerText = "Yaa tıkla artık 🥺"; btnNo.style.background = "#555"; }
-
         };
-
-
 
         btnNo.addEventListener('mouseover', moveButton);
-
         btnNo.addEventListener('touchstart', (e) => { e.preventDefault(); moveButton(); }, {passive: false});
-
         btnNo.addEventListener('click', (e) => { e.preventDefault(); moveButton(); });
 
-
-
         btnYes.addEventListener('click', () => {
-
             createParticles('🌸', 40); createParticles('❤️', 40);
-
             document.getElementById('screen-login').classList.remove('active');
-
             document.getElementById('screen-mood').classList.add('active');
-
             draggableKitty.style.filter = "drop-shadow(0 0 20px red) hue-rotate(20deg)";
-
             setTimeout(() => draggableKitty.style.filter = "drop-shadow(2px 4px 6px rgba(0,0,0,0.2))", 2000);
-
         });
 
-
-
-        // SÜRÜKLEME
-
+        // SÜRÜKLEME VE POZİSYON KAYDI
         let isDragging = false, startX, startY;
-
         const startDrag = (e) => {
-
             isDragging = true; isHovering = false;
-
             const evt = e.type.includes('mouse') ? e : e.touches[0];
-
             const rect = draggableKitty.getBoundingClientRect();
-
             startX = evt.clientX - rect.left - rect.width / 2;
-
             startY = evt.clientY - rect.top - rect.height / 2;
-
             draggableKitty.style.transition = "none";
-
             draggableKitty.style.cursor = "grabbing";
-
             draggableKitty.style.transform = "translate(-50%, -50%) scale(1.1) rotate(5deg)";
-
             draggableKitty.style.filter = "drop-shadow(0 0 20px yellow)";
-
         };
-
         const onDrag = (e) => {
-
             if (!isDragging) return; e.preventDefault();
-
             const evt = e.type.includes('mouse') ? e : e.touches[0];
-
             draggableKitty.style.left = `${Math.max(50, Math.min(window.innerWidth - 50, evt.clientX - startX))}px`;
-
             draggableKitty.style.top = `${Math.max(50, Math.min(window.innerHeight - 50, evt.clientY - startY))}px`;
-
         };
-
         const stopDrag = () => {
-
             if(isDragging) {
-
                 isDragging = false;
-
                 draggableKitty.style.transition = "transform 0.2s ease-out, filter 0.3s";
-
                 draggableKitty.style.cursor = "grab";
-
                 draggableKitty.style.transform = "translate(-50%, -50%) scale(1)";
-
                 draggableKitty.style.filter = "drop-shadow(2px 4px 6px rgba(0,0,0,0.2))";
-
+                
+                // POZİSYONU SUNUCUYA KAYDET (Bırakıldığı an)
+                saveToServer({
+                    position: {
+                        left: draggableKitty.style.left,
+                        top: draggableKitty.style.top
+                    }
+                });
             }
-
         };
-
         draggableKitty.addEventListener('mousedown', startDrag);
-
         document.addEventListener('mousemove', onDrag);
-
         document.addEventListener('mouseup', stopDrag);
-
         draggableKitty.addEventListener('touchstart', startDrag, {passive: false});
-
         document.addEventListener('touchmove', onDrag, {passive: false});
-
         document.addEventListener('touchend', stopDrag);
 
-
-
         // GİYDİRME VERİSİ
-
         let avatarState = { hat: 'style-kurdele', clothes: '', bg: 'white', hatName: 'Kurdele 🎀', clothesName: 'Çıplak' };
 
-
-
         function dressKitty(category, className, displayName) {
-
             if (category === 'hat') { avatarState.hat = className; avatarState.hatName = displayName; } 
-
             else if (category === 'clothes') { avatarState.clothes = className; avatarState.clothesName = displayName; } 
-
             else if (category === 'bg') { avatarState.bg = className; }
-
             
-
-          updateAvatarUI();
-
-loadFromServer();
-
-renderTasks();
-
+            updateAvatarUI();
             
-
             // Ne yaparsan yap anında sunucuya gidiyor
-
             saveToServer({ avatar: avatarState });
-
         }
-
-
 
         function updateAvatarUI() {
-
             [draggableKitty, staticKitty].forEach(kitty => {
-
-                // Classları sıfırlayıp sadece seçili olanı ekliyoruz
-
                 kitty.className = 'kitty-container'; 
-
                 if (avatarState.hat) kitty.classList.add(avatarState.hat);
-
                 if (avatarState.clothes) kitty.classList.add(avatarState.clothes);
-
             });
-
             avatarDisplay.style.background = avatarState.bg;
-
             document.getElementById('avatar-details').innerHTML = `Tarz: ${avatarState.hatName} + ${avatarState.clothesName}`;
-
             
-
-            // Butonların aktiflik durumunu güncelle
-
             document.querySelectorAll('.wardrobe-item').forEach(btn => {
-
                 btn.classList.remove('active-item');
-
                 let clickCode = btn.getAttribute('onclick');
-
                 if ((avatarState.hat && clickCode.includes(`'${avatarState.hat}'`)) || 
-
                     (!avatarState.hat && clickCode.includes(`''`) && clickCode.includes(`'hat'`)) ||
-
                     (avatarState.clothes && clickCode.includes(`'${avatarState.clothes}'`)) ||
-
                     (!avatarState.clothes && clickCode.includes(`''`) && clickCode.includes(`'clothes'`)) ||
-
                     (avatarState.bg && clickCode.includes(`'${avatarState.bg}'`))) {
-
                     btn.classList.add('active-item');
-
                 }
-
             });
-
         }
-
-
 
         function createParticles(emoji, count) {
-
             for(let i=0; i<count; i++) {
-
                 let p = document.createElement('div'); p.classList.add('particle'); p.innerText = emoji;
-
                 p.style.left = Math.random() * 100 + 'vw'; p.style.animationDuration = (Math.random() * 2 + 2) + 's';
-
                 p.style.fontSize = (Math.random() * 20 + 20) + 'px';
-
                 document.body.appendChild(p); setTimeout(() => p.remove(), 3500);
-
             }
-
         }
-
-
 
         const moodScale = document.getElementById('mood-scale');
-
         for(let i=0; i<=10; i++) {
-
             let btn = document.createElement('button'); btn.className = 'mood-btn'; btn.innerText = i;
-
             if(i>7) btn.style.background = "#ff3399"; if(i<4) btn.style.background = "#ffb3d9";
-
             btn.onclick = () => {
-
                 document.getElementById('mood-message').innerText = i <= 4 ? "Bugün biraz yorgunsun sanırım bebeğim ❤️" : (i <= 7 ? "Fena değiliz! Gününü daha da güzelleştireceğim 💖" : "İşte benim enerjik karım! 🔥");
-
                 createParticles(i <= 4 ? '🥺' : '✨', 20);
-
                 document.getElementById('btn-continue').style.display = 'block';
-
                 saveToServer({ mood: i }); 
-
             };
-
             moodScale.appendChild(btn);
-
         }
-
-
 
         document.getElementById('btn-continue').onclick = () => {
-
             document.getElementById('screen-mood').classList.remove('active');
-
             document.getElementById('screen-dashboard').classList.add('active');
-
         };
 
-
-
         function switchTab(tabId) {
-
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('tab-active'));
-
             document.querySelectorAll('nav div').forEach(n => n.classList.remove('active-tab'));
-
             document.getElementById('tab-' + tabId).classList.add('tab-active');
-
             document.getElementById('nav-' + tabId).classList.add('active-tab');
-
             if(tabId === 'dressup') updateAvatarUI();
-
         }
-
-
 
         const tasks = ["Kahvaltı 🍳", "Öğle Yemeği 🥗", "Dışarı Çıkma 🚶‍♀️", "Ders Çalışma 📚", "Bana Fotoğraf Atma 📸", "Su İçme 💧", "Cilt Bakımı ✨", "Kahve İçme ☕"];
-
         let userTasks = {};
-
         
-
         function renderTasks() {
-
             const list = document.getElementById('todo-list'); list.innerHTML = '';
-
             tasks.forEach((task, index) => {
-
                 let isDone = userTasks[index] || false;
-
                 let div = document.createElement('div'); div.className = `todo-item ${isDone ? 'done' : ''}`;
-
                 div.innerHTML = `<span>${task}</span><button class="todo-btn" onclick="toggleTask(${index})">${isDone ? 'Aç' : 'Yaptım'}</button>`;
-
                 list.appendChild(div);
-
             });
-
         }
-
         
-
         function toggleTask(index) {
-
             userTasks[index] = !userTasks[index]; renderTasks();
-
             if(userTasks[index]) createParticles('✅', 10);
-
             saveToServer({ tasks: userTasks }); 
-
         }
-
-
 
         // --- SUNUCU İLETİŞİMİ (TAM SENKRONİZASYON) ---
-
-       async function saveToServer(data) {
-
-    try {
-
-
-
-        const response = await fetch(`${API_URL}/save`, {
-
-            method: "POST",
-
-            headers: {
-
-                "Content-Type": "application/json"
-
-            },
-
-            body: JSON.stringify(data)
-
-        });
-
-
-
-        const result = await response.json();
-
-
-
-        console.log("Kaydedildi:", result);
-
-
-
-    } catch(err) {
-
-        console.error("Save hatası:", err);
-
-    }
-
-}
-
-
-
-       async function loadFromServer() {
-
-    try {
-
-
-
-        const res = await fetch(`${API_URL}/load`);
-
-        const data = await res.json();
-
-
-
-        console.log("Sunucudan gelen veri:", data);
-
-
-
-        // Görevler
-
-        if (data.tasks) {
-
-            userTasks = data.tasks;
-
+        async function saveToServer(data) {
+            try {
+                const response = await fetch(`${API_URL}/save`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data)
+                });
+                const result = await response.json();
+                console.log("Kaydedildi:", result);
+            } catch(err) {
+                console.error("Save hatası:", err);
+            }
         }
 
+        async function loadFromServer() {
+            try {
+                const res = await fetch(`${API_URL}/load`);
+                const data = await res.json();
+                console.log("Sunucudan gelen veri:", data);
 
+                // Görevler
+                if (data.tasks) userTasks = data.tasks;
 
-        // Avatar
+                // Avatar
+                if (data.avatar && Object.keys(data.avatar).length > 0) {
+                    avatarState = { ...avatarState, ...data.avatar };
+                }
 
-        if (data.avatar && Object.keys(data.avatar).length > 0) {
+                // Mood
+                if (data.mood !== undefined && data.mood !== null) {
+                    document.getElementById("mood-message").innerText = `Son mod: ${data.mood}/10 ❤️`;
+                }
 
-            avatarState = {
+                // POZİSYON YÜKLEME EKLENDİ
+                if (data.position && data.position.left) {
+                    draggableKitty.style.left = data.position.left;
+                    draggableKitty.style.top = data.position.top;
+                }
 
-                ...avatarState,
+                renderTasks();
+                updateAvatarUI();
 
-                ...data.avatar
-
-            };
-
-        } else {
-
-            // İlk açılışta varsayılan avatarı kaydet
-
-            await saveToServer({
-
-                avatar: avatarState
-
-            });
-
+            } catch (err) {
+                console.error("Load hatası:", err);
+                renderTasks();
+                updateAvatarUI();
+            }
         }
-
-
-
-        // Mood
-
-        if (data.mood !== undefined && data.mood !== null) {
-
-            document.getElementById("mood-message").innerText =
-
-                `Son mod: ${data.mood}/10 ❤️`;
-
-        }
-
-
-
-        renderTasks();
-
-        updateAvatarUI();
-
-
-
-    } catch (err) {
-
-
-
-        console.error("Load hatası:", err);
-
-
-
-        renderTasks();
-
-        updateAvatarUI();
-
-
-
-    }
-
-}
-
-
 
         // Sayfa açılır açılmaz en güncel halini çeker ve uygular
-
         window.onload = loadFromServer;
-
         
-
     </script>
-
 </body>
-
 </html>
