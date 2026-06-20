@@ -236,7 +236,7 @@
     </div>
 
     <script>
-        const API_URL = ""; 
+      const API_URL = "https://directed-livecam-jacket-meets.trycloudflare.com";
 
         // DOM Klonlamaları
         const draggableKitty = document.getElementById('hello-kitty-draggable');
@@ -337,7 +337,9 @@
             else if (category === 'clothes') { avatarState.clothes = className; avatarState.clothesName = displayName; } 
             else if (category === 'bg') { avatarState.bg = className; }
             
-            updateAvatarUI();
+          updateAvatarUI();
+loadFromServer();
+renderTasks();
             
             // Ne yaparsan yap anında sunucuya gidiyor
             saveToServer({ avatar: avatarState });
@@ -422,40 +424,70 @@
         }
 
         // --- SUNUCU İLETİŞİMİ (TAM SENKRONİZASYON) ---
-        async function saveToServer(data) {
-            try {
-                await fetch(`${API_URL}/save`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
-                });
-            } catch (err) { console.log("Veri iletilemedi!"); }
+       async function saveToServer(data) {
+    try {
+
+        const response = await fetch(`${API_URL}/save`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        console.log("Kaydedildi:", result);
+
+    } catch(err) {
+        console.error("Save hatası:", err);
+    }
+}
+
+       async function loadFromServer() {
+    try {
+
+        const res = await fetch(`${API_URL}/load`);
+        const data = await res.json();
+
+        console.log("Sunucudan gelen veri:", data);
+
+        // Görevler
+        if (data.tasks) {
+            userTasks = data.tasks;
         }
 
-        async function loadFromServer() {
-            try {
-                const res = await fetch(`${API_URL}/load`);
-                const data = await res.json();
-                
-                // Görevleri doğrudan sunucudan çek ve ez
-                if(data.tasks) { userTasks = data.tasks; }
-                
-                // Sunucuda önceden kaydedilmiş kıyafet varsa TAMAMEN onu geçerli kıl (Default'u ez)
-                if(data.avatar && Object.keys(data.avatar).length > 0) { 
-                    avatarState = { ...avatarState, ...data.avatar }; 
-                } else {
-                    // Sunucu ilk defa açıldıysa ve boşsa, varsayılanı sunucuya hemen kaydet ki senkron bozmasın
-                    saveToServer({ avatar: avatarState });
-                }
-                
-                renderTasks();
-                updateAvatarUI();
-            } catch (err) { 
-                console.log("Bağlantı hatası, yerel veriler yüklendi."); 
-                renderTasks(); 
-                updateAvatarUI(); 
-            }
+        // Avatar
+        if (data.avatar && Object.keys(data.avatar).length > 0) {
+            avatarState = {
+                ...avatarState,
+                ...data.avatar
+            };
+        } else {
+            // İlk açılışta varsayılan avatarı kaydet
+            await saveToServer({
+                avatar: avatarState
+            });
         }
+
+        // Mood
+        if (data.mood !== undefined && data.mood !== null) {
+            document.getElementById("mood-message").innerText =
+                `Son mod: ${data.mood}/10 ❤️`;
+        }
+
+        renderTasks();
+        updateAvatarUI();
+
+    } catch (err) {
+
+        console.error("Load hatası:", err);
+
+        renderTasks();
+        updateAvatarUI();
+
+    }
+}
 
         // Sayfa açılır açılmaz en güncel halini çeker ve uygular
         window.onload = loadFromServer;
