@@ -11,11 +11,56 @@
         .screen { display: none; height: 100%; width: 100%; padding: 20px; align-items: center; justify-content: center; flex-direction: column; text-align: center; }
         .active { display: flex; }
         
-        /* HELLO KITTY MASKOT (Sürüklenen) */
+        /* ------------------------------------------- */
+        /* YENİ: SAF CSS İLE ÇİZİLMİŞ HELLO KITTY      */
+        /* ------------------------------------------- */
+        .css-kitty {
+            position: relative;
+            width: 100px;
+            height: 100px;
+        }
+        .hk-ear {
+            position: absolute; top: 5px; width: 35px; height: 35px;
+            background: white; border: 3px solid #000; border-radius: 8px; z-index: 1;
+        }
+        .hk-ear.left { left: 5px; transform: rotate(-25deg); }
+        .hk-ear.right { right: 5px; transform: rotate(25deg); }
+        
+        .hk-head {
+            position: absolute; bottom: 5px; left: 0; width: 100px; height: 75px;
+            background: white; border: 3px solid #000;
+            border-radius: 50% 50% 45% 45%; z-index: 2;
+        }
+        .hk-eye {
+            position: absolute; top: 35px; width: 8px; height: 14px;
+            background: #000; border-radius: 50%;
+        }
+        .hk-eye.left { left: 22px; }
+        .hk-eye.right { right: 22px; }
+        
+        .hk-nose {
+            position: absolute; top: 48px; left: 50%; transform: translateX(-50%);
+            width: 12px; height: 8px; background: #ffcc00; border: 2px solid #000; border-radius: 50%;
+        }
+        
+        .hk-whisker { position: absolute; width: 22px; height: 3px; background: #000; border-radius: 2px; }
+        .hk-w-l-1 { top: 30px; left: -10px; transform: rotate(15deg); }
+        .hk-w-l-2 { top: 42px; left: -12px; transform: rotate(0deg); }
+        .hk-w-l-3 { top: 54px; left: -10px; transform: rotate(-15deg); }
+        .hk-w-r-1 { top: 30px; right: -10px; transform: rotate(-15deg); }
+        .hk-w-r-2 { top: 42px; right: -12px; transform: rotate(0deg); }
+        .hk-w-r-3 { top: 54px; right: -10px; transform: rotate(15deg); }
+        
+        .hk-bow { position: absolute; top: 10px; right: 2px; width: 40px; height: 25px; z-index: 3; }
+        .hk-bow-center { position: absolute; top: 5px; left: 13px; width: 14px; height: 14px; background: #ff3333; border: 2px solid #000; border-radius: 50%; z-index: 4; }
+        .hk-bow-loop { position: absolute; top: 2px; width: 20px; height: 20px; background: #ff3333; border: 2px solid #000; border-radius: 50%; }
+        .hk-bow-loop.left { left: -2px; transform: rotate(20deg); }
+        .hk-bow-loop.right { right: -2px; transform: rotate(-20deg); }
+        /* ------------------------------------------- */
+
+        /* EKRANDA GEZEN HELLO KITTY MASKOT */
         #hello-kitty {
             position: absolute; width: 100px; height: 100px; z-index: 9999; cursor: grab;
-            background-image: url('https://upload.wikimedia.org/wikipedia/en/0/05/Hello_kitty_character_portrait.png'); 
-            background-size: contain; background-repeat: no-repeat; background-position: center;
             transition: filter 0.2s, transform 0.2s; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));
             left: 50%; top: 20%; transform: translate(-50%, -50%);
         }
@@ -55,32 +100,18 @@
         .video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; max-width: 600px; margin: 0 auto; }
         video { width: 100%; border-radius: 15px; border: 3px solid #ff4da6; }
 
-        /* YENİ: GERÇEK HELLO KITTY GİYDİRME EKRANI DETAYLARI */
+        /* GİYDİRME EKRANI DETAYLARI */
         .dressup-wrapper { display: flex; flex-direction: column; align-items: center; gap: 15px; height: 100%; overflow-y: auto;}
         .avatar-display { width: 280px; height: 280px; border: 4px dashed #ff4da6; border-radius: 20px; background: white; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; transition: background 0.5s;}
         
-        #dressup-kitty {
-            position: relative;
-            width: 160px;
-            height: 160px;
-            background-image: url('https://upload.wikimedia.org/wikipedia/en/0/05/Hello_kitty_character_portrait.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            z-index: 1;
-        }
+        #dressup-kitty { position: relative; width: 160px; height: 160px; z-index: 1; display: flex; justify-content: center; align-items: center; }
+        #dressup-kitty .css-kitty { transform: scale(1.5); } /* Giydirme ekranı için büyütülmüş CSS Kitty */
 
-        /* Giysi Katmanları (Kitty'nin üstüne biner) */
-        .clothing-layer {
-            position: absolute;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        #layer-hat { top: -25px; left: 50%; transform: translateX(-50%); font-size: 4rem; z-index: 3; }
-        #layer-clothes { top: 75px; left: 50%; transform: translateX(-50%); font-size: 5rem; z-index: 2; }
-        #layer-accessory { top: 40px; left: 95px; font-size: 3rem; z-index: 4; }
+        /* Giysi Katmanları */
+        .clothing-layer { position: absolute; display: flex; align-items: center; justify-content: center; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        #layer-hat { top: -20px; left: 50%; transform: translateX(-50%); font-size: 4rem; z-index: 4; }
+        #layer-clothes { top: 75px; left: 50%; transform: translateX(-50%); font-size: 5.5rem; z-index: 2; }
+        #layer-accessory { top: 50px; left: 100px; font-size: 3.5rem; z-index: 5; }
 
         .avatar-details { position: absolute; bottom: -40px; font-size: 1rem; font-weight: bold; color: #cc0066; width: 100%; text-align: center;}
         
@@ -93,7 +124,28 @@
 </head>
 <body>
 
-    <div id="hello-kitty"></div>
+    <div id="hello-kitty">
+        <div class="css-kitty">
+            <div class="hk-ear left"></div>
+            <div class="hk-ear right"></div>
+            <div class="hk-head">
+                <div class="hk-eye left"></div>
+                <div class="hk-eye right"></div>
+                <div class="hk-nose"></div>
+                <div class="hk-whisker hk-w-l-1"></div>
+                <div class="hk-whisker hk-w-l-2"></div>
+                <div class="hk-whisker hk-w-l-3"></div>
+                <div class="hk-whisker hk-w-r-1"></div>
+                <div class="hk-whisker hk-w-r-2"></div>
+                <div class="hk-whisker hk-w-r-3"></div>
+            </div>
+            <div class="hk-bow">
+                <div class="hk-bow-loop left"></div>
+                <div class="hk-bow-loop right"></div>
+                <div class="hk-bow-center"></div>
+            </div>
+        </div>
+    </div>
 
     <div id="screen-login" class="screen active">
         <h1>Beni seviyor musun KARICIM? ❤️</h1>
@@ -139,6 +191,27 @@
                 
                 <div class="avatar-display" id="avatar-display">
                     <div id="dressup-kitty">
+                        <div class="css-kitty">
+                            <div class="hk-ear left"></div>
+                            <div class="hk-ear right"></div>
+                            <div class="hk-head">
+                                <div class="hk-eye left"></div>
+                                <div class="hk-eye right"></div>
+                                <div class="hk-nose"></div>
+                                <div class="hk-whisker hk-w-l-1"></div>
+                                <div class="hk-whisker hk-w-l-2"></div>
+                                <div class="hk-whisker hk-w-l-3"></div>
+                                <div class="hk-whisker hk-w-r-1"></div>
+                                <div class="hk-whisker hk-w-r-2"></div>
+                                <div class="hk-whisker hk-w-r-3"></div>
+                            </div>
+                            <div class="hk-bow">
+                                <div class="hk-bow-loop left"></div>
+                                <div class="hk-bow-loop right"></div>
+                                <div class="hk-bow-center"></div>
+                            </div>
+                        </div>
+                        
                         <div id="layer-hat" class="clothing-layer"></div>
                         <div id="layer-clothes" class="clothing-layer"></div>
                         <div id="layer-accessory" class="clothing-layer"></div>
@@ -182,10 +255,8 @@
     </div>
 
     <script>
-        // SENİN CLOUDFLARE TÜNEL LİNKİN SABİTLENDİ 🚀
         const API_URL = "https://directed-livecam-jacket-meets.trycloudflare.com"; 
 
-        // 1. KAÇAN BUTON MANTIĞI (TÜM EKRANDA)
         const btnNo = document.getElementById('btn-no');
         const btnYes = document.getElementById('btn-yes');
 
@@ -210,7 +281,6 @@
             kittyReact('happy');
         });
 
-        // 2. PARÇACIK (PARTICLE) EFEKTİ
         function createParticles(emoji, count) {
             for(let i=0; i<count; i++) {
                 let particle = document.createElement('div');
@@ -223,7 +293,6 @@
             }
         }
 
-        // 3. SÜRÜKLENEBİLİR HELLO KITTY
         const kitty = document.getElementById('hello-kitty');
         let isDragging = false;
 
@@ -265,7 +334,6 @@
             else kitty.style.filter = "drop-shadow(2px 4px 6px rgba(0,0,0,0.3))";
         }
 
-        // 4. MOD SEÇİMİ VE MOTİVASYON SÖZLERİ
         const moodScale = document.getElementById('mood-scale');
         const moodMessage = document.getElementById('mood-message');
         
@@ -299,15 +367,12 @@
             loadFromServer();
         };
 
-        // 5. ANA PANO VE TAB GEÇİŞLERİ
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('tab-active'));
             document.getElementById('tab-' + tabId).classList.add('tab-active');
         }
 
-        // 6. GÖREVLER (TO-DO) YÖNETİMİ
         const tasks = ["Kahvaltı 🍳", "Öğle Yemeği 🥗", "Dışarı Çıkma 🚶‍♀️", "Ders Çalışma 📚", "Spor Yapma 💪", "Bana Fotoğraf Atma 📸", "Su İçme 💧", "Kitap Okuma 📖", "Film İzleme 🍿", "Cilt Bakımı ✨", "Kahve İçme ☕", "Müzik Dinleme 🎵", "Arkadaşlarla Görüşme 👯‍♀️", "Oda Toplama 🧹", "Günü Değerlendirme 🌙"];
-        
         let userTasks = {};
 
         function renderTasks() {
@@ -332,7 +397,6 @@
             saveToServer({ tasks: userTasks });
         }
 
-        // 7. YENİ: GERÇEK HELLO KITTY GİYDİRME OYUNU MANTIĞI
         let avatarState = { 
             hat: {name: '', icon: ''}, 
             clothes: {name: '', icon: ''}, 
@@ -357,15 +421,12 @@
             const display = document.getElementById('avatar-display');
             const details = document.getElementById('avatar-details');
             
-            // Arka plan rengini güncelle
             display.style.background = avatarState.bg || 'white';
             
-            // Emojileri Hello Kitty'nin üstündeki div'lere yerleştir
             document.getElementById('layer-hat').innerText = avatarState.hat.icon || '';
             document.getElementById('layer-clothes').innerText = avatarState.clothes.icon || '';
             document.getElementById('layer-accessory').innerText = avatarState.accessory.icon || '';
             
-            // Alt kısımdaki yazı detaylarını güncelle
             let htmlStr = `Şu anki Tarz:<br>`;
             let hasStyle = false;
 
@@ -374,11 +435,9 @@
             if(avatarState.accessory.name) { htmlStr += `${avatarState.accessory.name}`; hasStyle = true; }
             
             if(!hasStyle) htmlStr = "Tarz Bekleniyor...";
-            
             details.innerHTML = htmlStr;
         }
 
-        // 8. SUNUCU İLE İLETİŞİM (FETCH)
         async function saveToServer(data) {
             try {
                 await fetch(`${API_URL}/save`, {
@@ -397,7 +456,6 @@
                 if(data.tasks) userTasks = data.tasks;
                 
                 if(data.avatar) { 
-                    // Eski versiyonda (string olarak kaydolmuşsa) çökmemesi için basit bir kontrol
                     if(typeof data.avatar.hat === 'string') {
                         avatarState.bg = data.avatar.bg || 'white';
                     } else {
@@ -412,7 +470,6 @@
             }
         }
         
-        // 10 saniyede bir verileri arkada kontrol et
         setInterval(() => {
             if(document.getElementById('screen-dashboard').classList.contains('active')) {
                 loadFromServer();
