@@ -5,60 +5,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sude & Şahin - Evrenimiz</title>
     <style>
-        /* GENEL TASARIM VE ARKA PLAN ZENGİNLEŞTİRME */
-        * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; font-family: 'Comic Sans MS', cursive, sans-serif; outline: none; }
+        /* MODERN YAZI TİPİ VE GENEL SIFIRLAMA */
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; font-family: 'Nunito', system-ui, sans-serif; outline: none; }
         
         body { 
-            background: #ffe6f2; 
-            color: #ff3399; 
-            overflow: hidden; 
-            height: 100vh; 
-            width: 100vw; 
-            display: flex; 
-            flex-direction: column; 
-            position: relative;
-            /* Boşluğu almak için estetik arka plan detayları */
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.4) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(255, 255, 255, 0.4) 0%, transparent 20%);
+            background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 100%);
+            color: #d81b60; overflow: hidden; height: 100vh; width: 100vw; display: flex; flex-direction: column; position: relative;
         }
 
-        /* Dekoratif Sabit Bulutlar (Sayfa boş durmasın diye) */
-        .deco-cloud { position: absolute; background: rgba(255, 255, 255, 0.6); border-radius: 50px; pointer-events: none; z-index: 2; filter: blur(1px); }
-        .cloud-1 { width: 120px; height: 40px; top: 15%; left: 10%; }
-        .cloud-2 { width: 160px; height: 50px; top: 25%; right: 8%; }
+        /* MOD ARKA PLANI İÇİN DEĞİŞKENLER */
+        :root { --dashboard-bg-emoji: ''; --dashboard-bg-color: transparent; }
+
+        #heart-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; overflow: hidden; }
+        .floating-heart { position: absolute; bottom: -20px; font-size: 20px; opacity: 0.5; animation: floatUp linear infinite; filter: drop-shadow(0 2px 4px rgba(255,105,180,0.3));}
+        @keyframes floatUp { 0% { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 0.6; } 100% { transform: translateY(-120vh) rotate(360deg) scale(1.3); opacity: 0; } }
+
+        /* TIKLAMA PARTİKÜLLERİ (KALPLER) */
+        .click-particle { position: absolute; font-size: 25px; pointer-events: none; animation: popHeart 0.8s ease-out forwards; z-index: 10000; }
+        @keyframes popHeart { 0% { transform: scale(0.5) translateY(0); opacity: 1; } 100% { transform: scale(1.5) translateY(-50px); opacity: 0; } }
 
         .screen { display: none; height: 100%; width: 100%; padding: 20px; align-items: center; justify-content: center; flex-direction: column; text-align: center; position: absolute; top: 0; left: 0; z-index: 10;}
-        .active { display: flex; animation: fadeIn 0.5s ease; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .active { display: flex; animation: fadeIn 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        h1 { font-size: clamp(1.8rem, 5vw, 2.8rem); margin-bottom: 20px; text-shadow: 3px 3px 0px rgba(255, 179, 217, 0.6); padding: 0 10px; z-index: 10; color: #ff1a8c;}
-        h2 { font-size: clamp(1.4rem, 4vw, 2rem); margin-bottom: 15px; color: #ff3399; text-shadow: 1px 1px white;}
-        
-        /* UÇUŞAN PARÇACIKLAR */
-        #heart-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; overflow: hidden; }
-        .floating-heart { position: absolute; bottom: -20px; font-size: 20px; opacity: 0.6; animation: floatUp linear infinite; }
-        @keyframes floatUp {
-            0% { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 0.8; }
-            100% { transform: translateY(-120vh) rotate(360deg) scale(1.3); opacity: 0; }
+        .main-card { 
+            max-width: 900px; width: 98%; margin: auto; 
+            background: rgba(255, 255, 255, 0.45); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            padding: 30px 20px; border-radius: 30px; box-shadow: 0 10px 40px rgba(216, 27, 96, 0.15); 
+            border: 1px solid rgba(255, 255, 255, 0.6); text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
 
-        /* KITTY ÇİZİMİ (PANTOLONLAR KALKTI) */
-        .kitty-container { position: absolute; width: 120px; height: 145px; cursor: grab; transition: transform 0.1s; filter: drop-shadow(0px 8px 12px rgba(255, 51, 153, 0.25)); z-index: 9999; }
+        h1 { font-size: clamp(1.6rem, 4vw, 2.2rem); margin-bottom: 20px; color: #c2185b; font-weight: 800; text-shadow: 0 2px 10px rgba(255,255,255,0.8);}
+        h2 { font-size: clamp(1.4rem, 4vw, 1.8rem); margin-bottom: 15px; color: #d81b60; font-weight: 700;}
+
+        /* DASHBOARD ARKA PLANI (MODA GÖRE DEĞİŞİR) */
+        #screen-dashboard::before {
+            content: var(--dashboard-bg-emoji); position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            font-size: 50vw; opacity: 0.04; z-index: 0; pointer-events: none;
+        }
+        #screen-dashboard { background: var(--dashboard-bg-color); transition: background 1s ease; }
+
+        /* HELLO KITTY TEMEL */
+        .kitty-container { position: absolute; width: 120px; height: 145px; cursor: pointer; transition: transform 0.2s; filter: drop-shadow(0px 10px 15px rgba(216, 27, 96, 0.25)); z-index: 9999; }
         .kitty-container:active { cursor: grabbing; }
 
-        .k-part { position: absolute; background: white; border: 3px solid #222; }
+        .k-part { position: absolute; background: white; border: 3.5px solid #2d3436; }
         .k-ear { width: 28px; height: 28px; top: 8px; border-radius: 8px; z-index: 1;}
         .k-ear.left { left: 16px; transform: rotate(-25deg); border-top-left-radius: 12px;}
         .k-ear.right { right: 16px; transform: rotate(25deg); border-top-right-radius: 12px;}
         .k-head { width: 100px; height: 72px; top: 15px; left: 10px; border-radius: 50% / 45%; z-index: 3; }
         
-        .k-eye { position: absolute; width: 7px; height: 11px; background: #222; border-radius: 50%; top: 35px; border: none; transition: 0.3s;}
+        .k-eye { position: absolute; width: 8px; height: 12px; background: #2d3436; border-radius: 50%; top: 35px; border: none; transition: 0.3s;}
         .k-eye.left { left: 20px; } .k-eye.right { right: 20px; }
-        .k-nose { position: absolute; width: 10px; height: 7px; background: #ffcc00; border: 2px solid #222; border-radius: 50%; top: 43px; left: 45px; }
-        .k-smile-mouth { position: absolute; width: 12px; height: 6px; border-bottom: 2px solid #222; border-radius: 50%; top: 48px; left: 44px; opacity: 0; transition: 0.3s; }
+        .k-nose { position: absolute; width: 10px; height: 7px; background: #fdcb6e; border: 2.5px solid #2d3436; border-radius: 50%; top: 43px; left: 45px; }
+        .k-smile-mouth { position: absolute; width: 12px; height: 6px; border-bottom: 2.5px solid #2d3436; border-radius: 50%; top: 48px; left: 44px; opacity: 0; transition: 0.3s; }
         
-        .k-whisker { position: absolute; width: 18px; height: 2px; background: #222; border-radius: 2px; border: none;}
+        .k-whisker { position: absolute; width: 18px; height: 2.5px; background: #2d3436; border-radius: 2px; border: none;}
         .k-w-l1 { top: 34px; left: -2px; transform: rotate(15deg); } .k-w-l2 { top: 42px; left: -4px; } .k-w-l3 { top: 50px; left: -2px; transform: rotate(-15deg); }
         .k-w-r1 { top: 34px; right: -2px; transform: rotate(-15deg); } .k-w-r2 { top: 42px; right: -4px; } .k-w-r3 { top: 50px; right: -2px; transform: rotate(15deg); }
 
@@ -66,100 +70,188 @@
         .k-arm.left { left: 18px; transform: rotate(45deg); } .k-arm.right { right: 18px; transform: rotate(-45deg); }
         .k-foot { width: 26px; height: 16px; top: 118px; border-radius: 12px 12px 8px 8px; z-index: 1; transition: 0.3s;}
         .k-foot.left { left: 28px; } .k-foot.right { right: 28px; }
-        .k-torso { width: 54px; height: 42px; top: 82px; left: 33px; border-radius: 20px 20px 10px 10px; z-index: 2; transition: 0.3s;}
+        .k-torso { width: 54px; height: 42px; top: 82px; left: 33px; border-radius: 20px 20px 10px 10px; z-index: 2; transition: 0.3s; overflow: hidden;}
 
-        /* ANIMASYONLAR */
-        .dancing { animation: dance 0.8s infinite alternate ease-in-out; }
-        @keyframes dance {
-            0% { transform: scale(1) rotate(-4deg); }
-            100% { transform: scale(1.05) rotate(4deg); }
-        }
-        .dancing .k-arm.left { transform: rotate(130deg); }
-        .dancing .k-arm.right { transform: rotate(-130deg); }
-        .smiling .k-eye { height: 4px; border-radius: 10px; top: 38px;}
+        /* --- 10 FARKLI DANS ANİMASYONU --- */
+        .smiling .k-eye { height: 5px; border-radius: 10px; top: 38px;}
         .smiling .k-smile-mouth { opacity: 1; }
+        
+        .dance-1 { animation: d1 0.5s infinite alternate ease-in-out; } @keyframes d1 { 0% { transform: translateY(0); } 100% { transform: translateY(-15px); } } .dance-1 .k-arm { transform: rotate(180deg); }
+        .dance-2 { animation: d2 0.6s infinite alternate ease-in-out; } @keyframes d2 { 0% { transform: rotate(-15deg); } 100% { transform: rotate(15deg); } }
+        .dance-3 { animation: d3 0.4s infinite alternate; } @keyframes d3 { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
+        .dance-4 { animation: d4 1s infinite linear; } @keyframes d4 { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .dance-5 { animation: d5 0.5s infinite alternate; } @keyframes d5 { 0% { transform: skewX(-10deg); } 100% { transform: skewX(10deg); } } .dance-5 .k-arm.left { transform: rotate(130deg); }
+        .dance-6 { animation: d6 0.3s infinite alternate; } @keyframes d6 { 0% { transform: translateX(-10px); } 100% { transform: translateX(10px); } }
+        .dance-7 { animation: d7 0.7s infinite alternate ease-in-out; } @keyframes d7 { 0% { transform: scaleY(1); } 100% { transform: scaleY(0.8) scaleX(1.1); } }
+        .dance-8 { animation: d8 0.4s infinite alternate; } @keyframes d8 { 0% { transform: rotateY(0deg); } 100% { transform: rotateY(180deg); } }
+        .dance-9 { animation: d9 0.5s infinite alternate; } @keyframes d9 { 0% { transform: translateY(0) rotate(-5deg); } 100% { transform: translateY(-20px) rotate(5deg); } }
+        .dance-10 { animation: d10 0.8s infinite alternate; } @keyframes d10 { 0% { transform: scale(0.9) translateY(10px); } 100% { transform: scale(1.2) translateY(-10px); } } .dance-10 .k-arm { transform: rotate(-180deg); }
 
-        /* GİYDİRME CODES */
-        .k-hat { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 5; pointer-events: none;}
+        /* GİYDİRME CSS (TAMAMEN CSS GÖZLÜKLER VE KIYAFETLER - 50 ÇEŞİT) */
+        .k-hat, .k-glasses { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 5; pointer-events: none;}
+        .k-glasses { z-index: 6; }
+        
+        /* Şapkalar (Emojili, CSS desteksiz tasarımlar için) */
         .style-kurdele .k-hat::before { content: '🎀'; position: absolute; font-size: 38px; top: -12px; right: 0px; transform: rotate(15deg); }
         .style-tac .k-hat::before { content: '👑'; position: absolute; font-size: 35px; top: -20px; left: 32px; }
-        .style-hasir .k-hat::before { content: '👒'; position: absolute; font-size: 45px; top: -22px; left: 28px; }
         .style-kedi .k-hat::before { content: '🐱'; position: absolute; font-size: 35px; top: -25px; left: 32px; }
+        .style-cadilar .k-hat::before { content: '🧙‍♀️'; position: absolute; font-size: 35px; top: -20px; left: 32px; }
+        .style-noel .k-hat::before { content: '🧑‍🎄'; position: absolute; font-size: 35px; top: -25px; left: 30px; }
+        .style-parti .k-hat::before { content: '🎉'; position: absolute; font-size: 35px; top: -22px; left: 30px; }
+        .style-korsan .k-hat::before { content: '🏴‍☠️'; position: absolute; font-size: 40px; top: -22px; left: 28px; }
+        .style-kovboy .k-hat::before { content: '🤠'; position: absolute; font-size: 40px; top: -22px; left: 30px; }
+        .style-kask .k-hat::before { content: '🪖'; position: absolute; font-size: 40px; top: -25px; left: 30px; }
+        .style-bere .k-hat::before { content: '🧣'; position: absolute; font-size: 35px; top: -15px; left: 32px; }
 
-        .style-elbise .k-torso { background: #ff99cc; border-bottom: 5px solid #ff3399; } .style-elbise .k-arm { background: #ff99cc; }
-        .style-pijama .k-torso { background: #ccf2ff; border-bottom: 3px dashed #66ccff;} .style-pijama .k-arm { background: #ccf2ff; }
-        .style-kazak .k-torso { background: #ff6666; } .style-kazak .k-arm { background: #ff6666; }
-        .style-tisort .k-torso { background: #ffe600; } .style-tisort .k-arm { background: #ffe600; }
+        /* GÖZLÜKLER - SIFIR PNG, TAMAMEN SAF CSS! */
+        /* Yuvarlak Siyah */
+        .style-gozluk-yuvarlak .k-glasses::before { content:''; position:absolute; width: 22px; height: 22px; border: 3px solid #2d3436; border-radius: 50%; top: 30px; left: 12px; background: rgba(0,0,0,0.1);}
+        .style-gozluk-yuvarlak .k-glasses::after { content:''; position:absolute; width: 22px; height: 22px; border: 3px solid #2d3436; border-radius: 50%; top: 30px; right: 12px; background: rgba(0,0,0,0.1);}
+        /* Kare Siyah */
+        .style-gozluk-kare .k-glasses::before { content:''; position:absolute; width: 24px; height: 18px; border: 4px solid #2d3436; border-radius: 4px; top: 32px; left: 12px; }
+        .style-gozluk-kare .k-glasses::after { content:''; position:absolute; width: 24px; height: 18px; border: 4px solid #2d3436; border-radius: 4px; top: 32px; right: 12px; }
+        /* Güneş Gözlüğü (Koyu Cam) */
+        .style-gozluk-gunes .k-glasses::before { content:''; position:absolute; width: 26px; height: 20px; background: #2d3436; border-radius: 8px 8px 15px 15px; top: 31px; left: 10px; }
+        .style-gozluk-gunes .k-glasses::after { content:''; position:absolute; width: 26px; height: 20px; background: #2d3436; border-radius: 8px 8px 15px 15px; top: 31px; right: 10px; }
+        /* Kırmızı Çerçeve */
+        .style-gozluk-kirmizi .k-glasses::before { content:''; position:absolute; width: 24px; height: 16px; border: 3px solid #d63031; border-radius: 10px; top: 33px; left: 12px; }
+        .style-gozluk-kirmizi .k-glasses::after { content:''; position:absolute; width: 24px; height: 16px; border: 3px solid #d63031; border-radius: 10px; top: 33px; right: 12px; }
+        /* Matrix İnce Cam */
+        .style-gozluk-matrix .k-glasses::before { content:''; position:absolute; width: 22px; height: 8px; background: black; border-radius: 10px; top: 37px; left: 14px; }
+        .style-gozluk-matrix .k-glasses::after { content:''; position:absolute; width: 22px; height: 8px; background: black; border-radius: 10px; top: 37px; right: 14px; }
+        /* 3D Sinema Gözlüğü */
+        .style-gozluk-3d .k-glasses::before { content:''; position:absolute; width: 24px; height: 18px; background: rgba(255,0,0,0.6); border: 2px solid white; top: 32px; left: 12px; }
+        .style-gozluk-3d .k-glasses::after { content:''; position:absolute; width: 24px; height: 18px; background: rgba(0,0,255,0.6); border: 2px solid white; top: 32px; right: 12px; }
+        /* Kedi Gözü Çerçevesi */
+        .style-gozluk-kedi .k-glasses::before { content:''; position:absolute; width: 26px; height: 18px; border: 4px solid #e84393; border-radius: 0 15px 15px 15px; top: 30px; left: 10px; transform: rotate(-10deg);}
+        .style-gozluk-kedi .k-glasses::after { content:''; position:absolute; width: 26px; height: 18px; border: 4px solid #e84393; border-radius: 15px 0 15px 15px; top: 30px; right: 10px; transform: rotate(10deg);}
+        /* Thug Life Gözlüğü (Piksel CSS) */
+        .style-gozluk-mozaik .k-glasses::before { content:''; position:absolute; width: 26px; height: 12px; background: repeating-linear-gradient(90deg, #000, #000 4px, transparent 4px, transparent 6px); border-bottom: 4px solid black; top: 34px; left: 10px; }
+        .style-gozluk-mozaik .k-glasses::after { content:''; position:absolute; width: 26px; height: 12px; background: repeating-linear-gradient(90deg, #000, #000 4px, transparent 4px, transparent 6px); border-bottom: 4px solid black; top: 34px; right: 10px; }
+        /* Altın Çerçeve */
+        .style-gozluk-altin .k-glasses::before { content:''; position:absolute; width: 22px; height: 22px; border: 2px solid #fdcb6e; border-radius: 50%; top: 30px; left: 12px; }
+        .style-gozluk-altin .k-glasses::after { content:''; position:absolute; width: 22px; height: 22px; border: 2px solid #fdcb6e; border-radius: 50%; top: 30px; right: 12px; }
+        /* İnek Öğrenci (Bantlı) */
+        .style-gozluk-bant .k-glasses::before { content:''; position:absolute; width: 24px; height: 24px; border: 3px solid #2d3436; border-radius: 4px; top: 28px; left: 10px; }
+        .style-gozluk-bant .k-glasses::after { content:''; position:absolute; width: 24px; height: 24px; border: 3px solid #2d3436; border-radius: 4px; top: 28px; right: 10px; }
+        .style-gozluk-bant .k-head::after { content:''; position:absolute; width: 6px; height: 12px; background: #dfe6e9; top: 32px; left: 47px; z-index: 7;}
 
-        /* 10 DEKORATİF MEKAN (ZENGİNLEŞTİRİLMİŞ) */
-        .bg-oda1 { background: radial-gradient(circle, #fff0f5, #ffb6c1); border: 3px solid #ff99cc; }
-        .bg-gokyuzu { background: linear-gradient(to bottom, #87ceeb, #e0f6ff); border: 3px solid #87ceeb; }
-        .bg-piknik { background: repeating-linear-gradient(45deg, #ffcccc, #ffcccc 15px, #ffffff 15px, #ffffff 30px); border: 3px solid #ffb3d9; }
-        .bg-gece { background: radial-gradient(circle, #2b2b52, #0a0a2a); border: 3px solid #2b2b52; }
-        .bg-orman { background: linear-gradient(to bottom, #a8e6cf, #dcedc1); border: 3px solid #a8e6cf; }
-        .bg-plaj { background: linear-gradient(to bottom, #e0f6ff 60%, #ffe4b5 40%); border: 3px solid #ffe4b5; }
-        .bg-disko { background: linear-gradient(135deg, #ff007f, #7f00ff); border: 3px solid #ff007f; }
-        .bg-kalp { background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"><text x="5" y="20" font-size="14">💖</text></svg>') repeat; background-color: #ffe6f2; border: 3px solid #ff99cc;}
-        .bg-yildiz { background: #111; background-image: radial-gradient(white 1px, transparent 0); background-size: 16px 16px; border: 3px solid white;}
-        .bg-sade { background: #fff; border: 3px dashed #ccc; }
+        /* Kıyafetler (TAMAMEN CSS TABANLI - 15 ÇEŞİT) */
+        .style-elbise .k-torso { background: #fd79a8; border-bottom: 5px solid #e84393; } .style-elbise .k-arm { background: #fd79a8; }
+        .style-pijama .k-torso { background: #74b9ff; border-bottom: 3px dashed #0984e3;} .style-pijama .k-arm { background: #74b9ff; }
+        .style-kazak .k-torso { background: #ff7675; } .style-kazak .k-arm { background: #ff7675; }
+        .style-tisort .k-torso { background: #ffeaa7; } .style-tisort .k-arm { background: #ffeaa7; }
+        .style-elbise-leopar .k-torso { background: radial-gradient(circle, #55efc4 15%, transparent 20%), radial-gradient(circle, #55efc4 15%, transparent 20%), #ffeaa7; background-size: 16px 16px; background-position: 0 0, 8px 8px; border-bottom: 4px solid #fdcb6e;} .style-elbise-leopar .k-arm { background: #ffeaa7; }
+        .style-tisort-cizgili .k-torso { background: repeating-linear-gradient(0deg, #ffffff, #ffffff 6px, #0984e3 6px, #0984e3 12px); } .style-tisort-cizgili .k-arm { background: #ffffff; }
+        .style-gomlek-hawaii .k-torso { background: radial-gradient(circle at 50% 50%, #fab1a0 15%, transparent 20%), radial-gradient(circle at 10% 10%, #ffeaa7 20%, transparent 25%), #81ecec; background-size: 20px 20px; } .style-gomlek-hawaii .k-arm { background: #81ecec; }
+        .style-kazak-kar .k-torso { background: #d63031; border-top: 8px solid #ffffff; } .style-kazak-kar .k-arm { background: #d63031; }
+        .style-elbise-puantiye .k-torso { background: radial-gradient(circle, #ffffff 25%, transparent 30%), radial-gradient(circle, #ffffff 25%, transparent 30%), #d63031; background-size: 14px 14px; background-position: 0 0, 7px 7px; border-bottom: 4px solid #ffffff;} .style-elbise-puantiye .k-arm { background: #d63031; }
+        .style-ceket-deri .k-torso { background: #2d3436; border-left: 5px solid #b2bec3; border-right: 5px solid #b2bec3; } .style-ceket-deri .k-arm { background: #2d3436; }
+        .style-tisort-gokkusagi .k-torso { background: linear-gradient(180deg, #ff7675 20%, #fdcb6e 40%, #ffeaa7 60%, #55efc4 80%, #74b9ff 100%); } .style-tisort-gokkusagi .k-arm { background: #fdcb6e; }
+        .style-forma-futbol .k-torso { background: repeating-linear-gradient(90deg, #d63031, #d63031 10px, #ffffff 10px, #ffffff 20px); border-top: 3px solid #2d3436;} .style-forma-futbol .k-arm { background: #d63031; }
+        .style-elbise-galaksi .k-torso { background: radial-gradient(circle at 30% 30%, #ffffff 2%, transparent 4%), radial-gradient(circle at 70% 60%, #ffffff 3%, transparent 5%), linear-gradient(135deg, #0984e3, #6c5ce7); background-size: 20px 20px, 25px 25px, 100% 100%;} .style-elbise-galaksi .k-arm { background: #6c5ce7; }
+        .style-pijama-karpuz .k-torso { background: #55efc4; border-bottom: 8px solid #ff7675; } .style-pijama-karpuz .k-arm { background: #55efc4; }
+        .style-ninja .k-torso { background: #2d3436; border-bottom: 2px solid #d63031;} .style-ninja .k-arm { background: #2d3436; }
 
-        /* MOD SEÇİM EKRANI */
-        .mood-scale { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 20px; width: 100%; max-width: 500px; z-index: 10;}
-        .mood-btn { background: white; font-size: 1.1rem; border-radius: 20px; width: 75px; height: 75px; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: 0.2s; border: 2px solid #ffb3d9; box-shadow: 0 6px 12px rgba(255, 51, 153, 0.15); cursor:pointer;}
-        .mood-btn:hover { background: #ff3399; color: white; transform: scale(1.1); border-color: transparent;}
-        .mood-btn span.emoji { font-size: 1.6rem; margin-top: 2px; animation: bounce 1.5s infinite;}
-        @keyframes bounce { 0%, 100% {transform: translateY(0);} 50% {transform: translateY(-5px);} }
+        /* Arka Planlar (15 ÇEŞİT) */
+        .bg-oda1 { background: linear-gradient(to bottom right, #fff0f5, #ffb6c1); }
+        .bg-gokyuzu { background: linear-gradient(to bottom, #81ecec, #dfe6e9); }
+        .bg-piknik { background: repeating-linear-gradient(45deg, #fab1a0, #fab1a0 15px, #ffffff 15px, #ffffff 30px); }
+        .bg-gece { background: radial-gradient(circle at top right, #2d3436, #000000); }
+        .bg-orman { background: linear-gradient(to bottom, #55efc4, #ffeaa7); }
+        .bg-plaj { background: linear-gradient(to bottom, #74b9ff 50%, #ffeaa7 50%); }
+        .bg-disko { background: linear-gradient(135deg, #e84393, #6c5ce7); }
+        .bg-kalp { background: radial-gradient(circle, #ffdde1, #ee9ca7); }
+        .bg-yildiz { background: #2d3436; background-image: radial-gradient(#dfe6e9 1px, transparent 0); background-size: 16px 16px;}
+        .bg-sari { background: linear-gradient(to right, #ffeaa7, #fdcb6e); }
+        .bg-siyahbeyaz { background: repeating-linear-gradient(90deg, #fff, #fff 20px, #000 20px, #000 40px); }
+        .bg-neon { background: radial-gradient(circle, #ff007f, #33001b); }
+        .bg-hastane { background: linear-gradient(to bottom, #f1f2f6, #ced6e0); }
+        .bg-kamp { background: linear-gradient(to bottom, #1e272e, #808e9b); }
+        .bg-sade { background: transparent; border: 2px dashed rgba(255, 105, 180, 0.4); }
+
+        /* MOD EKRANI VE BUTONLAR */
+        .mood-scale { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin: 20px auto; width: 100%; max-width: 500px; z-index: 10;}
+        .mood-btn { background: rgba(255,255,255,0.7); font-size: 1.1rem; border-radius: 20px; width: 70px; height: 70px; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.9); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); cursor:pointer;}
+        .mood-btn:hover { background: #d81b60; color: white; transform: translateY(-5px); border-color: transparent; box-shadow: 0 8px 20px rgba(216, 27, 96, 0.3);}
+        .mood-btn span.emoji { font-size: 1.8rem; margin-top: 4px; animation: bounce 2s infinite;}
+        @keyframes bounce { 0%, 100% {transform: translateY(0);} 50% {transform: translateY(-4px);} }
         
-        #mood-message { margin: 25px 0; font-size: clamp(1.1rem, 4vw, 1.5rem); font-weight: bold; min-height: 60px; color: #cc0066; padding: 10px 20px; background: rgba(255,255,255,0.7); border-radius: 15px; max-width: 600px; z-index: 10;}
-        .countdown-btn { background: linear-gradient(135deg, #ff3399, #ff007f); font-size: 1.3rem; padding: 15px 35px; border-radius: 30px; color: white; border: none; font-weight: bold; cursor: pointer; display: none; margin-top: 10px; box-shadow: 0 5px 15px rgba(255,0,127,0.4); z-index: 10;}
-
-        /* PC VE MOBİL UYUMLU DASHBOARD (PANEL YAPISI - BOŞLUKLARI DOLDURUR) */
-        nav { display: flex; width: 100%; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(5px); padding: 10px; justify-content: space-around; position: absolute; top: 0; left: 0; z-index: 100; border-bottom: 2px solid #ffb3d9;}
-        nav div { cursor: pointer; font-weight: bold; font-size: clamp(1rem, 3.5vw, 1.3rem); padding: 10px 20px; transition: 0.2s; border-radius: 15px; color: #ff3399;}
-        nav div:hover, nav div.active-tab { background: #ff3399; color: white; box-shadow: 0 4px 10px rgba(255,51,153,0.3); }
+        #mood-message { margin: 25px auto; font-size: clamp(1.1rem, 4vw, 1.3rem); font-weight: 700; min-height: 60px; color: #ad1457; padding: 15px 25px; background: rgba(255,255,255,0.6); border-radius: 20px; max-width: 600px; border: 1px solid white;}
         
-        .tab-content { display: none; width: 100%; height: 100%; padding-top: 80px; overflow-y: auto; z-index: 10;}
+        .primary-btn { background: linear-gradient(135deg, #e84393, #d81b60); font-size: 1.2rem; padding: 15px 35px; border-radius: 30px; color: white; border: none; font-weight: 800; cursor: pointer; transition: all 0.3s; box-shadow: 0 5px 20px rgba(216, 27, 96, 0.3); z-index: 10;}
+        .primary-btn:hover { transform: scale(1.05) translateY(-2px); box-shadow: 0 8px 25px rgba(216, 27, 96, 0.4);}
+        #btn-continue { display: none; margin: 15px auto 0 auto; }
+
+        /* DASHBOARD MENÜSÜ */
+        nav { display: flex; width: 100%; background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(10px); padding: 12px; justify-content: center; gap: 20px; position: absolute; top: 0; left: 0; z-index: 100; border-bottom: 1px solid rgba(255,255,255,0.8);}
+        nav div { cursor: pointer; font-weight: 800; font-size: clamp(1rem, 3.5vw, 1.2rem); padding: 12px 25px; transition: 0.3s; border-radius: 20px; color: #c2185b; background: rgba(255,255,255,0.5);}
+        nav div:hover, nav div.active-tab { background: #d81b60; color: white; box-shadow: 0 5px 15px rgba(216, 27, 96, 0.3); }
+        
+        .tab-content { display: none; width: 100%; height: 100%; padding-top: 90px; overflow-y: auto; z-index: 10; position: relative;}
         .tab-active { display: block; }
         
-        /* PC DE GENİŞ EKRANDA GÜZEL DURSUN DİYE MAKSİMUM GENİŞLİK */
-        .main-card { max-width: 700px; width: 92%; margin: 20px auto; background: rgba(255,255,255,0.92); padding: 25px; border-radius: 24px; box-shadow: 0 10px 30px rgba(255, 51, 153, 0.15); border: 2px solid rgba(255, 255, 255, 0.7); text-align: center;}
-        
-        .todo-list { text-align: left; margin-top: 15px; }
-        .todo-item { display: flex; justify-content: space-between; align-items: center; padding: 14px 10px; border-bottom: 2px dashed #ffe6f2; font-size: clamp(1rem, 3vw, 1.2rem); transition: 0.2s;}
-        .todo-item.done span { text-decoration: line-through; color: #ccc; }
-        .todo-btn { padding: 8px 16px; background: #ff4da6; border: none; border-radius: 12px; color:white; font-weight: bold; cursor: pointer; transition: 0.2s;}
-        .todo-btn:hover { background: #ff007f; }
+        /* GÖREV LİSTESİ VE EKLEME KISMI */
+        .todo-list { text-align: left; margin-top: 20px; max-height: 400px; overflow-y: auto; padding-right: 10px;}
+        .todo-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; margin-bottom: 10px; background: rgba(255,255,255,0.7); border-radius: 15px; font-size: clamp(1rem, 3vw, 1.1rem); font-weight: 700; transition: 0.3s; border: 1px solid white;}
+        .todo-item.done { opacity: 0.6; }
+        .todo-item.done span { text-decoration: line-through; color: #636e72; }
+        .todo-btn { padding: 10px 18px; background: #e84393; border: none; border-radius: 12px; color:white; font-weight: 800; cursor: pointer; transition: 0.2s;}
+        .todo-btn:hover { background: #c2185b; }
 
-        /* BÜYÜTÜLMÜŞ KIYAFET ODASI WIDGETI */
-        .dressup-container { display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%; }
-        .avatar-display { width: 100%; max-width: 450px; height: 280px; border-radius: 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; transition: all 0.3s; box-shadow: inset 0 0 25px rgba(0,0,0,0.1), 0 8px 20px rgba(0,0,0,0.05); overflow: hidden;}
-        #dressup-kitty-static .kitty-container { position: relative; top: auto; left: auto; transform: scale(1.3); cursor: pointer; }
+        .add-task-container { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; justify-content: center; background: rgba(255,255,255,0.4); padding: 15px; border-radius: 20px;}
+        .add-task-input { flex: 1; min-width: 200px; padding: 12px 15px; border-radius: 15px; border: 1px solid rgba(216,27,96,0.3); font-size: 1rem; outline: none; font-weight: bold;}
+        .add-task-input:focus { border-color: #d81b60; box-shadow: 0 0 10px rgba(216,27,96,0.2);}
         
-        .wardrobe-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; width: 100%; margin-top: 10px; }
-        .category-box { background: white; padding: 15px; border-radius: 18px; border: 2px solid #ffe6f2; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
-        .category-box h3 { font-size: 1rem; margin-bottom: 10px; border-bottom: 3px solid #ffb3d9; padding-bottom: 5px; color: #ff1a8c;}
-        .wardrobe-item { background: #ffe6f2; margin-bottom: 6px; padding: 8px; border-radius: 10px; cursor: pointer; text-align: center; font-size: 0.9rem; transition: 0.2s; font-weight: 500;}
-        .wardrobe-item:hover { background: #ffb3d9; }
-        .wardrobe-item.active-item { background: linear-gradient(135deg, #ff3399, #ff007f); color: white; font-weight: bold; }
+        #suggestions-modal { display: none; position: absolute; bottom: 80px; left: 50%; transform: translateX(-50%); background: white; border-radius: 15px; padding: 15px; width: 90%; max-width: 400px; max-height: 250px; overflow-y: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.2); z-index: 100;}
+        .suggestion-item { padding: 10px; border-bottom: 1px solid #eee; cursor: pointer; font-weight: 700; color: #2d3436; transition: 0.2s;}
+        .suggestion-item:hover { background: #ffdde1; color: #d81b60; }
 
-        /* GİRİŞ EKRANI BUTONLARI */
-        #btn-yes { background: linear-gradient(135deg, #ff4da6, #ff007f); padding: 18px 40px; font-size: 1.6rem; border-radius: 30px; color:white; border:none; margin-right: 20px; cursor: pointer; box-shadow: 0 6px 15px rgba(255,0,127,0.3); transition: 0.2s;}
-        #btn-yes:hover { transform: scale(1.05); }
-        #btn-no { background: #999; padding: 18px 40px; font-size: 1.6rem; border-radius: 30px; color:white; border:none; position:absolute; cursor: pointer; transition: 0.1s;}
+        /* MERKEZLENMİŞ VE YANLARA DAĞITILMIŞ GİYDİRME ODASI (3 KOLON YAPISI) */
+        .dressup-container { display: flex; flex-direction: row; justify-content: space-between; align-items: flex-start; gap: 15px; width: 100%; margin-top: 10px; }
+        .side-panel { flex: 1; display: flex; flex-direction: column; gap: 15px; max-height: 50vh; overflow-y: auto; padding-right: 5px;}
+        .avatar-panel { flex: 1.2; display: flex; flex-direction: column; align-items: center; position: sticky; top: 0;}
+        
+        /* Mobil Uyum için Alt Alta Alma */
+        @media (max-width: 768px) {
+            .dressup-container { flex-direction: column; align-items: center; }
+            .side-panel { width: 100%; max-height: 250px; }
+            .avatar-panel { width: 100%; order: -1; margin-bottom: 15px; }
+        }
+
+        .avatar-display { width: 100%; max-width: 350px; height: 280px; border-radius: 25px; display: flex; align-items: center; justify-content: center; position: relative; transition: all 0.3s; box-shadow: inset 0 0 20px rgba(0,0,0,0.05), 0 10px 20px rgba(0,0,0,0.05); overflow: hidden; background-color: rgba(255,255,255,0.4); margin-bottom: 10px;}
+        
+        #dressup-kitty-static { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
+        #dressup-kitty-static .kitty-container { position: relative; top: 0 !important; left: 0 !important; transform: scale(1.6); transform-origin: center; cursor: pointer; }
+        
+        .wardrobe-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; width: 100%; }
+        .category-box { background: rgba(255,255,255,0.6); padding: 15px; border-radius: 20px; border: 1px solid white; box-shadow: 0 4px 15px rgba(0,0,0,0.03); width: 100%;}
+        .category-box h3 { font-size: 1.05rem; margin-bottom: 12px; border-bottom: 2px solid rgba(216,27,96,0.2); padding-bottom: 8px; color: #ad1457; font-weight: 800; text-align: left;}
+        .wardrobe-item { background: rgba(255,255,255,0.8); margin-bottom: 5px; padding: 10px 5px; border-radius: 12px; cursor: pointer; text-align: center; font-size: 0.85rem; transition: 0.2s; font-weight: 800; color: #2d3436; border: 1px solid transparent;}
+        .wardrobe-item:hover { background: white; transform: translateY(-2px); border-color: #ffdde1;}
+        .wardrobe-item.active-item { background: linear-gradient(135deg, #e84393, #d81b60); color: white; box-shadow: 0 4px 10px rgba(216,27,96,0.3); }
+
+        /* GİRİŞ EKRANI BUTONLARI (DALGA GEÇEN BUTON DÜZENLEMESİ) */
+        #login-buttons-container { position: relative; width: 100%; height: 250px; display: flex; justify-content: center; align-items: center; margin-top: 20px; }
+        #btn-yes { background: linear-gradient(135deg, #e84393, #d81b60); padding: 18px 45px; font-size: 1.5rem; border-radius: 30px; color:white; border:none; margin-right: 20px; cursor: pointer; box-shadow: 0 8px 20px rgba(216, 27, 96, 0.3); transition: 0.3s; font-weight: 800; z-index: 2;}
+        #btn-yes:hover { transform: scale(1.08); box-shadow: 0 10px 25px rgba(216, 27, 96, 0.4);}
+        #btn-no { background: #b2bec3; padding: 18px 45px; font-size: 1.5rem; border-radius: 30px; color:white; border:none; position: absolute; cursor: pointer; transition: top 0.2s, left 0.2s; font-weight: 800; box-shadow: 0 5px 15px rgba(0,0,0,0.1); z-index: 5;}
+        
+        ::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: rgba(216, 27, 96, 0.4); border-radius: 10px; } ::-webkit-scrollbar-thumb:hover { background: rgba(216, 27, 96, 0.7); }
     </style>
 </head>
 <body>
     <div id="heart-bg"></div>
-    <div class="deco-cloud cloud-1"></div>
-    <div class="deco-cloud cloud-2"></div>
 
-    <div id="hello-kitty-draggable" class="kitty-container dancing smiling" style="top: 150px; left: 50px;">
+    <!-- Draggable Kedi -->
+    <div id="hello-kitty-draggable" class="kitty-container dancing smiling" style="top: 15vh; left: 10vw;">
         <div class="k-part k-ear left"></div><div class="k-part k-ear right"></div>
         <div class="k-part k-foot left"></div><div class="k-part k-foot right"></div>
         <div class="k-part k-arm left"></div><div class="k-part k-arm right"></div>
         <div class="k-part k-torso"></div>
         <div class="k-part k-head">
             <div class="k-hat"></div>
+            <div class="k-glasses"></div>
             <div class="k-eye left"></div><div class="k-eye right"></div>
             <div class="k-smile-mouth"></div>
             <div class="k-nose"></div>
@@ -168,157 +260,258 @@
         </div>
     </div>
 
-    <div id="screen-login" class="screen active">
-        <div class="main-card">
+    <!-- GİRİŞ EKRANI -->
+    <div id="screen-login" class="screen">
+        <div class="main-card" id="login-card">
             <h1>Beni seviyor musun KARICIM? ❤️</h1>
-            <div style="position: relative; width: 100%; height: 160px; display: flex; justify-content: center; align-items: center;">
+            <div id="login-buttons-container">
                 <button id="btn-yes">Evet 🥰</button>
                 <button id="btn-no">Hayır 😒</button>
             </div>
         </div>
     </div>
 
+    <!-- MOD EKRANI -->
     <div id="screen-mood" class="screen">
         <div class="main-card">
             <h1>Bugün modun nasıl bebeğim?</h1>
             <div class="mood-scale" id="mood-scale"></div>
             <div id="mood-message">Modunu seç, sana özel mesajım gelsin! ✨</div>
-            <button id="btn-continue" class="countdown-btn"></button>
+            <button id="btn-continue" class="primary-btn"></button>
         </div>
     </div>
 
+    <!-- DASHBOARD -->
     <div id="screen-dashboard" class="screen">
         <nav id="main-nav">
             <div onclick="switchTab('todo')" id="nav-todo" class="active-tab">Görevler 📝</div>
             <div onclick="switchTab('dressup')" id="nav-dressup">Giydirme Odası 👗</div>
         </nav>
 
+        <!-- GÖREVLER EKRANI -->
         <div id="tab-todo" class="tab-content tab-active">
-            <div class="main-card">
-                <h2>Günün Görevleri ✨</h2>
+            <div class="main-card" style="position:relative;">
+                <h2>Senin ve Benim Görevlerimiz ✨</h2>
+                
+                <div class="add-task-container">
+                    <input type="text" id="new-task-input" class="add-task-input" placeholder="Kendine yeni görev ekle bebeğim...">
+                    <button class="primary-btn" style="padding: 10px 20px; font-size: 1rem;" onclick="addNewTask()">Ekle 💖</button>
+                    <button class="todo-btn" style="background:#b2bec3; padding: 10px 15px;" onclick="toggleSuggestions()">Örnekler 💡</button>
+                </div>
+                
+                <div id="suggestions-modal">
+                    <h3 style="color:#ad1457; margin-bottom:10px; border-bottom:1px solid #eee; padding-bottom:5px;">Örnek Görevler</h3>
+                    <!-- JS ile doldurulacak -->
+                </div>
+
                 <div class="todo-list" id="todo-list">Yükleniyor...</div>
             </div>
         </div>
 
+        <!-- GİYDİRME ODASI EKRANI -->
         <div id="tab-dressup" class="tab-content">
             <div class="main-card">
-                <h2>Kombin Odası 🎀</h2>
+                <h2>Büyük Kombin Odası 🎀</h2>
                 <div class="dressup-container">
-                    <div class="avatar-display" id="avatar-display">
-                        <div id="dressup-kitty-static"></div>
-                    </div>
-                    <div id="avatar-details" style="font-weight:bold; color:#ff007f;"></div>
+                    
+                    <!-- SOL PANEL (Şapka & Gözlük) -->
+                    <div class="side-panel">
+                        <div class="category-box">
+                            <h3>Şapkalar (10) 👒</h3>
+                            <div class="wardrobe-grid">
+                                <div class="wardrobe-item" onclick="dressKitty('hat', 'style-kurdele', 'Kurdele')">Kurdele 🎀</div>
+                                <div class="wardrobe-item" onclick="dressKitty('hat', 'style-tac', 'Taç')">Taç 👑</div>
+                                <div class="wardrobe-item" onclick="dressKitty('hat', 'style-kedi', 'Kedi')">Kedi 🐱</div>
+                                <div class="wardrobe-item" onclick="dressKitty('hat', 'style-cadilar', 'Cadı')">Cadı 🧙‍♀️</div>
+                                <div class="wardrobe-item" onclick="dressKitty('hat', 'style-noel', 'Noel')">Noel 🧑‍🎄</div>
+                                <div class="wardrobe-item" onclick="dressKitty('hat', 'style-parti', 'Parti')">Parti 🎉</div>
+                                <div class="wardrobe-item" onclick="dressKitty('hat', 'style-korsan', 'Korsan')">Korsan 🏴‍☠️</div>
+                                <div class="wardrobe-item" onclick="dressKitty('hat', 'style-kovboy', 'Kovboy')">Kovboy 🤠</div>
+                                <div class="wardrobe-item" onclick="dressKitty('hat', 'style-kask', 'Kask')">Kask 🪖</div>
+                                <div class="wardrobe-item" onclick="dressKitty('hat', 'style-bere', 'Bere')">Bere 🧣</div>
+                                <div class="wardrobe-item" onclick="dressKitty('hat', '', 'Yok')">Çıkar ❌</div>
+                            </div>
+                        </div>
 
-                    <div class="wardrobe-grid">
                         <div class="category-box">
-                            <h3>Şapka / Aksesuar 👒</h3>
-                            <div class="wardrobe-item" onclick="dressKitty('hat', 'style-kurdele', 'Kurdele')">Kurdele 🎀</div>
-                            <div class="wardrobe-item" onclick="dressKitty('hat', 'style-tac', 'Taç')">Taç 👑</div>
-                            <div class="wardrobe-item" onclick="dressKitty('hat', 'style-hasir', 'Hasır Şapka')">Şapka 👒</div>
-                            <div class="wardrobe-item" onclick="dressKitty('hat', 'style-kedi', 'Kedi Kulak')">Kedi 🐱</div>
-                            <div class="wardrobe-item" onclick="dressKitty('hat', '', 'Yok')">Çıkar ❌</div>
-                        </div>
-                        <div class="category-box">
-                            <h3>Üst Kıyafet 👚</h3>
-                            <div class="wardrobe-item" onclick="dressKitty('clothes', 'style-elbise', 'Pembe Elbise')">Elbise 👗</div>
-                            <div class="wardrobe-item" onclick="dressKitty('clothes', 'style-pijama', 'Pijama')">Pijama 👘</div>
-                            <div class="wardrobe-item" onclick="dressKitty('clothes', 'style-kazak', 'Kırmızı Kazak')">Kazak 🧥</div>
-                            <div class="wardrobe-item" onclick="dressKitty('clothes', 'style-tisort', 'Sarı Tişört')">Tişört 👕</div>
-                            <div class="wardrobe-item" onclick="dressKitty('clothes', '', 'Yok')">Çıkar ❌</div>
-                        </div>
-                        <div class="category-box">
-                            <h3>Oda Arka Planı 🏞️</h3>
-                            <div class="wardrobe-item" onclick="dressKitty('bg', 'bg-oda1', 'Pembe Oda')">Pembe Oda 🌸</div>
-                            <div class="wardrobe-item" onclick="dressKitty('bg', 'bg-gokyuzu', 'Gökyüzü')">Gökyüzü ☁️</div>
-                            <div class="wardrobe-item" onclick="dressKitty('bg', 'bg-piknik', 'Piknik')">Piknik 🍃</div>
-                            <div class="wardrobe-item" onclick="dressKitty('bg', 'bg-gece', 'Gece')">Gece 🌙</div>
-                            <div class="wardrobe-item" onclick="dressKitty('bg', 'bg-disko', 'Disko')">Disko 🪩</div>
-                            <div class="wardrobe-item" onclick="dressKitty('bg', 'bg-sade', 'Sade')">Sade ❌</div>
+                            <h3>Gözlükler (CSS) (10) 😎</h3>
+                            <div class="wardrobe-grid">
+                                <div class="wardrobe-item" onclick="dressKitty('glasses', 'style-gozluk-yuvarlak', 'Yuvarlak')">Yuvarlak 👓</div>
+                                <div class="wardrobe-item" onclick="dressKitty('glasses', 'style-gozluk-kare', 'Kare')">Kare ⬛</div>
+                                <div class="wardrobe-item" onclick="dressKitty('glasses', 'style-gozluk-gunes', 'Güneş')">Güneş 🕶️</div>
+                                <div class="wardrobe-item" onclick="dressKitty('glasses', 'style-gozluk-kirmizi', 'Kırmızı')">Kırmızı 🔴</div>
+                                <div class="wardrobe-item" onclick="dressKitty('glasses', 'style-gozluk-matrix', 'Matrix')">Matrix 💊</div>
+                                <div class="wardrobe-item" onclick="dressKitty('glasses', 'style-gozluk-3d', '3D')">3D 🎬</div>
+                                <div class="wardrobe-item" onclick="dressKitty('glasses', 'style-gozluk-kedi', 'Kedi')">Kedi Ç. 🐾</div>
+                                <div class="wardrobe-item" onclick="dressKitty('glasses', 'style-gozluk-mozaik', 'ThugLife')">Piksel 🎮</div>
+                                <div class="wardrobe-item" onclick="dressKitty('glasses', 'style-gozluk-altin', 'Altın')">Altın 🪙</div>
+                                <div class="wardrobe-item" onclick="dressKitty('glasses', 'style-gozluk-bant', 'Bantlı')">İnek 🤓</div>
+                                <div class="wardrobe-item" onclick="dressKitty('glasses', '', 'Yok')">Çıkar ❌</div>
+                            </div>
                         </div>
                     </div>
+
+                    <!-- ORTA PANEL (Kedi) -->
+                    <div class="avatar-panel">
+                        <div class="avatar-display" id="avatar-display">
+                            <div id="dressup-kitty-static"></div>
+                        </div>
+                        <div id="avatar-details" style="font-weight:800; color:#d81b60; font-size:0.95rem; padding: 10px; background: rgba(255,255,255,0.7); border-radius: 15px; width: 100%; border: 1px solid white;"></div>
+                    </div>
+
+                    <!-- SAĞ PANEL (Kıyafet & Arka Plan) -->
+                    <div class="side-panel">
+                        <div class="category-box">
+                            <h3>Kıyafetler (CSS) (15) 👚</h3>
+                            <div class="wardrobe-grid">
+                                <div class="wardrobe-item" onclick="dressKitty('clothes', 'style-elbise', 'Pembe Elbise')">Pembe 👗</div>
+                                <div class="wardrobe-item" onclick="dressKitty('clothes', 'style-pijama', 'Pijama')">Pijama 👘</div>
+                                <div class="wardrobe-item" onclick="dressKitty('clothes', 'style-kazak', 'Kazak')">Kazak 🧥</div>
+                                <div class="wardrobe-item" onclick="dressKitty('clothes', 'style-tisort', 'Tişört')">Tişört 👕</div>
+                                <div class="wardrobe-item" onclick="dressKitty('clothes', 'style-elbise-leopar', 'Leopar')">Leopar 🐆</div>
+                                <div class="wardrobe-item" onclick="dressKitty('clothes', 'style-tisort-cizgili', 'Çizgili')">Çizgili ⚓</div>
+                                <div class="wardrobe-item" onclick="dressKitty('clothes', 'style-gomlek-hawaii', 'Hawaii')">Hawaii 🌺</div>
+                                <div class="wardrobe-item" onclick="dressKitty('clothes', 'style-kazak-kar', 'Kar Kazak')">Geyik 🦌</div>
+                                <div class="wardrobe-item" onclick="dressKitty('clothes', 'style-elbise-puantiye', 'Puantiyeli')">Noktalı 🔴</div>
+                                <div class="wardrobe-item" onclick="dressKitty('clothes', 'style-ceket-deri', 'Deri Ceket')">Deri 🏍️</div>
+                                <div class="wardrobe-item" onclick="dressKitty('clothes', 'style-tisort-gokkusagi', 'Gökkuşağı')">Renkli 🌈</div>
+                                <div class="wardrobe-item" onclick="dressKitty('clothes', 'style-forma-futbol', 'Forma')">Forma ⚽</div>
+                                <div class="wardrobe-item" onclick="dressKitty('clothes', 'style-elbise-galaksi', 'Galaksi')">Galaksi 🌌</div>
+                                <div class="wardrobe-item" onclick="dressKitty('clothes', 'style-pijama-karpuz', 'Karpuzlu')">Karpuz 🍉</div>
+                                <div class="wardrobe-item" onclick="dressKitty('clothes', 'style-ninja', 'Ninja')">Ninja 🥷</div>
+                                <div class="wardrobe-item" onclick="dressKitty('clothes', '', 'Yok')">Çıkar ❌</div>
+                            </div>
+                        </div>
+                        
+                        <div class="category-box">
+                            <h3>Arka Plan (15) 🏞️</h3>
+                            <div class="wardrobe-grid">
+                                <div class="wardrobe-item" onclick="dressKitty('bg', 'bg-oda1', 'Pembe Oda')">Pembe 🌸</div>
+                                <div class="wardrobe-item" onclick="dressKitty('bg', 'bg-gokyuzu', 'Gökyüzü')">Gök ☁️</div>
+                                <div class="wardrobe-item" onclick="dressKitty('bg', 'bg-piknik', 'Piknik')">Piknik 🍃</div>
+                                <div class="wardrobe-item" onclick="dressKitty('bg', 'bg-gece', 'Gece')">Gece 🌙</div>
+                                <div class="wardrobe-item" onclick="dressKitty('bg', 'bg-orman', 'Orman')">Orman 🌲</div>
+                                <div class="wardrobe-item" onclick="dressKitty('bg', 'bg-plaj', 'Plaj')">Plaj 🏖️</div>
+                                <div class="wardrobe-item" onclick="dressKitty('bg', 'bg-disko', 'Disko')">Disko 🪩</div>
+                                <div class="wardrobe-item" onclick="dressKitty('bg', 'bg-kalp', 'Kalpli')">Kalp 💖</div>
+                                <div class="wardrobe-item" onclick="dressKitty('bg', 'bg-yildiz', 'Yıldızlı')">Yıldız ⭐</div>
+                                <div class="wardrobe-item" onclick="dressKitty('bg', 'bg-sari', 'Sarı')">Sarı ☀️</div>
+                                <div class="wardrobe-item" onclick="dressKitty('bg', 'bg-siyahbeyaz', 'Zebra')">Zebra 🦓</div>
+                                <div class="wardrobe-item" onclick="dressKitty('bg', 'bg-neon', 'Neon')">Neon 🟣</div>
+                                <div class="wardrobe-item" onclick="dressKitty('bg', 'bg-hastane', 'Gri')">Gri 🔘</div>
+                                <div class="wardrobe-item" onclick="dressKitty('bg', 'bg-kamp', 'Kamp')">Kamp ⛺</div>
+                                <div class="wardrobe-item" onclick="dressKitty('bg', 'bg-sade', 'Sade')">Sade ❌</div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        const API_URL = "https://guardian-toner-logged-dosage.trycloudflare.com"; // Cloudflare linkini unutma kanka
+        const API_URL = "https://transport-wellness-raising-experts.trycloudflare.com"; 
 
-        // Arka Plan Kalp Efekti
-        function createHeart() {
+        // Kalp Animasyonu (Arka Plan)
+        setInterval(() => {
             const heart = document.createElement('div');
             heart.classList.add('floating-heart');
-            heart.innerText = ['💖', '💕', '🌸', '✨', '💝'][Math.floor(Math.random() * 5)];
+            heart.innerText = ['💖', '✨', '🌸', '🤍', '🎀'][Math.floor(Math.random() * 5)];
             heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = Math.random() * 3 + 4 + 's';
+            heart.style.animationDuration = Math.random() * 3 + 5 + 's';
             document.getElementById('heart-bg').appendChild(heart);
-            setTimeout(() => heart.remove(), 7000);
-        }
-        setInterval(createHeart, 350);
+            setTimeout(() => heart.remove(), 8000);
+        }, 400);
 
-        // Klonlama Mekaniği
         const draggableKitty = document.getElementById('hello-kitty-draggable');
         const staticKittyContainer = document.getElementById('dressup-kitty-static');
         staticKittyContainer.innerHTML = draggableKitty.outerHTML;
-        staticKittyContainer.querySelector('.kitty-container').id = 'hello-kitty-static';
-        const staticKitty = document.getElementById('hello-kitty-static');
-        
-        // Dans Etme Tetikleyicisi
-        staticKitty.addEventListener('click', () => {
-            staticKitty.classList.add('dancing', 'smiling');
-            setTimeout(() => staticKitty.classList.remove('dancing', 'smiling'), 2000);
+        const staticKitty = staticKittyContainer.querySelector('.kitty-container');
+        staticKitty.id = 'hello-kitty-static';
+        staticKitty.style.top = 'auto'; staticKitty.style.left = 'auto';
+
+        // Tıklama ile Dans ve Partikül Sistemi
+        draggableKitty.addEventListener('click', (e) => {
+            // Dansı değiştir (1'den 10'a kadar)
+            let randomDance = Math.floor(Math.random() * 10) + 1;
+            draggableKitty.className = `kitty-container smiling dance-${randomDance}`;
+            
+            // Mevcut kıyafetleri geri ekle
+            if (avatarState.hat) draggableKitty.classList.add(avatarState.hat);
+            if (avatarState.glasses) draggableKitty.classList.add(avatarState.glasses);
+            if (avatarState.clothes) draggableKitty.classList.add(avatarState.clothes);
+
+            // Partikül patlaması yarat
+            for(let i=0; i<5; i++) {
+                let p = document.createElement('div');
+                p.className = 'click-particle';
+                p.innerText = ['💖','✨','🎀'][Math.floor(Math.random()*3)];
+                p.style.left = (e.clientX - 10 + (Math.random()*40 - 20)) + 'px';
+                p.style.top = (e.clientY - 20 + (Math.random()*40 - 20)) + 'px';
+                document.body.appendChild(p);
+                setTimeout(() => p.remove(), 800);
+            }
         });
 
-        // Kaçan Buton Mekanizması
+        // Kaçan "Hayır" Butonu ve Dalga Geçme Mekanizması
         const btnNo = document.getElementById('btn-no');
         const btnYes = document.getElementById('btn-yes');
+        const loginContainer = document.getElementById('login-buttons-container');
+        
+        const mockTexts = [
+            "Yakala bakalım! 😜", "Çok yavaşsın! 🐢", "Hayır demek yok! 🚫", 
+            "Şahin'i üzme! 🥺", "Tıklayamazsın ki! 😂", "Vazgeç bence! 💁‍♀️", 
+            "Buradayım! 👀", "Yakalayamadın! 💨", "Evet'e bas! 😡", "Şaka şaka! 🤡"
+        ];
+
         const moveButton = () => {
-            const minX = -100, maxX = 100, minY = -60, maxY = 60;
-            btnNo.style.left = `${Math.random() * (maxX - minX) + minX}px`;
-            btnNo.style.top = `${Math.random() * (maxY - minY) + minY}px`;
+            const containerRect = loginContainer.getBoundingClientRect();
+            const btnW = btnNo.offsetWidth, btnH = btnNo.offsetHeight;
+            
+            // Kutu sınırları içinde kalmasını sağlıyoruz
+            const maxX = containerRect.width - btnW;
+            const maxY = containerRect.height - btnH;
+            
+            let newX = Math.random() * maxX;
+            let newY = Math.random() * maxY;
+
+            btnNo.style.left = `${newX}px`;
+            btnNo.style.top = `${newY}px`;
+            
+            // Rastgele dalga geçme metni
+            btnNo.innerText = mockTexts[Math.floor(Math.random() * mockTexts.length)];
         };
+
         btnNo.addEventListener('mouseover', moveButton);
         btnNo.addEventListener('touchstart', (e) => { e.preventDefault(); moveButton(); }, {passive: false});
         btnYes.addEventListener('click', () => {
             document.getElementById('screen-login').classList.remove('active');
             document.getElementById('screen-mood').classList.add('active');
-            draggableKitty.classList.remove('dancing', 'smiling');
         });
 
-        // AKILLI EKRAN SINIR BARİYERLİ SÜRÜKLEME SİSTEMİ (Mobilde Dışarı Çıkmaz!)
+        // Sürükle Bırak Mekanizması
         let isDragging = false, startX, startY;
-        
         const startDrag = (e) => {
+            // Eğer tıklama sadece kısa bir süreyse "click" eventi çalışsın diye hafif tolerans
             isDragging = true; 
             const evt = e.type.includes('mouse') ? e : e.touches[0];
             const rect = draggableKitty.getBoundingClientRect();
             startX = evt.clientX - rect.left;
             startY = evt.clientY - rect.top;
         };
-
         const onDrag = (e) => {
             if (!isDragging) return; 
             e.preventDefault();
             const evt = e.type.includes('mouse') ? e : e.touches[0];
-            
-            // Yeni koordinat hesaplama
-            let newX = evt.clientX - startX;
-            let newY = evt.clientY - startY;
-
-            // Ekran Sınırları Koruması (Bariyer)
+            let newX = evt.clientX - startX; let newY = evt.clientY - startY;
             const padding = 10;
             const maxW = window.innerWidth - draggableKitty.offsetWidth - padding;
             const maxH = window.innerHeight - draggableKitty.offsetHeight - padding;
-
-            if (newX < padding) newX = padding;
-            if (newX > maxW) newX = maxW;
-            if (newY < padding) newY = padding;
-            if (newY > maxH) newY = maxH;
-
-            draggableKitty.style.left = `${newX}px`;
-            draggableKitty.style.top = `${newY}px`;
+            if (newX < padding) newX = padding; if (newX > maxW) newX = maxW;
+            if (newY < padding) newY = padding; if (newY > maxH) newY = maxH;
+            draggableKitty.style.left = `${newX}px`; draggableKitty.style.top = `${newY}px`;
         };
-
         const stopDrag = () => {
             if(isDragging) {
                 isDragging = false;
@@ -330,10 +523,11 @@
         draggableKitty.addEventListener('touchstart', startDrag, {passive: false}); document.addEventListener('touchmove', onDrag, {passive: false}); document.addEventListener('touchend', stopDrag);
 
         // Giydirme Odası Mantığı
-        let avatarState = { hat: 'style-kurdele', clothes: '', bg: 'bg-sade', hatName: 'Kurdele', clothesName: 'Yok' };
+        let avatarState = { hat: 'style-kurdele', glasses: '', clothes: '', bg: 'bg-sade', hatName: 'Kurdele', glassesName: 'Yok', clothesName: 'Yok' };
 
         function dressKitty(category, className, displayName) {
             if (category === 'hat') { avatarState.hat = className; avatarState.hatName = displayName; } 
+            else if (category === 'glasses') { avatarState.glasses = className; avatarState.glassesName = displayName; }
             else if (category === 'clothes') { avatarState.clothes = className; avatarState.clothesName = displayName; } 
             else if (category === 'bg') { avatarState.bg = className; }
             updateAvatarUI();
@@ -341,40 +535,41 @@
         }
 
         function updateAvatarUI() {
+            // Sınıfları yeniliyoruz (Dinamik Dans sınıfını korumak için draggableKitty'yi ellemiyoruz çok fazla ama sabitliyoruz)
+            let baseClasses = 'kitty-container smiling';
+            
             [draggableKitty, staticKitty].forEach(kitty => {
-                kitty.className = 'kitty-container'; 
+                // Draggable kedi son dansını hatırlasın, static hep d-1 de dans etsin
+                let currentDance = Array.from(kitty.classList).find(c => c.startsWith('dance-')) || 'dance-1';
+                kitty.className = `${baseClasses} ${currentDance}`; 
+                
                 if (avatarState.hat) kitty.classList.add(avatarState.hat);
+                if (avatarState.glasses) kitty.classList.add(avatarState.glasses);
                 if (avatarState.clothes) kitty.classList.add(avatarState.clothes);
             });
             
             document.getElementById('avatar-display').className = `avatar-display ${avatarState.bg}`;
-            document.getElementById('avatar-details').innerText = `Aktif Kombin: ${avatarState.hatName} + ${avatarState.clothesName}`;
+            document.getElementById('avatar-details').innerText = `👒 ${avatarState.hatName} | 😎 ${avatarState.glassesName} | 👚 ${avatarState.clothesName}`;
             
             document.querySelectorAll('.wardrobe-item').forEach(btn => {
                 btn.classList.remove('active-item');
                 let clickCode = btn.getAttribute('onclick');
-                if (clickCode.includes(`'${avatarState.hat}'`) || clickCode.includes(`'${avatarState.clothes}'`) || clickCode.includes(`'${avatarState.bg}'`)) {
+                if ((avatarState.hat && clickCode.includes(`'${avatarState.hat}'`)) || 
+                    (avatarState.glasses && clickCode.includes(`'${avatarState.glasses}'`)) || 
+                    (avatarState.clothes && clickCode.includes(`'${avatarState.clothes}'`)) || 
+                    (avatarState.bg && clickCode.includes(`'${avatarState.bg}'`))) {
                     btn.classList.add('active-item');
                 }
             });
         }
 
-        // Mod Skalası & 7 Ayrı Motivasyon Mesajı
+        // Mod Skalası & Dashboard Arka Plan Renkleri
         const moodMessages = {
-            low: [
-                "Bugün biraz yorgunsun sanırım bebeğim ❤️", "Kıyamam sana, dinlen bugün 🥺", "Ben yanındayım, her şey geçecek 🌸", 
-                "Seni çok seviyorum, unutma! 💖", "Güzel karım, moralini bozma lütfen 🧸", "Sana sarılmaya ihtiyacım var 🫂", "Hemen bana yaz, dertleşelim 💕"
-            ],
-            mid: [
-                "Fena değiliz! Gününü daha da güzelleştireceğim 💖", "Hadi enerjimizi toplayalım! ☀️", "Bugün güzel bir gün olacak! 🦋", 
-                "Gülümse bakalım! 😊", "Seni düşünmeden edemiyorum! 💭", "Biraz daha gayret bebeğim! 💪", "Sen her halinle mükemmelsin! 🌷"
-            ],
-            high: [
-                "İşte benim enerjik karım! 🔥", "Bugün harika görünüyorsun! ✨", "Seni durdurabilene aşk olsun! 🚀", 
-                "Mükemmelliğin vücut bulmuş halisin! 👑", "Enerjin bana da geçti! ⚡", "Bugün dünyayı fethedebiliriz! 🌍", "Seni çok seviyorum, çok! ❤️‍🔥"
-            ]
+            low: ["Bugün biraz yorgunsun sanırım bebeğim ❤️", "Kıyamam sana, dinlen bugün 🥺", "Ben yanındayım, her şey geçecek 🌸", "Seni çok seviyorum, unutma! 💖", "Güzel karım, moralini bozma lütfen 🧸"],
+            mid: ["Fena değiliz! Gününü daha da güzelleştireceğim 💖", "Hadi enerjimizi toplayalım! ☀️", "Bugün güzel bir gün olacak! 🦋", "Gülümse bakalım! 😊"],
+            high: ["İşte benim enerjik karım! 🔥", "Bugün harika görünüyorsun! ✨", "Seni durdurabilene aşk olsun! 🚀", "Mükemmelliğin vücut bulmuş halisin! 👑", "Enerjin bana da geçti! ⚡"]
         };
-
+        const moodColors = ['#2d3436','#636e72','#a29bfe','#74b9ff','#55efc4','#ffeaa7','#fab1a0','#ff7675','#fd79a8','#e84393'];
         const moodEmojis = ['😭','😢','🥺','😔','😐','🙂','😊','🥰','😍','🤩'];
         const moodScale = document.getElementById('mood-scale');
         let countdownInterval;
@@ -388,10 +583,16 @@
                 let randomMsg = msgGroup[Math.floor(Math.random() * msgGroup.length)];
                 
                 document.getElementById('mood-message').innerText = randomMsg;
+                
+                // Dashboard arka planını seçilen moda göre hafif renklendir ve emoji ekle
+                document.documentElement.style.setProperty('--dashboard-bg-emoji', `"${moodEmojis[i-1]}"`);
+                // Arka plan gradientini hafifçe mod rengiyle harmanla
+                document.documentElement.style.setProperty('--dashboard-bg-color', `linear-gradient(135deg, rgba(255,255,255,0.8), ${moodColors[i-1]}33)`);
+
                 saveToServer({ mood: i });
                 
                 clearInterval(countdownInterval);
-                let timer = 6;
+                let timer = 3; // Hızlı geçiş
                 const cBtn = document.getElementById('btn-continue');
                 cBtn.style.display = 'block';
                 cBtn.innerText = `Görevlere Geç (${timer})`;
@@ -422,16 +623,49 @@
             document.getElementById('nav-' + tabId).classList.add('active-tab');
         }
 
-        // Görev Veri Yönetimi
+        // Görev Veri Yönetimi & Ekleme Sistemi
         let currentTasks = [];
         let userTasks = {};
         
+        // 15 Örnek Görev Listesi
+        const taskSuggestions = [
+            "1 Bardak Su İç 💧", "Şahin'e 'Seni seviyorum' yaz 💖", "5 dakika gözlerini dinlendir 😌",
+            "Sevdiğin bir şarkıyı aç 🎵", "Derin derin 3 nefes al 🌬️", "Odanı biraz havalandır 🪟",
+            "Tatlı veya çikolata ye 🍫", "Şahin'i ara 📞", "Aynaya bakıp gülümse 😊",
+            "Sevimli kedi videosu izle 🐈", "Bitkilerine bak / sula 🌱", "Kahve veya çay yap ☕",
+            "Eski fotoğraflara bakıp gül 📸", "Şahin'e komik bir selfie at 🤳", "Sadece uzan ve 10dk dinlen 🛌"
+        ];
+
+        const modal = document.getElementById('suggestions-modal');
+        taskSuggestions.forEach(s => {
+            let div = document.createElement('div'); div.className = 'suggestion-item'; div.innerText = s;
+            div.onclick = () => { document.getElementById('new-task-input').value = s; toggleSuggestions(); };
+            modal.appendChild(div);
+        });
+
+        function toggleSuggestions() { modal.style.display = modal.style.display === 'block' ? 'none' : 'block'; }
+        
+        function addNewTask() {
+            const input = document.getElementById('new-task-input');
+            const val = input.value.trim();
+            if(val) {
+                currentTasks.push(val);
+                userTasks[currentTasks.length - 1] = false; // Yeni eklenen task false (yapılmadı) olarak başlar
+                input.value = '';
+                renderTasks();
+                // Sunucuya hem görev listesini hem durumları yolluyoruz
+                saveToServer({ currentTaskList: currentTasks, tasks: userTasks });
+            }
+        }
+
         function renderTasks() {
             const list = document.getElementById('todo-list'); list.innerHTML = '';
             if(!currentTasks || currentTasks.length === 0) {
-                list.innerHTML = "<p style='text-align:center;'>Günün görevleri hazırlanıyor...</p>"; return;
+                list.innerHTML = "<p style='text-align:center;'>Henüz bir görev eklenmemiş bebeğim...</p>"; return;
             }
-            currentTasks.forEach((task, index) => {
+            // Listeyi tersten yazdıralım ki yeni eklenenler en üstte çıksın
+            [...currentTasks].reverse().forEach((task, revIndex) => {
+                let index = currentTasks.length - 1 - revIndex;
                 let isDone = userTasks[index] || false;
                 let div = document.createElement('div'); div.className = `todo-item ${isDone ? 'done' : ''}`;
                 div.innerHTML = `<span>${task}</span><button class="todo-btn" onclick="toggleTask(${index})">${isDone ? 'Aç' : 'Yaptım'}</button>`;
@@ -445,34 +679,30 @@
         }
 
         async function saveToServer(data) {
-            try {
-                await fetch(`${API_URL}/save`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
-            } catch(err) { console.error("Save hatası:", err); }
+            try { await fetch(`${API_URL}/save`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) }); } 
+            catch(err) { console.error("Save hatası:", err); }
         }
 
         async function loadFromServer() {
             try {
                 const res = await fetch(`${API_URL}/load`);
-                const data = await res.json();
-                
-                if (data.currentTaskList) currentTasks = data.currentTaskList;
-                if (data.tasks) userTasks = data.tasks;
-                if (data.avatar && Object.keys(data.avatar).length > 0) avatarState = { ...avatarState, ...data.avatar };
-                
-                if (data.position && data.position.left) {
-                    // Ekran genişliği değiştiyse taşmayı önlemek için başlangıçta kontrol et
-                    let savedX = parseInt(data.position.left);
-                    let savedY = parseInt(data.position.top);
-                    if(savedX > window.innerWidth - 130) savedX = window.innerWidth - 130;
-                    if(savedY > window.innerHeight - 150) savedY = window.innerHeight - 150;
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.currentTaskList && data.currentTaskList.length > 0) currentTasks = data.currentTaskList;
+                    if (data.tasks) userTasks = data.tasks;
+                    if (data.avatar && Object.keys(data.avatar).length > 0) avatarState = { ...avatarState, ...data.avatar };
                     
-                    draggableKitty.style.left = `${savedX}px`;
-                    draggableKitty.style.top = `${savedY}px`;
+                    if (data.position && data.position.left) {
+                        let savedX = parseInt(data.position.left); let savedY = parseInt(data.position.top);
+                        if(savedX > window.innerWidth - 130) savedX = window.innerWidth - 130;
+                        if(savedY > window.innerHeight - 150) savedY = window.innerHeight - 150;
+                        draggableKitty.style.left = `${savedX}px`; draggableKitty.style.top = `${savedY}px`;
+                    }
                 }
-
-                renderTasks();
-                updateAvatarUI();
-            } catch (err) { console.error("Load hatası:", err); }
+            } catch (err) { console.error("Sunucu bağlantısı yok, lokal çalışıyor.", err); }
+            
+            document.getElementById('screen-login').classList.add('active');
+            renderTasks(); updateAvatarUI();
         }
 
         window.onload = loadFromServer;
