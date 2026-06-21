@@ -230,12 +230,78 @@
         .wardrobe-item { background: rgba(255,255,255,0.8); margin-bottom: 5px; padding: 10px 5px; border-radius: 12px; cursor: pointer; text-align: center; font-size: 0.85rem; transition: 0.2s; font-weight: 800; color: #2d3436; border: 1px solid transparent;}
         .wardrobe-item:hover { background: white; transform: translateY(-2px); border-color: #ffdde1;}
         .wardrobe-item.active-item { background: linear-gradient(135deg, #e84393, #d81b60); color: white; box-shadow: 0 4px 10px rgba(216,27,96,0.3); }
+/* GİRİŞ EKRANI BUTON ALANI */
+#login-buttons-container {
+    position: relative;
+    width: 100%;
+    height: 250px;
 
-        /* GİRİŞ EKRANI BUTONLARI (DALGA GEÇEN BUTON DÜZENLEMESİ) */
-        #login-buttons-container { position: relative; width: 100%; height: 250px; display: flex; justify-content: center; align-items: center; margin-top: 20px; }
-        #btn-yes { background: linear-gradient(135deg, #e84393, #d81b60); padding: 18px 45px; font-size: 1.5rem; border-radius: 30px; color:white; border:none; margin-right: 20px; cursor: pointer; box-shadow: 0 8px 20px rgba(216, 27, 96, 0.3); transition: 0.3s; font-weight: 800; z-index: 2;}
-        #btn-yes:hover { transform: scale(1.08); box-shadow: 0 10px 25px rgba(216, 27, 96, 0.4);}
-        #btn-no { background: #b2bec3; padding: 18px 45px; font-size: 1.5rem; border-radius: 30px; color:white; border:none; position: absolute; cursor: pointer; transition: top 0.2s, left 0.2s; font-weight: 800; box-shadow: 0 5px 15px rgba(0,0,0,0.1); z-index: 5;}
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 20px;
+
+    overflow: hidden; /* 🔥 kaçış taşmasın */
+}
+
+/* ✅ EVET BUTONU */
+#btn-yes {
+    background: linear-gradient(135deg, #e84393, #d81b60);
+
+    padding: 16px 38px;
+    font-size: 1.3rem;
+
+    border-radius: 30px;
+    color: white;
+    border: none;
+
+    margin-right: 20px;
+
+    cursor: pointer;
+
+    box-shadow: 0 8px 20px rgba(216, 27, 96, 0.3);
+
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    font-weight: 800;
+
+    z-index: 10;
+
+    position: relative; /* 🔥 click stabil olsun */
+}
+
+#btn-yes:hover {
+    transform: scale(1.06);
+    box-shadow: 0 10px 25px rgba(216, 27, 96, 0.4);
+}
+
+/* ❌ HAYIR BUTONU (KAÇAN BUTON) */
+#btn-no {
+    background: #b2bec3;
+
+    padding: 10px 20px;
+    font-size: 1.05rem;
+
+    border-radius: 25px;
+
+    color: white;
+    border: none;
+
+    position: absolute;
+
+    cursor: pointer;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+
+    z-index: 5;
+
+    transition: left 0.25s ease, top 0.25s ease, transform 0.25s ease;
+}
         
         ::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: rgba(216, 27, 96, 0.4); border-radius: 10px; } ::-webkit-scrollbar-thumb:hover { background: rgba(216, 27, 96, 0.7); }
     </style>
@@ -260,26 +326,34 @@
         </div>
     </div>
 
-    <!-- GİRİŞ EKRANI -->
-    <div id="screen-login" class="screen">
-        <div class="main-card" id="login-card">
-            <h1>Beni seviyor musun KARICIM? ❤️</h1>
-            <div id="login-buttons-container">
-                <button id="btn-yes">Evet 🥰</button>
-                <button id="btn-no">Hayır 😒</button>
-            </div>
-        </div>
-    </div>
+<!-- GİRİŞ EKRANI -->
+<div id="screen-login" class="screen active">
+    <div class="main-card" id="login-card">
 
-    <!-- MOD EKRANI -->
-    <div id="screen-mood" class="screen">
-        <div class="main-card">
-            <h1>Bugün modun nasıl bebeğim?</h1>
-            <div class="mood-scale" id="mood-scale"></div>
-            <div id="mood-message">Modunu seç, sana özel mesajım gelsin! ✨</div>
-            <button id="btn-continue" class="primary-btn"></button>
+        <h1>Beni seviyor musun KARICIM? ❤️</h1>
+
+        <div id="login-buttons-container">
+            <button id="btn-yes" type="button">Evet 🥰</button>
+            <button id="btn-no" type="button">Hayır 😒</button>
         </div>
+
     </div>
+</div>
+
+<!-- MOD EKRANI -->
+<div id="screen-mood" class="screen">
+    <div class="main-card">
+        <h1>Bugün modun nasıl bebeğim?</h1>
+
+        <div class="mood-scale" id="mood-scale"></div>
+
+        <div id="mood-message">
+            Modunu seç, sana özel mesajım gelsin! ✨
+        </div>
+
+        <button id="btn-continue" class="primary-btn"></button>
+    </div>
+</div>
 
     <!-- DASHBOARD -->
     <div id="screen-dashboard" class="screen">
@@ -453,43 +527,143 @@
                 setTimeout(() => p.remove(), 800);
             }
         });
+const btnNo = document.getElementById('btn-no');
+const btnYes = document.getElementById('btn-yes');
+const loginContainer = document.getElementById('login-buttons-container');
 
-        // Kaçan "Hayır" Butonu ve Dalga Geçme Mekanizması
-        const btnNo = document.getElementById('btn-no');
-        const btnYes = document.getElementById('btn-yes');
-        const loginContainer = document.getElementById('login-buttons-container');
-        
-        const mockTexts = [
-            "Yakala bakalım! 😜", "Çok yavaşsın! 🐢", "Hayır demek yok! 🚫", 
-            "Şahin'i üzme! 🥺", "Tıklayamazsın ki! 😂", "Vazgeç bence! 💁‍♀️", 
-            "Buradayım! 👀", "Yakalayamadın! 💨", "Evet'e bas! 😡", "Şaka şaka! 🤡"
-        ];
+const mockTexts = [
+    "Yakala bakalım! 😜",
+    "Çok yavaşsın! 🐢",
+    "Hayır demek yok! 🚫",
+    "Şahin'i üzme! 🥺",
+    "Tıklayamazsın ki! 😂",
+    "Vazgeç bence! 💁‍♀️",
+    "Buradayım! 👀",
+    "Yakalayamadın! 💨",
+    "Evet'e bas! 😡",
+    "Şaka şaka! 🤡"
+];
 
-        const moveButton = () => {
-            const containerRect = loginContainer.getBoundingClientRect();
-            const btnW = btnNo.offsetWidth, btnH = btnNo.offsetHeight;
-            
-            // Kutu sınırları içinde kalmasını sağlıyoruz
-            const maxX = containerRect.width - btnW;
-            const maxY = containerRect.height - btnH;
-            
-            let newX = Math.random() * maxX;
-            let newY = Math.random() * maxY;
+let lastMove = 0;
+let typing = false;
 
-            btnNo.style.left = `${newX}px`;
-            btnNo.style.top = `${newY}px`;
-            
-            // Rastgele dalga geçme metni
-            btnNo.innerText = mockTexts[Math.floor(Math.random() * mockTexts.length)];
-        };
+// ✨ YAZI ANİMASYONU (SMOOTH TYPEWRITER)
+const animateText = (text) => {
+    if (typing) return;
+    typing = true;
 
-        btnNo.addEventListener('mouseover', moveButton);
-        btnNo.addEventListener('touchstart', (e) => { e.preventDefault(); moveButton(); }, {passive: false});
-        btnYes.addEventListener('click', () => {
-            document.getElementById('screen-login').classList.remove('active');
-            document.getElementById('screen-mood').classList.add('active');
-        });
+    btnNo.innerText = "";
 
+    let i = 0;
+
+    const write = () => {
+        if (i < text.length) {
+            btnNo.innerText += text[i];
+            i++;
+            setTimeout(write, 30);
+        } else {
+            typing = false;
+        }
+    };
+
+    write();
+};
+
+// 🎯 KAÇIŞ FONKSİYONU
+const moveButton = (mouseX, mouseY) => {
+    const now = Date.now();
+    if (now - lastMove < 90) return;
+    lastMove = now;
+
+    const rect = loginContainer.getBoundingClientRect();
+
+    const containerW = loginContainer.clientWidth;
+    const containerH = loginContainer.clientHeight;
+
+    const btnW = btnNo.offsetWidth;
+    const btnH = btnNo.offsetHeight;
+
+    let mx = mouseX - rect.left;
+    let my = mouseY - rect.top;
+
+    let currentX = btnNo.offsetLeft;
+    let currentY = btnNo.offsetTop;
+
+    let dx = (currentX + btnW / 2) - mx;
+    let dy = (currentY + btnH / 2) - my;
+
+    let dist = Math.max(1, Math.hypot(dx, dy));
+
+    dx /= dist;
+    dy /= dist;
+
+    // 🔥 hafif + doğal kaçış
+    const jump = 70 + Math.random() * 50;
+
+    let newX = currentX + dx * jump;
+    let newY = currentY + dy * jump;
+
+    // 🔥 güvenli alan (sıkışmayı engeller)
+    const margin = 10;
+
+    newX = Math.max(margin, Math.min(containerW - btnW - margin, newX));
+    newY = Math.max(margin, Math.min(containerH - btnH - margin, newY));
+
+    // 🚫 FARENİN ALTINA GİRMEYİ ENGELLE
+    const safeDistance = 80;
+
+    if (Math.abs(newX - mx) < safeDistance) {
+        newX += dx * safeDistance;
+    }
+    if (Math.abs(newY - my) < safeDistance) {
+        newY += dy * safeDistance;
+    }
+
+    newX = Math.max(margin, Math.min(containerW - btnW - margin, newX));
+    newY = Math.max(margin, Math.min(containerH - btnH - margin, newY));
+
+    btnNo.style.position = "absolute";
+    btnNo.style.transition = "left 0.2s ease, top 0.2s ease, transform 0.2s ease";
+
+    btnNo.style.left = `${newX}px`;
+    btnNo.style.top = `${newY}px`;
+    btnNo.style.transform = `rotate(${Math.random() * 8 - 4}deg)`;
+
+    // 😈 yazı değiştir + animasyon
+    animateText(mockTexts[Math.floor(Math.random() * mockTexts.length)]);
+};
+
+// 🧠 MOUSE TAKİP
+document.addEventListener('mousemove', (e) => {
+    const rect = btnNo.getBoundingClientRect();
+
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
+    const distance = Math.hypot(e.clientX - centerX, e.clientY - centerY);
+
+    if (distance < 140) {
+        moveButton(e.clientX, e.clientY);
+    }
+});
+
+// 📱 TOUCH SUPPORT
+btnNo.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    const touch = e.touches[0];
+    moveButton(touch.clientX, touch.clientY);
+}, { passive: false });
+
+// 🖱 hover kaçış
+btnNo.addEventListener('mouseenter', (e) => {
+    moveButton(e.clientX, e.clientY);
+});
+
+// ❤️ EVET BUTONU (SAYFA GEÇİŞİ)
+btnYes.addEventListener('click', () => {
+    document.getElementById('screen-login').classList.remove('active');
+    document.getElementById('screen-mood').classList.add('active');
+});
         // Sürükle Bırak Mekanizması
         let isDragging = false, startX, startY;
         const startDrag = (e) => {
@@ -563,13 +737,22 @@
             });
         }
 
-        // Mod Skalası & Dashboard Arka Plan Renkleri
+        // Mod Skalası & 7 Ayrı Motivasyon Mesajı
         const moodMessages = {
-            low: ["Bugün biraz yorgunsun sanırım bebeğim ❤️", "Kıyamam sana, dinlen bugün 🥺", "Ben yanındayım, her şey geçecek 🌸", "Seni çok seviyorum, unutma! 💖", "Güzel karım, moralini bozma lütfen 🧸"],
-            mid: ["Fena değiliz! Gününü daha da güzelleştireceğim 💖", "Hadi enerjimizi toplayalım! ☀️", "Bugün güzel bir gün olacak! 🦋", "Gülümse bakalım! 😊"],
-            high: ["İşte benim enerjik karım! 🔥", "Bugün harika görünüyorsun! ✨", "Seni durdurabilene aşk olsun! 🚀", "Mükemmelliğin vücut bulmuş halisin! 👑", "Enerjin bana da geçti! ⚡"]
+            low: [
+                "Bugün biraz yorgunsun sanırım bebeğim ❤️", "Kıyamam sana, dinlen bugün 🥺", "Ben yanındayım, her şey geçecek 🌸", 
+                "Seni çok seviyorum, unutma! 💖", "Güzel karım, moralini bozma lütfen 🧸", "Sana sarılmaya ihtiyacım var 🫂", "Hemen bana yaz, dertleşelim 💕"
+            ],
+            mid: [
+                "Fena değiliz! Gününü daha da güzelleştireceğim 💖", "Hadi enerjimizi toplayalım! ☀️", "Bugün güzel bir gün olacak! 🦋", 
+                "Gülümse bakalım! 😊", "Seni düşünmeden edemiyorum! 💭", "Biraz daha gayret bebeğim! 💪", "Sen her halinle mükemmelsin! 🌷"
+            ],
+            high: [
+                "İşte benim enerjik karım! 🔥", "Bugün harika görünüyorsun! ✨", "Seni durdurabilene aşk olsun! 🚀", 
+                "Mükemmelliğin vücut bulmuş halisin! 👑", "Enerjin bana da geçti! ⚡", "Bugün dünyayı fethedebiliriz! 🌍", "Seni çok seviyorum, çok! ❤️‍🔥"
+            ]
         };
-        const moodColors = ['#2d3436','#636e72','#a29bfe','#74b9ff','#55efc4','#ffeaa7','#fab1a0','#ff7675','#fd79a8','#e84393'];
+
         const moodEmojis = ['😭','😢','🥺','😔','😐','🙂','😊','🥰','😍','🤩'];
         const moodScale = document.getElementById('mood-scale');
         let countdownInterval;
@@ -583,16 +766,10 @@
                 let randomMsg = msgGroup[Math.floor(Math.random() * msgGroup.length)];
                 
                 document.getElementById('mood-message').innerText = randomMsg;
-                
-                // Dashboard arka planını seçilen moda göre hafif renklendir ve emoji ekle
-                document.documentElement.style.setProperty('--dashboard-bg-emoji', `"${moodEmojis[i-1]}"`);
-                // Arka plan gradientini hafifçe mod rengiyle harmanla
-                document.documentElement.style.setProperty('--dashboard-bg-color', `linear-gradient(135deg, rgba(255,255,255,0.8), ${moodColors[i-1]}33)`);
-
                 saveToServer({ mood: i });
                 
                 clearInterval(countdownInterval);
-                let timer = 3; // Hızlı geçiş
+                let timer = 6;
                 const cBtn = document.getElementById('btn-continue');
                 cBtn.style.display = 'block';
                 cBtn.innerText = `Görevlere Geç (${timer})`;
@@ -623,49 +800,16 @@
             document.getElementById('nav-' + tabId).classList.add('active-tab');
         }
 
-        // Görev Veri Yönetimi & Ekleme Sistemi
+        // Görev Veri Yönetimi
         let currentTasks = [];
         let userTasks = {};
         
-        // 15 Örnek Görev Listesi
-        const taskSuggestions = [
-            "1 Bardak Su İç 💧", "Şahin'e 'Seni seviyorum' yaz 💖", "5 dakika gözlerini dinlendir 😌",
-            "Sevdiğin bir şarkıyı aç 🎵", "Derin derin 3 nefes al 🌬️", "Odanı biraz havalandır 🪟",
-            "Tatlı veya çikolata ye 🍫", "Şahin'i ara 📞", "Aynaya bakıp gülümse 😊",
-            "Sevimli kedi videosu izle 🐈", "Bitkilerine bak / sula 🌱", "Kahve veya çay yap ☕",
-            "Eski fotoğraflara bakıp gül 📸", "Şahin'e komik bir selfie at 🤳", "Sadece uzan ve 10dk dinlen 🛌"
-        ];
-
-        const modal = document.getElementById('suggestions-modal');
-        taskSuggestions.forEach(s => {
-            let div = document.createElement('div'); div.className = 'suggestion-item'; div.innerText = s;
-            div.onclick = () => { document.getElementById('new-task-input').value = s; toggleSuggestions(); };
-            modal.appendChild(div);
-        });
-
-        function toggleSuggestions() { modal.style.display = modal.style.display === 'block' ? 'none' : 'block'; }
-        
-        function addNewTask() {
-            const input = document.getElementById('new-task-input');
-            const val = input.value.trim();
-            if(val) {
-                currentTasks.push(val);
-                userTasks[currentTasks.length - 1] = false; // Yeni eklenen task false (yapılmadı) olarak başlar
-                input.value = '';
-                renderTasks();
-                // Sunucuya hem görev listesini hem durumları yolluyoruz
-                saveToServer({ currentTaskList: currentTasks, tasks: userTasks });
-            }
-        }
-
         function renderTasks() {
             const list = document.getElementById('todo-list'); list.innerHTML = '';
             if(!currentTasks || currentTasks.length === 0) {
-                list.innerHTML = "<p style='text-align:center;'>Henüz bir görev eklenmemiş bebeğim...</p>"; return;
+                list.innerHTML = "<p style='text-align:center;'>Günün görevleri hazırlanıyor...</p>"; return;
             }
-            // Listeyi tersten yazdıralım ki yeni eklenenler en üstte çıksın
-            [...currentTasks].reverse().forEach((task, revIndex) => {
-                let index = currentTasks.length - 1 - revIndex;
+            currentTasks.forEach((task, index) => {
                 let isDone = userTasks[index] || false;
                 let div = document.createElement('div'); div.className = `todo-item ${isDone ? 'done' : ''}`;
                 div.innerHTML = `<span>${task}</span><button class="todo-btn" onclick="toggleTask(${index})">${isDone ? 'Aç' : 'Yaptım'}</button>`;
@@ -679,30 +823,34 @@
         }
 
         async function saveToServer(data) {
-            try { await fetch(`${API_URL}/save`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) }); } 
-            catch(err) { console.error("Save hatası:", err); }
+            try {
+                await fetch(`${API_URL}/save`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
+            } catch(err) { console.error("Save hatası:", err); }
         }
 
         async function loadFromServer() {
             try {
                 const res = await fetch(`${API_URL}/load`);
-                if (res.ok) {
-                    const data = await res.json();
-                    if (data.currentTaskList && data.currentTaskList.length > 0) currentTasks = data.currentTaskList;
-                    if (data.tasks) userTasks = data.tasks;
-                    if (data.avatar && Object.keys(data.avatar).length > 0) avatarState = { ...avatarState, ...data.avatar };
+                const data = await res.json();
+                
+                if (data.currentTaskList) currentTasks = data.currentTaskList;
+                if (data.tasks) userTasks = data.tasks;
+                if (data.avatar && Object.keys(data.avatar).length > 0) avatarState = { ...avatarState, ...data.avatar };
+                
+                if (data.position && data.position.left) {
+                    // Ekran genişliği değiştiyse taşmayı önlemek için başlangıçta kontrol et
+                    let savedX = parseInt(data.position.left);
+                    let savedY = parseInt(data.position.top);
+                    if(savedX > window.innerWidth - 130) savedX = window.innerWidth - 130;
+                    if(savedY > window.innerHeight - 150) savedY = window.innerHeight - 150;
                     
-                    if (data.position && data.position.left) {
-                        let savedX = parseInt(data.position.left); let savedY = parseInt(data.position.top);
-                        if(savedX > window.innerWidth - 130) savedX = window.innerWidth - 130;
-                        if(savedY > window.innerHeight - 150) savedY = window.innerHeight - 150;
-                        draggableKitty.style.left = `${savedX}px`; draggableKitty.style.top = `${savedY}px`;
-                    }
+                    draggableKitty.style.left = `${savedX}px`;
+                    draggableKitty.style.top = `${savedY}px`;
                 }
-            } catch (err) { console.error("Sunucu bağlantısı yok, lokal çalışıyor.", err); }
-            
-            document.getElementById('screen-login').classList.add('active');
-            renderTasks(); updateAvatarUI();
+
+                renderTasks();
+                updateAvatarUI();
+            } catch (err) { console.error("Load hatası:", err); }
         }
 
         window.onload = loadFromServer;
