@@ -43,7 +43,8 @@
         h2 { font-size: clamp(1.3rem, 3.5vw, 1.8rem); margin-bottom: 15px; color: #d81b60; font-weight: 700;}
 
         /* HELLO KITTY AVATARLARI */
-        .kitty-container { position: absolute; width: 100px; height: 125px; cursor: pointer; transition: transform 0.2s; filter: drop-shadow(0px 12px 18px rgba(0,0,0,0.2)); z-index: 9999; }
+        .kitty-container { position: absolute; width: 100px; height: 125px; cursor: grab; transition: transform 0.2s; filter: drop-shadow(0px 12px 18px rgba(0,0,0,0.2)); z-index: 9999; }
+        .kitty-container:active { cursor: grabbing; }
         .k-part { position: absolute; background: white; border: 3.5px solid #2d3436; }
         .k-ear { width: 26px; height: 26px; top: 6px; border-radius: 8px; z-index: 1;}
         .k-ear.left { left: 10px; transform: rotate(-25deg); border-top-left-radius: 12px;}
@@ -79,7 +80,7 @@
         @keyframes d-flip { 0% { transform: skewX(-15deg); } 100% { transform: skewX(15deg); } }
         @keyframes d-wave { 0% { transform: translateX(-15px) translateY(-10px); } 100% { transform: translateX(15px) translateY(0); } }
 
-        /* 20 SAF CSS ŞAPKA VE AKSESUAR (Emojisiz, 100% KOD) */
+        /* 20 SAF CSS ŞAPKA VE AKSESUAR */
         .k-hat, .k-glasses { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 5; pointer-events: none;}
         
         /* 1. Silindir Şapka */
@@ -88,9 +89,9 @@
         /* 2. Kraliyet Tacı */
         .s-2 .k-hat::before { content:''; position:absolute; width: 40px; height: 25px; background: linear-gradient(to bottom, #f1c40f, #f39c12); top:-15px; left: 25px; clip-path: polygon(0 0, 20% 50%, 40% 0, 60% 50%, 80% 0, 100% 50%, 100% 100%, 0 100%); }
         .s-2 .k-hat::after { content:''; position:absolute; width: 40px; height: 4px; background: #e67e22; top: 6px; left: 25px; border-radius: 2px; }
-        /* 3. Kurdele Toka */
-        .s-3 .k-hat::before { content:''; position:absolute; width: 0; height: 0; border-left: 15px solid #ff4757; border-right: 15px solid #ff4757; border-top: 10px solid transparent; border-bottom: 10px solid transparent; top: -10px; left: 30px; }
-        .s-3 .k-hat::after { content:''; position:absolute; width: 10px; height: 10px; background: #ff6b81; border-radius: 50%; top: -5px; left: 40px; }
+        /* 3. Kurdele Toka (Orijinal Konuma Alındı) */
+        .s-3 .k-hat::before { content:''; position:absolute; width: 0; height: 0; border-left: 15px solid #ff4757; border-right: 15px solid #ff4757; border-top: 10px solid transparent; border-bottom: 10px solid transparent; top: 2px; left: 60px; transform: rotate(15deg); }
+        .s-3 .k-hat::after { content:''; position:absolute; width: 12px; height: 12px; background: #ff6b81; border-radius: 50%; top: 6px; left: 69px; box-shadow: 0 0 2px rgba(0,0,0,0.2); }
         /* 4. Spor Kep */
         .s-4 .k-hat::before { content:''; position:absolute; width: 40px; height: 20px; background: #0984e3; top: -10px; left: 25px; border-radius: 20px 20px 0 0; }
         .s-4 .k-hat::after { content:''; position:absolute; width: 25px; height: 6px; background: #0984e3; top: 5px; left: 55px; border-radius: 0 3px 3px 0; }
@@ -311,13 +312,12 @@
         .preview-stage { width: 300px; height: 320px; background: rgba(255,255,255,0.6); backdrop-filter: blur(10px); border-radius: 30px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; border: 3px dashed #ffb6c1; box-shadow: inset 0 0 20px rgba(255,105,180,0.2);}
         .preview-stage .kitty-container { position: relative; top: 0 !important; left: 0 !important; transform: scale(1.5); transform-origin: center; animation: d-pulse 2s infinite alternate;}
 
-        /* MUHTEŞEM HATA / ÇEVRİMDIŞI EKRANI (Yeni) */
+        /* MUHTEŞEM HATA / ÇEVRİMDIŞI EKRANI (Düzeltildi) */
         #screen-error { 
             z-index: 99999; 
             background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%); 
             color: white; 
             text-shadow: 1px 1px 3px rgba(0,0,0,0.2); 
-            display: none;
         }
         .error-heart { 
             font-size: 110px; 
@@ -359,7 +359,7 @@
         </div>
     </div>
 
-    <div id="kitty-sahin" class="kitty-container dance-0 avatar-sahin" style="top: 20vh; right: 10vw;">
+    <div id="kitty-sahin" class="kitty-container dance-0 avatar-sahin" style="top: 20vh; left: 70vw;">
         <div class="k-part k-ear left"></div><div class="k-part k-ear right"></div>
         <div class="k-part k-foot left"></div><div class="k-part k-foot right"></div>
         <div class="k-part k-arm left"></div><div class="k-part k-arm right"></div>
@@ -453,7 +453,7 @@
                     
                     <div class="wardrobe-panel" style="border-top: 5px solid #ff4757;">
                         <h4 style="color: #ff4757;">Sude'nin Dolabı (Kız)</h4>
-                        <p style="font-size: 0.8rem; margin-bottom: 5px; font-weight: bold;">20 Saf CSS Aksesuar (Emoji Yok)</p>
+                        <p style="font-size: 0.8rem; margin-bottom: 5px; font-weight: bold;">20 Saf CSS Aksesuar</p>
                         <div class="wardrobe-grid" id="grid-sude-hat"></div>
                         <p style="font-size: 0.8rem; margin-bottom: 5px; font-weight: bold;">20 CSS Gözlük</p>
                         <div class="wardrobe-grid" id="grid-sude-glasses"></div>
@@ -467,7 +467,7 @@
 
                     <div class="wardrobe-panel" style="border-top: 5px solid #2d3436;">
                         <h4 style="color: #2d3436;">Şahin'in Dolabı (Erkek)</h4>
-                        <p style="font-size: 0.8rem; margin-bottom: 5px; font-weight: bold;">20 Saf CSS Aksesuar (Emoji Yok)</p>
+                        <p style="font-size: 0.8rem; margin-bottom: 5px; font-weight: bold;">20 Saf CSS Aksesuar</p>
                         <div class="wardrobe-grid" id="grid-sahin-hat"></div>
                         <p style="font-size: 0.8rem; margin-bottom: 5px; font-weight: bold;">20 CSS Gözlük</p>
                         <div class="wardrobe-grid" id="grid-sahin-glasses"></div>
@@ -487,22 +487,22 @@
 
     <div id="screen-error" class="screen">
         <div class="error-heart">🧸💖</div>
-        <h1 style="color: white; font-size: clamp(1.8rem, 5vw, 2.5rem); text-shadow: 2px 2px 10px rgba(0,0,0,0.2);">Şahin uyuyor yada müsait değil...</h1>
+        <h1 style="color: white; font-size: clamp(1.8rem, 5vw, 2.5rem); text-shadow: 2px 2px 10px rgba(0,0,0,0.2);">Şahin uyuyor ya da müsait değil...</h1>
         <p style="font-size: clamp(1.1rem, 3vw, 1.4rem); font-weight: bold; margin-top: 15px; background: rgba(255,255,255,0.3); padding: 20px 40px; border-radius: 25px; color: #2d3436; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 2px dashed rgba(255,255,255,0.6); max-width: 600px;">
             Büyük ihtimal Şahin uyuyordur yoksa sana hep müsaittir karıcım 💕
         </p>
-        <button class="primary-btn" style="margin-top: 35px; background: white; color: #ff4757; font-size: 1.2rem; padding: 15px 40px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);" onclick="forceDashboard()">Yine de Giriş Yap (Çevrimdışı Mod)</button>
+        <button class="primary-btn" style="margin-top: 35px; background: white; color: #ff4757; font-size: 1.2rem; padding: 15px 40px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);" onclick="forceDashboard()">Yine de Devam Et (Çevrimdışı Mod)</button>
     </div>
 
     <script>
-        const API_URL = "https://indoor-span-directions-remove.trycloudflare.com"; 
+        const API_URL = "https://cardiff-assured-luther-montreal.trycloudflare.com"; 
         
         let currentUser = ""; 
         let currentSelectedMoodIndex = 5;
         let sudeDanceIdx = 0;
         let sahinDanceIdx = 0;
         let countdownTimer;
-        let isOfflineMode = false; // Sürekli hata ekranına atmaması için
+        let isOfflineMode = false;
 
         let appState = {
             moodSude: "Belirlenmedi 🌸",
@@ -510,7 +510,11 @@
             tasks: { sahin: [], sude: [], ortak: [] },
             sudeLook: { hat: "s-3", glasses: "", clothes: "sk-1" },
             sahinLook: { hat: "s-4", glasses: "g-3", clothes: "sh-1" },
-            backgroundClass: "bg-sweet-pink"
+            backgroundClass: "bg-sweet-pink",
+            positions: {
+                sude: { top: '20vh', left: '10vw' },
+                sahin: { top: '20vh', left: '70vw' }
+            }
         };
 
         const moodEmojis = ['😭','🥺','😔','😐','🙂','😊','🥰','😍','🤩','🔥'];
@@ -531,7 +535,6 @@
         const sudeWardrobeData = { hat: [], glasses: [], clothes: [] };
         const sahinWardrobeData = { hat: [], glasses: [], clothes: [] };
 
-        // 20 Saf CSS Şapka/Aksesuar İsimleri
         sudeWardrobeData.hat.push({c:'', n:'❌ Yok'});
         sahinWardrobeData.hat.push({c:'', n:'❌ Yok'});
         const hatNames = [
@@ -545,7 +548,6 @@
             sahinWardrobeData.hat.push({c: `s-${i}`, n: hatNames[i-1]});
         }
 
-        // 20 CSS Gözlük
         sudeWardrobeData.glasses.push({c:'', n:'❌ Yok'});
         sahinWardrobeData.glasses.push({c:'', n:'❌ Yok'});
         const glassNames = ["Yuvarlak","Kare","Güneş","Pembe","Mavi","Kedi","Matrix","Altın","Kalın","Pilot","Kalp","Küçük","3D","Mor","Monokl","Hipster","Altıgen","Retro","Siber","Beyaz"];
@@ -554,7 +556,6 @@
             sahinWardrobeData.glasses.push({c: `g-${i}`, n: glassNames[i-1]});
         }
 
-        // 40 CSS Kıyafet
         for(let i=1; i<=40; i++) {
             sudeWardrobeData.clothes.push({c: `sk-${i}`, n: `Tarz ${i}`});
             sahinWardrobeData.clothes.push({c: `sh-${i}`, n: `Kombin ${i}`});
@@ -595,8 +596,13 @@
             if(user === 'sude') sudeDanceIdx = currentIdx; else sahinDanceIdx = currentIdx;
         }
 
-        document.getElementById('kitty-sude').addEventListener('mousedown', (e) => handleKittyClick(e, 'sude'));
-        document.getElementById('kitty-sahin').addEventListener('mousedown', (e) => handleKittyClick(e, 'sahin'));
+        // Tıklama efektini drag'e engel olmaması için sadece click anında yakalıyoruz
+        document.getElementById('kitty-sude').addEventListener('click', (e) => {
+            if(!document.getElementById('kitty-sude').hasAttribute('data-was-dragged')) handleKittyClick(e, 'sude');
+        });
+        document.getElementById('kitty-sahin').addEventListener('click', (e) => {
+            if(!document.getElementById('kitty-sahin').hasAttribute('data-was-dragged')) handleKittyClick(e, 'sahin');
+        });
 
         function handleLogin() {
             if (document.documentElement.requestFullscreen) {
@@ -613,7 +619,6 @@
             }
         }
 
-        // HAYIR BUTONU KAÇIŞ ALGORİTMASI
         const noBtn = document.getElementById('btn-no');
         const box = document.getElementById('love-box');
         const mockMessages = ["Yaklaşamadın bile! 😂", "Hıh, ezik! 😝", "Buna basamazsın ki!", "Daha hızlı olman lazım! 🐢", "Kocanı sevmek zorundasın! 💖", "Kaçtııım! 💨", "Oley, yakalayamadı! 🤸"];
@@ -701,10 +706,14 @@
         }
 
         function forceDashboard() {
-            isOfflineMode = true; // Artık çevrimdışı devam edecek, pop-up bir daha rahatsız etmesin
-            showScreen('screen-dashboard');
-            applyPermissions();
-            renderAllData();
+            isOfflineMode = true; 
+            if (currentUser === "") {
+                showScreen('screen-login');
+            } else {
+                showScreen('screen-dashboard');
+                applyPermissions();
+                renderAllData();
+            }
         }
 
         function applyPermissions() {
@@ -801,9 +810,9 @@
             const cloneZone = document.getElementById('clone-preview-zone');
             cloneZone.innerHTML = "";
             let sClone = document.getElementById('kitty-sude').cloneNode(true);
-            sClone.id = "preview-sude-clone"; sClone.style.position = "relative"; sClone.style.top = "0"; sClone.style.left = "0";
+            sClone.id = "preview-sude-clone"; sClone.style.position = "relative"; sClone.style.top = "0"; sClone.style.left = "0"; sClone.style.transform = "none"; sClone.style.cursor = "default";
             let mClone = document.getElementById('kitty-sahin').cloneNode(true);
-            mClone.id = "preview-sahin-clone"; mClone.style.position = "relative"; mClone.style.top = "0"; mClone.style.left = "0";
+            mClone.id = "preview-sahin-clone"; mClone.style.position = "relative"; mClone.style.top = "0"; mClone.style.left = "0"; mClone.style.transform = "none"; mClone.style.cursor = "default";
 
             cloneZone.appendChild(sClone); cloneZone.appendChild(mClone);
             document.getElementById('wardrobe-bg-preview').className = `preview-stage ${appState.backgroundClass}`;
@@ -846,22 +855,67 @@
             applyLooksToElement('kitty-sahin', appState.sahinLook);
             applyLooksToElement('preview-sude-clone', appState.sudeLook);
             applyLooksToElement('preview-sahin-clone', appState.sahinLook);
+
+            // Sürükleme esnasında ekranın titrememesi için kontrol ediliyor
+            const sEl = document.getElementById('kitty-sude');
+            if(!sEl.hasAttribute('data-dragging') && appState.positions?.sude) {
+                sEl.style.left = appState.positions.sude.left;
+                sEl.style.top = appState.positions.sude.top;
+            }
+            const mEl = document.getElementById('kitty-sahin');
+            if(!mEl.hasAttribute('data-dragging') && appState.positions?.sahin) {
+                mEl.style.left = appState.positions.sahin.left;
+                mEl.style.top = appState.positions.sahin.top;
+            }
         }
 
-        function enableDrag(elId) {
+        // CANLI SÜRÜKLEME SENKRONİZASYONU
+        function enableDrag(elId, userKey) {
             const el = document.getElementById(elId);
-            let activeDrag = false, sx, sy;
+            let activeDrag = false, sx, sy, moved = false;
 
-            el.addEventListener('mousedown', (e) => { activeDrag = true; sx = e.clientX - el.offsetLeft; sy = e.clientY - el.offsetTop; });
-            document.addEventListener('mousemove', (e) => { if (!activeDrag) return; el.style.left = `${e.clientX - sx}px`; el.style.top = `${e.clientY - sy}px`; });
-            document.addEventListener('mouseup', () => { activeDrag = false; });
+            const startDrag = (e) => { 
+                activeDrag = true; 
+                moved = false;
+                el.removeAttribute('data-was-dragged');
+                el.setAttribute('data-dragging', 'true');
+                el.style.transition = 'none';
+                let clientX = e.clientX || (e.touches && e.touches[0].clientX);
+                let clientY = e.clientY || (e.touches && e.touches[0].clientY);
+                sx = clientX - el.offsetLeft; 
+                sy = clientY - el.offsetTop; 
+            };
+            const drag = (e) => { 
+                if (!activeDrag) return; 
+                moved = true;
+                let clientX = e.clientX || (e.touches && e.touches[0].clientX);
+                let clientY = e.clientY || (e.touches && e.touches[0].clientY);
+                el.style.left = `${clientX - sx}px`; 
+                el.style.top = `${clientY - sy}px`; 
+            };
+            const stopDrag = () => { 
+                if(!activeDrag) return;
+                activeDrag = false; 
+                el.removeAttribute('data-dragging');
+                el.style.transition = 'transform 0.2s';
+                if(moved) el.setAttribute('data-was-dragged', 'true');
+                
+                appState.positions[userKey].left = el.style.left;
+                appState.positions[userKey].top = el.style.top;
+                saveToServer();
+            };
+
+            el.addEventListener('mousedown', startDrag);
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('mouseup', stopDrag);
             
-            el.addEventListener('touchstart', (e) => { activeDrag = true; sx = e.touches[0].clientX - el.offsetLeft; sy = e.touches[0].clientY - el.offsetTop; });
-            document.addEventListener('touchmove', (e) => { if (!activeDrag) return; el.style.left = `${e.touches[0].clientX - sx}px`; el.style.top = `${e.touches[0].clientY - sy}px`; });
-            document.addEventListener('touchend', () => { activeDrag = false; });
+            el.addEventListener('touchstart', startDrag, {passive: false});
+            document.addEventListener('touchmove', drag, {passive: false});
+            document.addEventListener('touchend', stopDrag);
         }
-        enableDrag('kitty-sude');
-        enableDrag('kitty-sahin');
+        
+        enableDrag('kitty-sude', 'sude');
+        enableDrag('kitty-sahin', 'sahin');
 
         async function saveToServer() {
             if(isOfflineMode) return;
@@ -870,19 +924,22 @@
         }
 
         async function loadFromServer() {
-            if(isOfflineMode) return; // Çevrimdışı moda geçtiyse sürekli senkronize etmeyi ve hata vermeyi durdurur.
+            if(isOfflineMode) return;
             try {
                 const res = await fetch(`${API_URL}/load`);
                 if (res.ok) {
                     const data = await res.json();
-                    if (data.projectData) appState = data.projectData;
+                    if (data.projectData) {
+                        appState = { ...appState, ...data.projectData };
+                        if(data.projectData.positions) appState.positions = { ...appState.positions, ...data.projectData.positions };
+                    }
                     renderAllData();
                     if(document.getElementById('tab-dressup').classList.contains('tab-active')) renderWardrobeOptions();
                 } else {
-                    if(!isOfflineMode) showScreen('screen-error');
+                    if(!isOfflineMode && !document.getElementById('screen-error').classList.contains('active')) showScreen('screen-error');
                 }
             } catch (err) { 
-                if(!isOfflineMode) showScreen('screen-error');
+                if(!isOfflineMode && !document.getElementById('screen-error').classList.contains('active')) showScreen('screen-error');
             }
         }
 
@@ -893,9 +950,9 @@
                 {text: "Beraber Oyuna Girmek 🎮", done: false}
             ];
             
-            // İlk açılışta veriyi çek ve 4 saniyede bir arka planda sessizce tekrar çek (Canlı Senkronizasyon)
+            // İlk açılışta veriyi çek ve 1.5 saniyede bir arka planda sessizce tekrar çek (Anlık sürükleme senkronizasyonu için daha hızlı)
             loadFromServer().then(() => {
-                setInterval(loadFromServer, 4000);
+                setInterval(loadFromServer, 1500);
             });
         };
     </script>
