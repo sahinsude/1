@@ -64,7 +64,7 @@
         .k-foot.left { left: 22px; } .k-foot.right { right: 22px; }
         .k-torso { width: 50px; height: 38px; top: 78px; left: 25px; border-radius: 18px 18px 10px 10px; z-index: 2; overflow: hidden; background: #fff; position: relative;}
 
-        /* DANS ANİMASYONLARI (6 FARKLI) */
+        /* DANS ANİMASYONLARI */
         .dance-0 { animation: d-jump 0.5s infinite alternate ease-in-out; } 
         .dance-1 { animation: d-spin 1s infinite linear; } 
         .dance-2 { animation: d-wiggle 0.4s infinite ease-in-out; } 
@@ -79,78 +79,172 @@
         @keyframes d-flip { 0% { transform: skewX(-15deg); } 100% { transform: skewX(15deg); } }
         @keyframes d-wave { 0% { transform: translateX(-15px) translateY(-10px); } 100% { transform: translateX(15px) translateY(0); } }
 
-        /* AKSESUARLAR */
+        /* 20 SAF CSS ŞAPKA VE AKSESUAR (Emojisiz, 100% KOD) */
         .k-hat, .k-glasses { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 5; pointer-events: none;}
-        .s-kurdele .k-hat::before { content: '🎀'; position: absolute; font-size: 36px; top: -14px; right: -6px; transform: rotate(15deg); filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));}
-        .s-tac .k-hat::before { content: '👑'; position: absolute; font-size: 34px; top: -20px; left: 26px; }
-        .s-kep .k-hat::before { content: '🧢'; position: absolute; font-size: 36px; top: -18px; left: 24px; }
-        .s-bere .k-hat::before { content: '🧣'; position: absolute; font-size: 34px; top: 45px; left: 26px; z-index: 10;}
+        
+        /* 1. Silindir Şapka */
+        .s-1 .k-hat::before { content:''; position:absolute; width: 34px; height: 30px; background: #2d3436; top:-25px; left: 28px; border-radius: 4px 4px 0 0; border-bottom: 6px solid #e74c3c; z-index:2; }
+        .s-1 .k-hat::after { content:''; position:absolute; width: 54px; height: 6px; background: #2d3436; top: 5px; left: 18px; border-radius: 3px; z-index:1; }
+        /* 2. Kraliyet Tacı */
+        .s-2 .k-hat::before { content:''; position:absolute; width: 40px; height: 25px; background: linear-gradient(to bottom, #f1c40f, #f39c12); top:-15px; left: 25px; clip-path: polygon(0 0, 20% 50%, 40% 0, 60% 50%, 80% 0, 100% 50%, 100% 100%, 0 100%); }
+        .s-2 .k-hat::after { content:''; position:absolute; width: 40px; height: 4px; background: #e67e22; top: 6px; left: 25px; border-radius: 2px; }
+        /* 3. Kurdele Toka */
+        .s-3 .k-hat::before { content:''; position:absolute; width: 0; height: 0; border-left: 15px solid #ff4757; border-right: 15px solid #ff4757; border-top: 10px solid transparent; border-bottom: 10px solid transparent; top: -10px; left: 30px; }
+        .s-3 .k-hat::after { content:''; position:absolute; width: 10px; height: 10px; background: #ff6b81; border-radius: 50%; top: -5px; left: 40px; }
+        /* 4. Spor Kep */
+        .s-4 .k-hat::before { content:''; position:absolute; width: 40px; height: 20px; background: #0984e3; top: -10px; left: 25px; border-radius: 20px 20px 0 0; }
+        .s-4 .k-hat::after { content:''; position:absolute; width: 25px; height: 6px; background: #0984e3; top: 5px; left: 55px; border-radius: 0 3px 3px 0; }
+        /* 5. Kışlık Bere */
+        .s-5 .k-hat::before { content:''; position:absolute; width: 44px; height: 25px; background: #e84393; top: -12px; left: 23px; border-radius: 22px 22px 0 0; }
+        .s-5 .k-hat::after { content:''; position:absolute; width: 14px; height: 14px; background: #fd79a8; border-radius: 50%; top: -20px; left: 38px; }
+        /* 6. Melek Halesi */
+        .s-6 .k-hat::before { content:''; position:absolute; width: 40px; height: 10px; border: 3px solid #f1c40f; border-radius: 50%; top: -25px; left: 22px; box-shadow: 0 0 10px rgba(241,196,15,0.8); }
+        /* 7. Parti Şapkası */
+        .s-7 .k-hat::before { content:''; position:absolute; width: 0; height: 0; border-left: 15px solid transparent; border-right: 15px solid transparent; border-bottom: 35px solid #a29bfe; top: -25px; left: 30px; }
+        .s-7 .k-hat::after { content:''; position:absolute; width: 10px; height: 10px; background: #ffeaa7; border-radius: 50%; top: -30px; left: 40px; }
+        /* 8. Şeytan Boynuzu */
+        .s-8 .k-hat::before { content:''; position:absolute; width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-bottom: 18px solid #d63031; top: -10px; left: 20px; transform: rotate(-20deg); }
+        .s-8 .k-hat::after { content:''; position:absolute; width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-bottom: 18px solid #d63031; top: -10px; right: 20px; transform: rotate(20deg); }
+        /* 9. Spor Bandana */
+        .s-9 .k-hat::before { content:''; position:absolute; width: 86px; height: 15px; border-top: 6px solid #ff7675; border-radius: 50%; top: 5px; left: 2px; }
+        /* 10. Aşçı Kepi */
+        .s-10 .k-hat::before { content:''; position:absolute; width: 40px; height: 25px; background: white; border: 2px solid #dfe6e9; top: -10px; left: 25px; border-radius: 5px 5px 0 0; z-index:2;}
+        .s-10 .k-hat::after { content:''; position:absolute; width: 50px; height: 20px; background: white; border: 2px solid #dfe6e9; border-radius: 20px; top: -20px; left: 20px; z-index:1; box-shadow: -10px 5px 0 -2px white, 10px 5px 0 -2px white;}
+        /* 11. Ressam Beresi */
+        .s-11 .k-hat::before { content:''; position:absolute; width: 45px; height: 15px; background: #c0392b; top: -8px; left: 25px; border-radius: 50%; transform: rotate(10deg); }
+        .s-11 .k-hat::after { content:''; position:absolute; width: 4px; height: 6px; background: #c0392b; top: -12px; left: 45px; }
+        /* 12. Cadı Şapkası */
+        .s-12 .k-hat::before { content:''; position:absolute; width: 0; height: 0; border-left: 15px solid transparent; border-right: 15px solid transparent; border-bottom: 40px solid #2d3436; top: -30px; left: 30px; z-index:2; }
+        .s-12 .k-hat::after { content:''; position:absolute; width: 60px; height: 8px; background: #2d3436; top: 8px; left: 15px; border-radius: 50%; z-index:1; }
+        /* 13. Müzik Kulaklığı */
+        .s-13 .k-hat::before { content:''; position:absolute; width: 94px; height: 50px; border-top: 6px solid #2d3436; border-left: 6px solid #2d3436; border-right: 6px solid #2d3436; border-radius: 40px 40px 0 0; top: -5px; left: -2px; }
+        .s-13 .k-hat::after { content:''; position:absolute; width: 104px; height: 20px; border-left: 14px solid #0984e3; border-right: 14px solid #0984e3; border-radius: 10px; top: 30px; left: -7px; }
+        /* 14. Meksika Şapkası */
+        .s-14 .k-hat::before { content:''; position:absolute; width: 30px; height: 25px; background: #e1b12c; top: -15px; left: 30px; border-radius: 10px 10px 0 0; z-index:2; }
+        .s-14 .k-hat::after { content:''; position:absolute; width: 70px; height: 12px; background: #fbc531; top: 5px; left: 10px; border-radius: 50%; z-index:1; border-top: 3px solid #e1b12c; }
+        /* 15. Noel Şapkası */
+        .s-15 .k-hat::before { content:''; position:absolute; width: 0; height: 0; border-left: 15px solid transparent; border-right: 15px solid transparent; border-bottom: 35px solid #e84118; top: -25px; left: 30px; z-index:2; transform: skewX(-15deg); }
+        .s-15 .k-hat::after { content:''; position:absolute; width: 44px; height: 10px; background: white; border-radius: 5px; top: 5px; left: 23px; z-index:3; box-shadow: 20px -32px 0 -1px white; }
+        /* 16. Korsan Bandanası */
+        .s-16 .k-hat::before { content:''; position:absolute; width: 46px; height: 18px; background: #c23616; top: -5px; left: 22px; border-radius: 20px 20px 0 0; }
+        .s-16 .k-hat::after { content:''; position:absolute; width: 15px; height: 15px; background: #c23616; top: 5px; left: 60px; clip-path: polygon(0 0, 100% 50%, 0 100%); }
+        /* 17. Klasik Fedora */
+        .s-17 .k-hat::before { content:''; position:absolute; width: 36px; height: 22px; background: #7f8c8d; top: -15px; left: 27px; border-radius: 5px 5px 0 0; border-bottom: 6px solid #2c3e50; z-index:2; }
+        .s-17 .k-hat::after { content:''; position:absolute; width: 56px; height: 8px; background: #7f8c8d; top: 5px; left: 17px; border-radius: 50%; z-index:1; }
+        /* 18. Mezuniyet Kepi */
+        .s-18 .k-hat::before { content:''; position:absolute; width: 40px; height: 15px; background: #2d3436; top: -12px; left: 25px; transform: skewX(-30deg); z-index:2; }
+        .s-18 .k-hat::after { content:''; position:absolute; width: 4px; height: 20px; background: #f1c40f; top: -5px; left: 55px; z-index:3; }
+        /* 19. Yaprak Taç */
+        .s-19 .k-hat::before { content:''; position:absolute; width: 84px; height: 20px; border-top: 5px dashed #27ae60; border-radius: 50%; top: 0px; left: 3px; }
+        .s-19 .k-hat::after { content:''; position:absolute; width: 84px; height: 20px; border-top: 5px dashed #2ecc71; border-radius: 50%; top: -3px; left: 3px; }
+        /* 20. Çiçek Toka */
+        .s-20 .k-hat::before { content:''; position:absolute; width: 12px; height: 12px; background: #f1c40f; border-radius: 50%; top: 2px; left: 15px; box-shadow: 0 -10px 0 0 #ff9ff3, 8px -7px 0 0 #ff9ff3, 8px 7px 0 0 #ff9ff3, 0 10px 0 0 #ff9ff3, -8px 7px 0 0 #ff9ff3, -8px -7px 0 0 #ff9ff3; transform: scale(0.6); }
 
-        /* 20 DETAYLI GÖZLÜK CSS'İ */
+        /* 20 GÖZLÜK CSS'İ */
         .g-1 .k-glasses::before, .g-1 .k-glasses::after { content:''; position:absolute; width: 22px; height: 22px; border: 3px solid #2d3436; border-radius: 50%; top: 26px; background: rgba(0,0,0,0.1); } .g-1 .k-glasses::before{left:10px;} .g-1 .k-glasses::after{right:10px;}
         .g-2 .k-glasses::before, .g-2 .k-glasses::after { content:''; position:absolute; width: 22px; height: 18px; border: 3px solid #2d3436; top: 28px; background: rgba(0,0,0,0.1); } .g-2 .k-glasses::before{left:10px;} .g-2 .k-glasses::after{right:10px;}
         .g-3 .k-glasses::before, .g-3 .k-glasses::after { content:''; position:absolute; width: 24px; height: 18px; background: #2d3436; border-radius: 5px; top: 28px; } .g-3 .k-glasses::before{left:8px;} .g-3 .k-glasses::after{right:8px;}
         .g-4 .k-glasses::before, .g-4 .k-glasses::after { content:''; position:absolute; width: 22px; height: 22px; border: 3px solid #d81b60; border-radius: 50%; top: 26px; background: rgba(216,27,96,0.2); } .g-4 .k-glasses::before{left:10px;} .g-4 .k-glasses::after{right:10px;}
         .g-5 .k-glasses::before, .g-5 .k-glasses::after { content:''; position:absolute; width: 22px; height: 18px; border: 3px solid #0984e3; top: 28px; background: rgba(9,132,227,0.2); } .g-5 .k-glasses::before{left:10px;} .g-5 .k-glasses::after{right:10px;}
-        .g-6 .k-glasses::before, .g-6 .k-glasses::after { content:''; position:absolute; width: 24px; height: 16px; background: #2d3436; border-radius: 50% 0 50% 50%; top: 28px; } .g-6 .k-glasses::before{left:8px;} .g-6 .k-glasses::after{right:8px; border-radius: 0 50% 50% 50%;} /* Cat Eye */
-        .g-7 .k-glasses::before { content:''; position:absolute; width: 66px; height: 12px; background: #2d3436; border-radius: 5px; top: 30px; left: 12px; } /* Matrix/Cyclops */
+        .g-6 .k-glasses::before, .g-6 .k-glasses::after { content:''; position:absolute; width: 24px; height: 16px; background: #2d3436; border-radius: 50% 0 50% 50%; top: 28px; } .g-6 .k-glasses::before{left:8px;} .g-6 .k-glasses::after{right:8px; border-radius: 0 50% 50% 50%;}
+        .g-7 .k-glasses::before { content:''; position:absolute; width: 66px; height: 12px; background: #2d3436; border-radius: 5px; top: 30px; left: 12px; }
         .g-8 .k-glasses::before, .g-8 .k-glasses::after { content:''; position:absolute; width: 22px; height: 22px; border: 2px solid gold; border-radius: 50%; top: 26px; background: rgba(255,215,0,0.2); } .g-8 .k-glasses::before{left:10px;} .g-8 .k-glasses::after{right:10px;}
         .g-9 .k-glasses::before, .g-9 .k-glasses::after { content:''; position:absolute; width: 24px; height: 18px; border: 3px solid white; border-radius: 4px; top: 28px; background: rgba(0,0,0,0.5); } .g-9 .k-glasses::before{left:8px;} .g-9 .k-glasses::after{right:8px;}
-        .g-10 .k-glasses::before, .g-10 .k-glasses::after { content:''; position:absolute; width: 24px; height: 20px; border: 2px solid #2d3436; border-radius: 4px 4px 15px 15px; top: 27px; background: rgba(45,52,54,0.3); } .g-10 .k-glasses::before{left:9px;} .g-10 .k-glasses::after{right:9px;} /* Aviator */
-        .g-11 .k-glasses::before, .g-11 .k-glasses::after { content:''; position:absolute; width: 22px; height: 22px; background: rgba(255,105,180,0.6); top: 26px; clip-path: polygon(50% 100%, 0 40%, 0 0, 50% 20%, 100% 0, 100% 40%); } .g-11 .k-glasses::before{left:10px;} .g-11 .k-glasses::after{right:10px;} /* Heart */
-        .g-12 .k-glasses::before, .g-12 .k-glasses::after { content:''; position:absolute; width: 22px; height: 18px; background: #00b894; border-radius: 50%; top: 28px; } .g-12 .k-glasses::before{left:10px;} .g-12 .k-glasses::after{right:10px;} /* Small round */
-        .g-13 .k-glasses::before { content:''; position:absolute; width: 66px; height: 16px; background: linear-gradient(to right, red, cyan); border-radius: 5px; top: 28px; left: 12px; opacity: 0.8;} /* 3D */
+        .g-10 .k-glasses::before, .g-10 .k-glasses::after { content:''; position:absolute; width: 24px; height: 20px; border: 2px solid #2d3436; border-radius: 4px 4px 15px 15px; top: 27px; background: rgba(45,52,54,0.3); } .g-10 .k-glasses::before{left:9px;} .g-10 .k-glasses::after{right:9px;}
+        .g-11 .k-glasses::before, .g-11 .k-glasses::after { content:''; position:absolute; width: 22px; height: 22px; background: rgba(255,105,180,0.6); top: 26px; clip-path: polygon(50% 100%, 0 40%, 0 0, 50% 20%, 100% 0, 100% 40%); } .g-11 .k-glasses::before{left:10px;} .g-11 .k-glasses::after{right:10px;}
+        .g-12 .k-glasses::before, .g-12 .k-glasses::after { content:''; position:absolute; width: 22px; height: 18px; background: #00b894; border-radius: 50%; top: 28px; } .g-12 .k-glasses::before{left:10px;} .g-12 .k-glasses::after{right:10px;}
+        .g-13 .k-glasses::before { content:''; position:absolute; width: 66px; height: 16px; background: linear-gradient(to right, red, cyan); border-radius: 5px; top: 28px; left: 12px; opacity: 0.8;}
         .g-14 .k-glasses::before, .g-14 .k-glasses::after { content:''; position:absolute; width: 24px; height: 18px; background: linear-gradient(to bottom, #a29bfe, #6c5ce7); border-radius: 8px; top: 28px; } .g-14 .k-glasses::before{left:8px;} .g-14 .k-glasses::after{right:8px;}
-        .g-15 .k-glasses::before { content:''; position:absolute; width: 24px; height: 24px; border: 3px solid #2d3436; border-radius: 50%; top: 25px; left: 12px; background: rgba(0,0,0,0.1); } /* Monocle */
+        .g-15 .k-glasses::before { content:''; position:absolute; width: 24px; height: 24px; border: 3px solid #2d3436; border-radius: 50%; top: 25px; left: 12px; background: rgba(0,0,0,0.1); }
         .g-16 .k-glasses::before, .g-16 .k-glasses::after { content:''; position:absolute; width: 22px; height: 18px; border-top: 5px solid #2d3436; border-bottom: 2px solid #2d3436; top: 28px; background: rgba(0,0,0,0.1); } .g-16 .k-glasses::before{left:10px;} .g-16 .k-glasses::after{right:10px;}
-        .g-17 .k-glasses::before, .g-17 .k-glasses::after { content:''; position:absolute; width: 22px; height: 22px; background: #fdcb6e; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); top: 26px; } .g-17 .k-glasses::before{left:10px;} .g-17 .k-glasses::after{right:10px;} /* Hexagon */
-        .g-18 .k-glasses::before, .g-18 .k-glasses::after { content:''; position:absolute; width: 24px; height: 10px; background: #e17055; border-radius: 20px; top: 32px; } .g-18 .k-glasses::before{left:8px;} .g-18 .k-glasses::after{right:8px;} /* Tiny retro */
-        .g-19 .k-glasses::before { content:''; position:absolute; width: 66px; height: 20px; background: rgba(0,0,0,0.8); border: 2px solid #00cec9; border-radius: 10px; top: 26px; left: 12px; } /* Cyberpunk VR */
-        .g-20 .k-glasses::before, .g-20 .k-glasses::after { content:''; position:absolute; width: 22px; height: 22px; border: 4px solid #fff; border-radius: 50%; top: 26px; box-shadow: 0 0 5px rgba(0,0,0,0.5); } .g-20 .k-glasses::before{left:10px;} .g-20 .k-glasses::after{right:10px;} /* Thick white */
+        .g-17 .k-glasses::before, .g-17 .k-glasses::after { content:''; position:absolute; width: 22px; height: 22px; background: #fdcb6e; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); top: 26px; } .g-17 .k-glasses::before{left:10px;} .g-17 .k-glasses::after{right:10px;}
+        .g-18 .k-glasses::before, .g-18 .k-glasses::after { content:''; position:absolute; width: 24px; height: 10px; background: #e17055; border-radius: 20px; top: 32px; } .g-18 .k-glasses::before{left:8px;} .g-18 .k-glasses::after{right:8px;}
+        .g-19 .k-glasses::before { content:''; position:absolute; width: 66px; height: 20px; background: rgba(0,0,0,0.8); border: 2px solid #00cec9; border-radius: 10px; top: 26px; left: 12px; }
+        .g-20 .k-glasses::before, .g-20 .k-glasses::after { content:''; position:absolute; width: 22px; height: 22px; border: 4px solid #fff; border-radius: 50%; top: 26px; box-shadow: 0 0 5px rgba(0,0,0,0.5); } .g-20 .k-glasses::before{left:10px;} .g-20 .k-glasses::after{right:10px;}
 
-        /* 20 DETAYLI KIYAFET (SUDE KIZ) - Desenler, Şeritler, Puantiyeler */
-        .sk-1 .k-torso { background: #fd79a8; } /* Düz Pembe */
-        .sk-2 .k-torso { background: #ffb6c1; background-image: radial-gradient(white 15%, transparent 16%), radial-gradient(white 15%, transparent 16%); background-size: 14px 14px; background-position: 0 0, 7px 7px; } /* Puantiyeli Pembe */
-        .sk-3 .k-torso { background: repeating-linear-gradient(90deg, #74b9ff, #74b9ff 8px, #fff 8px, #fff 16px); } /* Mavi Beyaz Çizgili */
-        .sk-4 .k-torso { background: repeating-linear-gradient(45deg, #d63031, #d63031 10px, #2d3436 10px, #2d3436 20px); } /* Kırmızı Siyah Oduncu */
-        .sk-5 .k-torso { background: linear-gradient(to bottom, #a29bfe 45%, #6c5ce7 45%, #6c5ce7 55%, #a29bfe 55%); } /* Kemerli Mor Elbise */
-        .sk-6 .k-torso { background: radial-gradient(circle at 50% 0, #ffeaa7 30%, #fdcb6e 31%); } /* Sarı Yakalı Elbise */
-        .sk-7 .k-torso { background: #55efc4; box-shadow: inset 0 -8px 0 #00b894; } /* Uçları yeşil elbisemsi */
-        .sk-8 .k-torso { background: linear-gradient(to right, #ff7675 50%, #d63031 50%); } /* Yarı Yarıya Kırmızı */
-        .sk-9 .k-torso { background: repeating-linear-gradient(0deg, #fab1a0, #fab1a0 6px, #e17055 6px, #e17055 12px); } /* Yatay Çizgili Turuncu */
-        .sk-10 .k-torso::before { content:''; position:absolute; width:100%; height:10px; background:white; bottom:0; left:0; border-top: 2px dashed #d81b60;} .sk-10 .k-torso { background:#ff9ff3; } /* Dantel Etekli */
-        .sk-11 .k-torso { background: #fff; border: 4px solid #000; } /* Siyah Çerçeveli Beyaz */
-        .sk-12 .k-torso { background: repeating-radial-gradient(circle, #81ecec, #81ecec 5px, #00cec9 5px, #00cec9 10px); } /* Hedef Tahtası Cyan */
-        .sk-13 .k-torso { background: linear-gradient(135deg, #a29bfe 25%, transparent 25%) -10px 0, linear-gradient(225deg, #a29bfe 25%, transparent 25%) -10px 0, linear-gradient(315deg, #a29bfe 25%, transparent 25%), linear-gradient(45deg, #a29bfe 25%, transparent 25%); background-size: 20px 20px; background-color: #dfe6e9;} /* Geometrik Desen */
-        .sk-14 .k-torso { background: #e84393; box-shadow: inset 0 8px 0 #fff; } /* Beyaz Yakalı Fuşya */
-        .sk-15 .k-torso { background: linear-gradient(to right, #74b9ff, #a29bfe, #fd79a8); } /* Gökkuşağı Gradient */
-        .sk-16 .k-torso { background: #2d3436; background-image: radial-gradient(gold 10%, transparent 11%); background-size: 15px 15px; } /* Altın Noktalı Gece Elbisesi */
-        .sk-17 .k-torso { background: #fff; border-left: 10px solid #fd79a8; border-right: 10px solid #fd79a8; } /* Yanları Pembe Şeritli */
-        .sk-18 .k-torso { background: #fff; border-top: 15px solid #0984e3; } /* Mavi Omuzlu Tişört */
-        .sk-19 .k-torso::before { content:'❤'; position:absolute; width:100%; text-align:center; top:5px; font-size:16px; color:white; } .sk-19 .k-torso { background: #d63031; } /* Kalpli Kırmızı */
-        .sk-20 .k-torso { background: linear-gradient(45deg, #ffe2e2 25%, #ffb6c1 25%, #ffb6c1 50%, #ffe2e2 50%, #ffe2e2 75%, #ffb6c1 75%, #ffb6c1 100%); background-size: 20px 20px; } /* Çapraz Pötikare */
+        /* 40 DETAYLI KIYAFET (SUDE) */
+        .sk-1 .k-torso { background: #fd79a8; }
+        .sk-2 .k-torso { background: #ffb6c1; background-image: radial-gradient(white 15%, transparent 16%); background-size: 14px 14px; }
+        .sk-3 .k-torso { background: repeating-linear-gradient(90deg, #74b9ff, #74b9ff 8px, #fff 8px, #fff 16px); }
+        .sk-4 .k-torso { background: repeating-linear-gradient(45deg, #d63031, #d63031 10px, #2d3436 10px, #2d3436 20px); }
+        .sk-5 .k-torso { background: linear-gradient(to bottom, #a29bfe 45%, #6c5ce7 45%, #6c5ce7 55%, #a29bfe 55%); }
+        .sk-6 .k-torso { background: radial-gradient(circle at 50% 0, #ffeaa7 30%, #fdcb6e 31%); }
+        .sk-7 .k-torso { background: #55efc4; box-shadow: inset 0 -8px 0 #00b894; }
+        .sk-8 .k-torso { background: linear-gradient(to right, #ff7675 50%, #d63031 50%); }
+        .sk-9 .k-torso { background: repeating-linear-gradient(0deg, #fab1a0, #fab1a0 6px, #e17055 6px, #e17055 12px); }
+        .sk-10 .k-torso::before { content:''; position:absolute; width:100%; height:10px; background:white; bottom:0; left:0; border-top: 2px dashed #d81b60;} .sk-10 .k-torso { background:#ff9ff3; }
+        .sk-11 .k-torso { background: #fff; border: 4px solid #000; }
+        .sk-12 .k-torso { background: repeating-radial-gradient(circle, #81ecec, #81ecec 5px, #00cec9 5px, #00cec9 10px); }
+        .sk-13 .k-torso { background: linear-gradient(135deg, #a29bfe 25%, transparent 25%) -10px 0; background-color: #dfe6e9;}
+        .sk-14 .k-torso { background: #e84393; box-shadow: inset 0 8px 0 #fff; }
+        .sk-15 .k-torso { background: linear-gradient(to right, #74b9ff, #a29bfe, #fd79a8); }
+        .sk-16 .k-torso { background: #2d3436; background-image: radial-gradient(gold 10%, transparent 11%); background-size: 15px 15px; }
+        .sk-17 .k-torso { background: #fff; border-left: 10px solid #fd79a8; border-right: 10px solid #fd79a8; }
+        .sk-18 .k-torso { background: #fff; border-top: 15px solid #0984e3; }
+        .sk-19 .k-torso::before { content:'❤'; position:absolute; width:100%; text-align:center; top:5px; font-size:16px; color:white; } .sk-19 .k-torso { background: #d63031; }
+        .sk-20 .k-torso { background: linear-gradient(45deg, #ffe2e2 25%, #ffb6c1 25%); background-size: 20px 20px; }
+        .sk-21 .k-torso { background: #ffbe76; box-shadow: inset 0 -5px 0 #f0932b; }
+        .sk-22 .k-torso { background: repeating-linear-gradient(135deg, #f9ca24, #f9ca24 10px, #f0932b 10px, #f0932b 20px); }
+        .sk-23 .k-torso { background: #7ed6df; border-top: 8px solid #22a6b3; }
+        .sk-24 .k-torso { background: repeating-radial-gradient(circle, #ff7979, #ff7979 4px, #eb4d4b 4px, #eb4d4b 8px); }
+        .sk-25 .k-torso { background: #badc58; border-bottom: 6px solid #6ab04c; }
+        .sk-26 .k-torso { background: linear-gradient(to right, #e056fd 50%, #be2edd 50%); }
+        .sk-27 .k-torso { background: #c7ecee; border: 2px dashed #ff7979; }
+        .sk-28 .k-torso { background: radial-gradient(circle at center, #f6e58d 40%, #f9ca24 41%); }
+        .sk-29 .k-torso { background: repeating-linear-gradient(45deg, #4834d4, #4834d4 5px, #686de0 5px, #686de0 10px); }
+        .sk-30 .k-torso { background: #dff9fb; box-shadow: inset 0 10px 0 #c7ecee; }
+        .sk-31 .k-torso { background: #ffc048; border-left: 8px solid #ffa801; }
+        .sk-32 .k-torso { background: repeating-linear-gradient(-45deg, #ef5777, #ef5777 8px, #f53b57 8px, #f53b57 16px); }
+        .sk-33 .k-torso { background: #0fbcf9; background-image: radial-gradient(white 15%, transparent 16%); background-size: 10px 10px; }
+        .sk-34 .k-torso { background: #00d8d6; box-shadow: inset 0 -8px 0 #008080; }
+        .sk-35 .k-torso { background: linear-gradient(to bottom, #ffd32a 30%, #ff3f34 30%); }
+        .sk-36 .k-torso { background: repeating-linear-gradient(90deg, #1e272e, #1e272e 6px, #485460 6px, #485460 12px); }
+        .sk-37 .k-torso { background: #808e9b; border-bottom: 12px solid #d2dae2; }
+        .sk-38 .k-torso { background: repeating-radial-gradient(circle, #f5f6fa, #f5f6fa 6px, #dcdde1 6px, #dcdde1 12px); }
+        .sk-39 .k-torso { background: #e1b12c; border-top: 5px solid #44bd32; border-bottom: 5px solid #44bd32; }
+        .sk-40 .k-torso { background: linear-gradient(135deg, #c23616 25%, transparent 25%) -10px 0; background-color: #e84118;}
 
-        /* 20 DETAYLI KIYAFET (ŞAHİN ERKEK) - Ceketler, Gömlekler, Kapüşonlular */
-        .sh-1 .k-torso { background: #2d3436; border-top: 6px solid #dfe6e9; } /* Siyah Hoodie */
-        .sh-2 .k-torso { background: #636e72; border-left: 5px solid #b2bec3; border-right: 5px solid #b2bec3; } /* Gri Hırka */
-        .sh-3 .k-torso { background: #000; } .sh-3 .k-torso::before { content:''; position:absolute; width:12px; height:100%; background:white; left:50%; transform:translateX(-50%); } /* Beyaz Kravatlı Smokin */
-        .sh-4 .k-torso { background: repeating-linear-gradient(90deg, #0984e3, #0984e3 6px, #74b9ff 6px, #74b9ff 12px); } /* Mavi Çizgili Gömlek */
-        .sh-5 .k-torso { background: #0984e3; border-bottom: 10px solid #74b9ff; } /* Kot Ceket Efekti */
-        .sh-6 .k-torso { background: repeating-linear-gradient(45deg, #e17055, #e17055 10px, #2d3436 10px, #2d3436 20px); } /* Turuncu Oduncu */
-        .sh-7 .k-torso { background: #fff; border: 3px solid #2d3436; } .sh-7 .k-torso::before { content:'8'; position:absolute; width:100%; text-align:center; top:8px; font-weight:bold; font-size:14px; } /* 8 Numaralı Forma */
-        .sh-8 .k-torso { background: linear-gradient(135deg, transparent 15px, #55efc4 0); } /* V Yaka Yeşil Kazak */
-        .sh-9 .k-torso { background: #2d3436; border-radius: 18px 18px 0 0; border-bottom: 15px solid #b2bec3; } /* Biker Ceket */
-        .sh-10 .k-torso { background: linear-gradient(to right, #000 50%, #fff 50%); } /* Siyah Beyaz Yarı Yarıya */
-        .sh-11 .k-torso { background: #b2bec3; box-shadow: inset 0 0 10px #636e72; } /* Kirli Gri Atlet */
-        .sh-12 .k-torso { background: repeating-linear-gradient(0deg, #2d3436, #2d3436 5px, #ffeaa7 5px, #ffeaa7 10px); } /* Arı Maya Çizgili */
-        .sh-13 .k-torso { background: #d63031; border-top: 5px solid #2d3436; border-bottom: 5px solid #2d3436; } /* Kırmızı Eşofman Üstü */
-        .sh-14 .k-torso { background: radial-gradient(circle at 30% 30%, #556b2f 20%, transparent 20%), radial-gradient(circle at 70% 60%, #8b4513 20%, transparent 20%); background-color: #6b8e23; } /* Kamuflaj */
-        .sh-15 .k-torso::before { content:'⚡'; position:absolute; width:100%; text-align:center; top:6px; font-size:14px; color:#fdcb6e; } .sh-15 .k-torso { background: #000; } /* Şimşekli Siyah Tişört */
-        .sh-16 .k-torso { background: linear-gradient(to right, #74b9ff 30%, #fff 30%, #fff 70%, #74b9ff 70%); } /* Askılı Pantolon Efekti */
-        .sh-17 .k-torso { background: #fff; border-top: 10px solid #d63031; } /* Beyaz Kırmızı Omuzlu */
-        .sh-18 .k-torso { background: linear-gradient(to bottom, #0984e3 40%, #2d3436 40%); } /* İki Renkli Blok */
-        .sh-19 .k-torso { background: repeating-radial-gradient(circle, #2d3436, #2d3436 4px, #fff 4px, #fff 8px); } /* Hipnoz Eden Desen */
-        .sh-20 .k-torso { background: #e17055; box-shadow: inset 0 -12px 0 #d63031; } /* Kalın Alt Şeritli Kazak */
+        /* 40 DETAYLI KIYAFET (ŞAHİN) */
+        .sh-1 .k-torso { background: #2d3436; border-top: 6px solid #dfe6e9; }
+        .sh-2 .k-torso { background: #636e72; border-left: 5px solid #b2bec3; border-right: 5px solid #b2bec3; }
+        .sh-3 .k-torso { background: #000; } .sh-3 .k-torso::before { content:''; position:absolute; width:12px; height:100%; background:white; left:50%; transform:translateX(-50%); }
+        .sh-4 .k-torso { background: repeating-linear-gradient(90deg, #0984e3, #0984e3 6px, #74b9ff 6px, #74b9ff 12px); }
+        .sh-5 .k-torso { background: #0984e3; border-bottom: 10px solid #74b9ff; }
+        .sh-6 .k-torso { background: repeating-linear-gradient(45deg, #e17055, #e17055 10px, #2d3436 10px, #2d3436 20px); }
+        .sh-7 .k-torso { background: #fff; border: 3px solid #2d3436; } .sh-7 .k-torso::before { content:'8'; position:absolute; width:100%; text-align:center; top:8px; font-weight:bold; font-size:14px; }
+        .sh-8 .k-torso { background: linear-gradient(135deg, transparent 15px, #55efc4 0); }
+        .sh-9 .k-torso { background: #2d3436; border-radius: 18px 18px 0 0; border-bottom: 15px solid #b2bec3; }
+        .sh-10 .k-torso { background: linear-gradient(to right, #000 50%, #fff 50%); }
+        .sh-11 .k-torso { background: #b2bec3; box-shadow: inset 0 0 10px #636e72; }
+        .sh-12 .k-torso { background: repeating-linear-gradient(0deg, #2d3436, #2d3436 5px, #ffeaa7 5px, #ffeaa7 10px); }
+        .sh-13 .k-torso { background: #d63031; border-top: 5px solid #2d3436; border-bottom: 5px solid #2d3436; }
+        .sh-14 .k-torso { background: radial-gradient(circle at 30% 30%, #556b2f 20%, transparent 20%), radial-gradient(circle at 70% 60%, #8b4513 20%, transparent 20%); background-color: #6b8e23; }
+        .sh-15 .k-torso::before { content:'⚡'; position:absolute; width:100%; text-align:center; top:6px; font-size:14px; color:#fdcb6e; } .sh-15 .k-torso { background: #000; }
+        .sh-16 .k-torso { background: linear-gradient(to right, #74b9ff 30%, #fff 30%, #fff 70%, #74b9ff 70%); }
+        .sh-17 .k-torso { background: #fff; border-top: 10px solid #d63031; }
+        .sh-18 .k-torso { background: linear-gradient(to bottom, #0984e3 40%, #2d3436 40%); }
+        .sh-19 .k-torso { background: repeating-radial-gradient(circle, #2d3436, #2d3436 4px, #fff 4px, #fff 8px); }
+        .sh-20 .k-torso { background: #e17055; box-shadow: inset 0 -12px 0 #d63031; }
+        .sh-21 .k-torso { background: #4b6584; border-bottom: 8px solid #a5b1c2; }
+        .sh-22 .k-torso { background: repeating-linear-gradient(135deg, #20bf6b, #20bf6b 8px, #0fb9b1 8px, #0fb9b1 16px); }
+        .sh-23 .k-torso { background: #eb3b5a; border-left: 10px solid #fa8231; }
+        .sh-24 .k-torso { background: radial-gradient(circle, #8854d0 30%, #3867d6 31%); }
+        .sh-25 .k-torso { background: #2bcbba; border-top: 10px solid #0fb9b1; }
+        .sh-26 .k-torso { background: linear-gradient(to right, #4b7bec 50%, #3867d6 50%); }
+        .sh-27 .k-torso { background: #a5b1c2; border: 2px dashed #4b6584; }
+        .sh-28 .k-torso { background: repeating-linear-gradient(45deg, #f7b731, #f7b731 10px, #fa8231 10px, #fa8231 20px); }
+        .sh-29 .k-torso { background: #eb3b5a; box-shadow: inset 0 -5px 0 #20bf6b; }
+        .sh-30 .k-torso { background: repeating-radial-gradient(circle, #a5b1c2, #a5b1c2 5px, #778ca3 5px, #778ca3 10px); }
+        .sh-31 .k-torso { background: #f1c40f; border-left: 5px solid #000; border-right: 5px solid #000; }
+        .sh-32 .k-torso { background: linear-gradient(to bottom, #8e44ad 30%, #2980b9 30%); }
+        .sh-33 .k-torso { background: repeating-linear-gradient(90deg, #16a085, #16a085 8px, #27ae60 8px, #27ae60 16px); }
+        .sh-34 .k-torso { background: #2c3e50; border-bottom: 12px solid #e74c3c; }
+        .sh-35 .k-torso { background: radial-gradient(circle at center, #ecf0f1 40%, #bdc3c7 41%); }
+        .sh-36 .k-torso { background: repeating-linear-gradient(-45deg, #d35400, #d35400 10px, #e67e22 10px, #e67e22 20px); }
+        .sh-37 .k-torso { background: #7f8c8d; box-shadow: inset 0 10px 0 #95a5a6; }
+        .sh-38 .k-torso { background: linear-gradient(135deg, #1abc9c 25%, transparent 25%) -10px 0; background-color: #2ecc71;}
+        .sh-39 .k-torso { background: #34495e; border-top: 5px solid #f39c12; border-bottom: 5px solid #f39c12; }
+        .sh-40 .k-torso { background: linear-gradient(to right, #9b59b6 50%, #34495e 50%); }
 
         /* BUTONLAR & INPUTLAR */
         .login-input { padding: 15px 25px; border-radius: 20px; border: 2px solid rgba(255,105,180,0.3); font-size: 1.2rem; font-weight: bold; text-align: center; margin-bottom: 20px; width: 250px; background: rgba(255,255,255,0.8); box-shadow: inset 0 2px 5px rgba(0,0,0,0.05); transition: 0.3s;}
@@ -159,7 +253,7 @@
         .primary-btn { background: linear-gradient(45deg, #ff4757, #ff6b81); color: white; padding: 15px 35px; border-radius: 30px; border: none; font-size: 1.2rem; font-weight: 800; cursor: pointer; transition: 0.3s; box-shadow: 0 10px 20px rgba(255,105,180,0.3); }
         .primary-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 15px 25px rgba(255,105,180,0.4); }
 
-        /* AŞK TESTİ EKRANI (Büyütülmüş Kutu ve Küçük Hayır Butonu) */
+        /* AŞK TESTİ EKRANI */
         .love-buttons-box { position: relative; width: 100%; max-width: 500px; height: 350px; margin-top: 20px; display: flex; justify-content: center; align-items: center; background: rgba(255,255,255,0.3); border-radius: 30px; border: 2px dashed #ffb6c1; overflow: hidden; }
         #btn-yes { position: relative; z-index: 10; padding: 15px 40px; font-size: 1.3rem;}
         #btn-no { position: absolute; background: linear-gradient(45deg, #2d3436, #636e72); z-index: 11; transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94); box-shadow: 0 5px 15px rgba(0,0,0,0.2); left: 70%; top: 60%; padding: 10px 20px; font-size: 0.95rem; border-radius: 20px;}
@@ -173,7 +267,7 @@
         .motivation-box { display: none; margin-top: 20px; background: rgba(255,255,255,0.9); padding: 25px; border-radius: 20px; border: 2px dashed #ff4757; color: #d81b60; font-weight: 800; font-size: 1.3rem; animation: fadeIn 0.3s; box-shadow: 0 10px 20px rgba(0,0,0,0.05);}
         .countdown-text { font-size: 1.2rem; font-weight: 800; color: #636e72; margin-top: 15px; display: none; }
 
-        /* DASHBOARD (PLANLAR & GÖREVLER) */
+        /* DASHBOARD */
         .top-status-bar { width: 100%; display: flex; justify-content: space-between; padding: 15px 30px; background: rgba(255,255,255,0.7); backdrop-filter: blur(10px); border-bottom: 2px solid rgba(255,105,180,0.2); font-weight: 800; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(0,0,0,0.03);}
         .status-box { padding: 8px 18px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);}
         .status-sude { background: linear-gradient(45deg, #ff9a9e, #fecfef); color: white; text-align: left; }
@@ -217,9 +311,24 @@
         .preview-stage { width: 300px; height: 320px; background: rgba(255,255,255,0.6); backdrop-filter: blur(10px); border-radius: 30px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; border: 3px dashed #ffb6c1; box-shadow: inset 0 0 20px rgba(255,105,180,0.2);}
         .preview-stage .kitty-container { position: relative; top: 0 !important; left: 0 !important; transform: scale(1.5); transform-origin: center; animation: d-pulse 2s infinite alternate;}
 
-        /* HATA SAYFASI */
-        #screen-error { z-index: 99999; background: rgba(255, 182, 193, 0.95); backdrop-filter: blur(15px); color: white; text-shadow: 1px 1px 3px rgba(0,0,0,0.2);}
-        .error-heart { font-size: 80px; animation: d-pulse 1s infinite alternate; margin-bottom: 20px;}
+        /* MUHTEŞEM HATA / ÇEVRİMDIŞI EKRANI (Yeni) */
+        #screen-error { 
+            z-index: 99999; 
+            background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%); 
+            color: white; 
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2); 
+            display: none;
+        }
+        .error-heart { 
+            font-size: 110px; 
+            animation: pulseHeart 1.5s infinite alternate; 
+            margin-bottom: 20px;
+            filter: drop-shadow(0 15px 20px rgba(0,0,0,0.3));
+        }
+        @keyframes pulseHeart {
+            0% { transform: scale(1) translateY(0); }
+            100% { transform: scale(1.15) translateY(-10px); }
+        }
 
         @media (max-width: 768px) {
             .dressup-layout { flex-direction: column; align-items: center; }
@@ -250,7 +359,6 @@
         </div>
     </div>
 
-    <!-- ERKEK HELLO KITTY (Kafasındaki çıkıntı silindi) -->
     <div id="kitty-sahin" class="kitty-container dance-0 avatar-sahin" style="top: 20vh; right: 10vw;">
         <div class="k-part k-ear left"></div><div class="k-part k-ear right"></div>
         <div class="k-part k-foot left"></div><div class="k-part k-foot right"></div>
@@ -264,7 +372,6 @@
         </div>
     </div>
 
-    <!-- GİRİŞ EKRANI -->
     <div id="screen-login" class="screen active">
         <div class="main-card" style="max-width: 450px;">
             <h1>Giriş Yap 🤍</h1>
@@ -273,7 +380,6 @@
         </div>
     </div>
 
-    <!-- AŞK TESTİ EKRANI -->
     <div id="screen-love" class="screen">
         <div class="main-card" style="max-width: 650px;">
             <h1 id="love-q">Beni seviyor musun Karıcım? 🥺</h1>
@@ -284,7 +390,6 @@
         </div>
     </div>
 
-    <!-- MOD EKRANI -->
     <div id="screen-mood" class="screen">
         <div class="main-card" style="max-width: 650px;">
             <h1 id="mood-title">Bugün modun nasıl aşkım?</h1>
@@ -294,7 +399,6 @@
         </div>
     </div>
 
-    <!-- DASHBOARD EKRANI -->
     <div id="screen-dashboard" class="screen">
         <div class="top-status-bar">
             <div class="status-box status-sude" id="status-sude-view">Sude'nin Modu: Yükleniyor...</div>
@@ -312,7 +416,7 @@
                 <div class="task-boards-container">
                     
                     <div class="task-board">
-                        <h3 style="color: #4a69bd;">Şahin'in Görevleri 🦅</h3>
+                        <h3 style="color: #4a69bd;">Şahin'in Görevleri</h3>
                         <div class="add-task-form">
                             <input type="text" id="input-sahin" class="add-task-input" placeholder="Görev ekle...">
                             <button class="todo-btn" id="btn-add-sahin" onclick="addTask('sahin')">Ekle</button>
@@ -349,11 +453,11 @@
                     
                     <div class="wardrobe-panel" style="border-top: 5px solid #ff4757;">
                         <h4 style="color: #ff4757;">Sude'nin Dolabı (Kız)</h4>
-                        <p style="font-size: 0.8rem; margin-bottom: 5px; font-weight: bold;">Aksesuar</p>
+                        <p style="font-size: 0.8rem; margin-bottom: 5px; font-weight: bold;">20 Saf CSS Aksesuar (Emoji Yok)</p>
                         <div class="wardrobe-grid" id="grid-sude-hat"></div>
                         <p style="font-size: 0.8rem; margin-bottom: 5px; font-weight: bold;">20 CSS Gözlük</p>
                         <div class="wardrobe-grid" id="grid-sude-glasses"></div>
-                        <p style="font-size: 0.8rem; margin-bottom: 5px; font-weight: bold;">20 Detaylı CSS Kıyafet</p>
+                        <p style="font-size: 0.8rem; margin-bottom: 5px; font-weight: bold;">40 Detaylı CSS Kıyafet</p>
                         <div class="wardrobe-grid" id="grid-sude-clothes"></div>
                     </div>
 
@@ -363,11 +467,11 @@
 
                     <div class="wardrobe-panel" style="border-top: 5px solid #2d3436;">
                         <h4 style="color: #2d3436;">Şahin'in Dolabı (Erkek)</h4>
-                        <p style="font-size: 0.8rem; margin-bottom: 5px; font-weight: bold;">Şapka</p>
+                        <p style="font-size: 0.8rem; margin-bottom: 5px; font-weight: bold;">20 Saf CSS Aksesuar (Emoji Yok)</p>
                         <div class="wardrobe-grid" id="grid-sahin-hat"></div>
                         <p style="font-size: 0.8rem; margin-bottom: 5px; font-weight: bold;">20 CSS Gözlük</p>
                         <div class="wardrobe-grid" id="grid-sahin-glasses"></div>
-                        <p style="font-size: 0.8rem; margin-bottom: 5px; font-weight: bold;">20 Detaylı CSS Kıyafet</p>
+                        <p style="font-size: 0.8rem; margin-bottom: 5px; font-weight: bold;">40 Detaylı CSS Kıyafet</p>
                         <div class="wardrobe-grid" id="grid-sahin-clothes"></div>
                     </div>
 
@@ -381,14 +485,13 @@
         </div>
     </div>
 
-    <!-- HATA UYARI EKRANI -->
     <div id="screen-error" class="screen">
-        <div class="error-heart">💔</div>
-        <h1 style="color: white;">Şahin ya uyuyor ya da Müsait değildir...</h1>
-        <p style="font-size: 1.3rem; font-weight: bold; margin-top: 20px; background: rgba(255,255,255,0.2); padding: 15px 30px; border-radius: 20px;">
-            Şahin kesin uyuyordur yoksa sana hep müsaittir karıcım 💕
+        <div class="error-heart">🧸💖</div>
+        <h1 style="color: white; font-size: clamp(1.8rem, 5vw, 2.5rem); text-shadow: 2px 2px 10px rgba(0,0,0,0.2);">Şahin uyuyor yada müsait değil...</h1>
+        <p style="font-size: clamp(1.1rem, 3vw, 1.4rem); font-weight: bold; margin-top: 15px; background: rgba(255,255,255,0.3); padding: 20px 40px; border-radius: 25px; color: #2d3436; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 2px dashed rgba(255,255,255,0.6); max-width: 600px;">
+            Büyük ihtimal Şahin uyuyordur yoksa sana hep müsaittir karıcım 💕
         </p>
-        <button class="primary-btn" style="margin-top: 30px; background: white; color: #ff4757;" onclick="forceDashboard()">Yine de Giriş Yap (Çevrimdışı)</button>
+        <button class="primary-btn" style="margin-top: 35px; background: white; color: #ff4757; font-size: 1.2rem; padding: 15px 40px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);" onclick="forceDashboard()">Yine de Giriş Yap (Çevrimdışı Mod)</button>
     </div>
 
     <script>
@@ -399,36 +502,50 @@
         let sudeDanceIdx = 0;
         let sahinDanceIdx = 0;
         let countdownTimer;
+        let isOfflineMode = false; // Sürekli hata ekranına atmaması için
 
         let appState = {
             moodSude: "Belirlenmedi 🌸",
-            moodSahin: "Belirlenmedi 🦅",
+            moodSahin: "Belirlenmedi",
             tasks: { sahin: [], sude: [], ortak: [] },
-            sudeLook: { hat: "s-kurdele", glasses: "", clothes: "sk-1" },
-            sahinLook: { hat: "s-kep", glasses: "g-3", clothes: "sh-1" },
+            sudeLook: { hat: "s-3", glasses: "", clothes: "sk-1" },
+            sahinLook: { hat: "s-4", glasses: "g-3", clothes: "sh-1" },
             backgroundClass: "bg-sweet-pink"
         };
 
         const moodEmojis = ['😭','🥺','😔','😐','🙂','😊','🥰','😍','🤩','🔥'];
         
-        // Modlara özel dinamik mesaj havuzu (Tıklamalarda 1 tanesi rastgele seçilecek)
         const moodMessages = {
-            '😭': ["Kıyamam sana, her şey düzelecek aşkım! 💖", "Gözyaşlarına kurban olurum, yanındayım hep!", "Ağlama bebeğim, ben buradayım sarıl bana 🥺", "Sen ağlayınca benim içim acıyor 💔", "Seni çok seviyorum, geçecek her şey! ✨"],
-            '🥺': ["O masum bakışlarını yerim senin! 🥰", "Hemen yanına gelmek istiyorum!", "Neye ihtiyacın var sevgilim? 🌸", "Seni sımsıkı sarmak istedim şu an!", "Kıyamam o güzel gözlerine!"],
-            '😔': ["Canını ne sıktı aşkım? Ben çözerim! 💪", "Sen üzülme, dünyayı karşıma alırım!", "Gülümsemen için her şeyi yaparım! 🌟", "Derdin derdimdir bebeğim, anlat bana.", "Seni dünyanın en mutlu insanı yapacağım!"],
-            '😐': ["Hadi biraz enerjini yükseltelim! 🚀", "Günün sıkıcı mı geçiyor hayatım?", "Seni güldürecek bir şeyler bulmalıyım! 😂", "Hemen yanına ışınlanıp seni öpmek geldi içimden!", "Şu an yanında olsaydım böyle durmazdın! 😉"],
-            '🙂': ["Bu tatlı tebessümünü hep koru! 😊", "Seni böyle sakin görmek güzel.", "Huzurumsun sen benim! 🌸", "Beraber daha da iyi hissedeceğiz!", "Sen iyiysen ben çok daha iyiyim!"],
-            '😊': ["Gülüşün dünyamı aydınlatıyor aşkım! ✨", "Mutluluğun mutluluğumdur! 💖", "Sen hep böyle gülümse bebeğim!", "Gülmek sana çok yakışıyor kraliçem! 👑", "O güzel yüzün hep gülsün!"],
-            '🥰': ["Senin o sevgi dolu kalbini yerim! ❤️", "Seni çok ama çok seviyorum!", "İyi ki benimsin, iyi ki varsın! 🌸", "Sen benim en büyük şansımsın!", "Aşkından başım dönüyor!"],
-            '😍': ["Gözlerim kamaştı güzelliğinden! ✨", "Sana her gün yeniden aşık oluyorum!", "Dünyanın en güzel insanı sensin! 👑", "Oha ne kadar harika görünüyorsun!", "Sana bakmaya doyamıyorum hayatım!"],
-            '🤩': ["Enerjin harika, bayılıyorum buna! 🔥", "Bugün parlıyorsun bebeğim!", "Harikasın, mükemmelsin, sen efsanesin! 💫", "Seninle her şey çok heyecanlı!", "İşte benim biriciğim formunda!"],
-            '🔥': ["Ortalığı yakıyorsun yine! 🔥🔥", "Senin o mükemmelliğine kalbim dayanmıyor!", "Ateş ediyorsun bebeğim! 💥", "Sana olan tutkum hiç bitmiyor!", "Çok güzelsin/yakışıklısın, aklımı başımdan alıyorsun!"]
+            '😭': ["Kıyamam sana, her şey düzelecek aşkım! 💖", "Gözyaşlarına kurban olurum, yanındayım hep!", "Ağlama bebeğim, ben buradayım sarıl bana 🥺"],
+            '🥺': ["O masum bakışlarını yerim senin! 🥰", "Hemen yanına gelmek istiyorum!", "Neye ihtiyacın var sevgilim? 🌸"],
+            '😔': ["Canını ne sıktı aşkım? Ben çözerim! 💪", "Sen üzülme, dünyayı karşıma alırım!", "Gülümsemen için her şeyi yaparım! 🌟"],
+            '😐': ["Hadi biraz enerjini yükseltelim! 🚀", "Günün sıkıcı mı geçiyor hayatım?", "Seni güldürecek bir şeyler bulmalıyım! 😂"],
+            '🙂': ["Bu tatlı tebessümünü hep koru! 😊", "Seni böyle sakin görmek güzel.", "Huzurumsun sen benim! 🌸"],
+            '😊': ["Gülüşün dünyamı aydınlatıyor aşkım! ✨", "Mutluluğun mutluluğumdur! 💖", "Sen hep böyle gülümse bebeğim!"],
+            '🥰': ["Senin o sevgi dolu kalbini yerim! ❤️", "Seni çok ama çok seviyorum!", "İyi ki benimsin, iyi ki varsın! 🌸"],
+            '😍': ["Gözlerim kamaştı güzelliğinden! ✨", "Sana her gün yeniden aşık oluyorum!", "Dünyanın en güzel insanı sensin! 👑"],
+            '🤩': ["Enerjin harika, bayılıyorum buna! 🔥", "Bugün parlıyorsun bebeğim!", "Harikasın, mükemmelsin, sen efsanesin! 💫"],
+            '🔥': ["Ortalığı yakıyorsun yine! 🔥🔥", "Senin o mükemmelliğine kalbim dayanmıyor!", "Ateş ediyorsun bebeğim! 💥"]
         };
 
-        const sudeWardrobeData = { hat: [{c:'s-kurdele', n:'Kurdele'}, {c:'s-tac', n:'Taç'}, {c:'', n:'❌'}], glasses: [], clothes: [] };
-        const sahinWardrobeData = { hat: [{c:'s-kep', n:'Kep'}, {c:'s-bere', n:'Bere'}, {c:'', n:'❌'}], glasses: [], clothes: [] };
+        const sudeWardrobeData = { hat: [], glasses: [], clothes: [] };
+        const sahinWardrobeData = { hat: [], glasses: [], clothes: [] };
 
-        // 20 CSS Gözlük Ekle
+        // 20 Saf CSS Şapka/Aksesuar İsimleri
+        sudeWardrobeData.hat.push({c:'', n:'❌ Yok'});
+        sahinWardrobeData.hat.push({c:'', n:'❌ Yok'});
+        const hatNames = [
+            "Silindir Şapka", "Kraliyet Tacı", "Kurdele Toka", "Spor Kep", "Kışlık Bere", 
+            "Melek Halesi", "Parti Şapkası", "Şeytan Boynuzu", "Spor Bandana", "Aşçı Kepi", 
+            "Ressam Beresi", "Cadı Şapkası", "Müzik Kulaklığı", "Meksika Şapkası", "Noel Şapkası", 
+            "Korsan Bandanası", "Klasik Fedora", "Mezuniyet Kepi", "Yaprak Taç", "Çiçek Toka"
+        ];
+        for(let i=1; i<=20; i++) {
+            sudeWardrobeData.hat.push({c: `s-${i}`, n: hatNames[i-1]});
+            sahinWardrobeData.hat.push({c: `s-${i}`, n: hatNames[i-1]});
+        }
+
+        // 20 CSS Gözlük
         sudeWardrobeData.glasses.push({c:'', n:'❌ Yok'});
         sahinWardrobeData.glasses.push({c:'', n:'❌ Yok'});
         const glassNames = ["Yuvarlak","Kare","Güneş","Pembe","Mavi","Kedi","Matrix","Altın","Kalın","Pilot","Kalp","Küçük","3D","Mor","Monokl","Hipster","Altıgen","Retro","Siber","Beyaz"];
@@ -437,8 +554,8 @@
             sahinWardrobeData.glasses.push({c: `g-${i}`, n: glassNames[i-1]});
         }
 
-        // 20 CSS Kıyafet Ekle
-        for(let i=1; i<=20; i++) {
+        // 40 CSS Kıyafet
+        for(let i=1; i<=40; i++) {
             sudeWardrobeData.clothes.push({c: `sk-${i}`, n: `Tarz ${i}`});
             sahinWardrobeData.clothes.push({c: `sh-${i}`, n: `Kombin ${i}`});
         }
@@ -481,8 +598,11 @@
         document.getElementById('kitty-sude').addEventListener('mousedown', (e) => handleKittyClick(e, 'sude'));
         document.getElementById('kitty-sahin').addEventListener('mousedown', (e) => handleKittyClick(e, 'sahin'));
 
-        // GİRİŞ
         function handleLogin() {
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen().catch(err => console.log("Tam ekran reddedildi: " + err));
+            }
+
             const pass = document.getElementById('password-input').value.trim().toLowerCase();
             if (pass === "sude") {
                 currentUser = "sude"; document.getElementById('love-q').innerText = "Beni seviyor musun Karıcım? 🥺"; showScreen('screen-love');
@@ -493,7 +613,7 @@
             }
         }
 
-        // HAYIR BUTONU (Gelişmiş Kaçış Algoritması - Mouse üzerine gelmeden kaçar)
+        // HAYIR BUTONU KAÇIŞ ALGORİTMASI
         const noBtn = document.getElementById('btn-no');
         const box = document.getElementById('love-box');
         const mockMessages = ["Yaklaşamadın bile! 😂", "Hıh, ezik! 😝", "Buna basamazsın ki!", "Daha hızlı olman lazım! 🐢", "Kocanı sevmek zorundasın! 💖", "Kaçtııım! 💨", "Oley, yakalayamadı! 🤸"];
@@ -502,27 +622,22 @@
             if(!document.getElementById('screen-love').classList.contains('active')) return;
             const boxRect = box.getBoundingClientRect();
             const btnRect = noBtn.getBoundingClientRect();
-            
             const btnCenterX = btnRect.left + btnRect.width / 2;
             const btnCenterY = btnRect.top + btnRect.height / 2;
-            
             const dist = Math.hypot(e.clientX - btnCenterX, e.clientY - btnCenterY);
             
-            // Eğer fare 110px'den fazla yaklaşırsa butonu ters yöne fırlat
             if (dist < 110) { 
                 let angle = Math.atan2(btnCenterY - e.clientY, btnCenterX - e.clientX);
-                let moveDist = 130; // Çok uzağa kaçmasın, ortalama mesafe
-                
+                let moveDist = 130; 
                 let moveX = btnCenterX - boxRect.left + Math.cos(angle) * moveDist - btnRect.width/2;
                 let moveY = btnCenterY - boxRect.top + Math.sin(angle) * moveDist - btnRect.height/2;
 
-                // Kutunun içinde kalmasını sağla
                 moveX = Math.max(15, Math.min(boxRect.width - btnRect.width - 15, moveX));
                 moveY = Math.max(15, Math.min(boxRect.height - btnRect.height - 15, moveY));
 
                 noBtn.style.left = `${moveX}px`;
                 noBtn.style.top = `${moveY}px`;
-                noBtn.style.transform = 'none'; // İlk pozisyondaki transformu sıfırla
+                noBtn.style.transform = 'none';
                 noBtn.innerText = mockMessages[Math.floor(Math.random() * mockMessages.length)];
             }
         });
@@ -534,8 +649,7 @@
 
         function openMoodScreen() {
             showScreen('screen-mood');
-            document.getElementById('mood-title').innerText = currentUser === 'sude' ? "Bugün modun nasıl Sude'ciğim? 💕" : "Bugün modun nasıl Şahin? 🦅";
-            
+            document.getElementById('mood-title').innerText = currentUser === 'sude' ? "Bugün modun nasıl Sude'ciğim? 💕" : "Bugün modun nasıl Şahin?";
             const container = document.getElementById('mood-scale-container');
             container.innerHTML = "";
             moodEmojis.forEach((emoji, index) => {
@@ -547,7 +661,6 @@
             });
         }
 
-        // HER TIKLAMADA FARKLI MESAJ + GERİ SAYIM
         function selectMood(index, boxEl) {
             document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
             boxEl.classList.add('selected');
@@ -557,7 +670,6 @@
             if (currentUser === "sude") appState.moodSude = finalMoodStr;
             else if (currentUser === "sahin") appState.moodSahin = finalMoodStr;
 
-            // Moda uygun rastgele 1 mesaj seçimi
             const emojiKey = moodEmojis[index];
             const msgs = moodMessages[emojiKey];
             const randomMsg = msgs[Math.floor(Math.random() * msgs.length)];
@@ -565,13 +677,10 @@
             const motBox = document.getElementById('motivation-container');
             motBox.innerHTML = `<div>${randomMsg}</div>`;
             motBox.style.display = "block";
-            
-            // Animasyonu yenilemek için hile
             motBox.style.animation = 'none';
             motBox.offsetHeight; 
             motBox.style.animation = 'fadeIn 0.3s';
 
-            // Geri Sayım (Sürekli sıfırdan başlar her tıkladığında)
             clearInterval(countdownTimer);
             const countDisplay = document.getElementById('countdown-display');
             countDisplay.style.display = "block";
@@ -592,6 +701,7 @@
         }
 
         function forceDashboard() {
+            isOfflineMode = true; // Artık çevrimdışı devam edecek, pop-up bir daha rahatsız etmesin
             showScreen('screen-dashboard');
             applyPermissions();
             renderAllData();
@@ -708,14 +818,11 @@
                 box.className = `wardrobe-item ${currentSelection === item.c ? 'active-item' : ''}`;
                 box.innerText = item.n;
                 
-                if (currentUser !== targetUser) {
-                    box.style.opacity = "0.4"; box.style.cursor = "not-allowed"; box.title = "Sadece kendi avatarını giydirebilirsin aşkım!";
-                } else {
-                    box.onclick = () => {
-                        appState[`${targetUser}Look`][layer] = item.c;
-                        saveToServer(); renderAllData(); renderWardrobeOptions();
-                    };
-                }
+                box.onclick = () => {
+                    appState[`${targetUser}Look`][layer] = item.c;
+                    saveToServer(); renderAllData(); renderWardrobeOptions();
+                };
+                
                 grid.appendChild(box);
             });
         }
@@ -757,19 +864,26 @@
         enableDrag('kitty-sahin');
 
         async function saveToServer() {
+            if(isOfflineMode) return;
             try { await fetch(`${API_URL}/save`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ projectData: appState }) }); 
             } catch(err) { console.warn("Lokal modda çalışıyor."); }
         }
 
         async function loadFromServer() {
+            if(isOfflineMode) return; // Çevrimdışı moda geçtiyse sürekli senkronize etmeyi ve hata vermeyi durdurur.
             try {
                 const res = await fetch(`${API_URL}/load`);
                 if (res.ok) {
                     const data = await res.json();
                     if (data.projectData) appState = data.projectData;
                     renderAllData();
-                } else showScreen('screen-error');
-            } catch (err) { showScreen('screen-error'); }
+                    if(document.getElementById('tab-dressup').classList.contains('tab-active')) renderWardrobeOptions();
+                } else {
+                    if(!isOfflineMode) showScreen('screen-error');
+                }
+            } catch (err) { 
+                if(!isOfflineMode) showScreen('screen-error');
+            }
         }
 
         window.onload = () => {
@@ -778,7 +892,11 @@
                 {text: "Discord Sesli Konuşma 📞", done: false},
                 {text: "Beraber Oyuna Girmek 🎮", done: false}
             ];
-            loadFromServer();
+            
+            // İlk açılışta veriyi çek ve 4 saniyede bir arka planda sessizce tekrar çek (Canlı Senkronizasyon)
+            loadFromServer().then(() => {
+                setInterval(loadFromServer, 4000);
+            });
         };
     </script>
 </body>
