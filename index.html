@@ -504,7 +504,7 @@
     </div>
 
     <script>
-        const API_URL = "https://musicians-groundwater-become-thats.trycloudflare.com"; 
+	const API_URL = "https://waiver-headphones-rider-sailing.trycloudflare.com";
         
         let currentUser = ""; 
         let sudeDanceIdx = 0; let sahinDanceIdx = 0;
@@ -853,25 +853,39 @@
         }
         enableDrag('kitty-sude', 'sude'); enableDrag('kitty-sahin', 'sahin');
 
-        async function saveToServer() { if(isOfflineMode) return; try { await fetch(`${API_URL}/save`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ projectData: appState }) }); } catch(err) {} }
-        async function loadFromServer() {
-            if(isOfflineMode) return;
-            try {
-                const res = await fetch(`${API_URL}/load`);
-                if (res.ok) {
-                    const data = await res.json();
-                    if (data.projectData) {
-                        appState = { ...appState, ...data.projectData };
-                        if(data.projectData.positions) appState.positions = { ...appState.positions, ...data.projectData.positions };
-                        if(data.projectData.particleMode === undefined) appState.particleMode = 0; 
-                        if(data.projectData.particleSpeed === undefined) appState.particleSpeed = 5; 
-                    }
-                    renderAllData(); 
-                    if(document.getElementById('tab-dressup').classList.contains('tab-active')) renderWardrobeOptions();
-                    if(document.getElementById('screen-mood').classList.contains('active')) renderMoodButtons();
-                } else { if(!isOfflineMode && !document.getElementById('screen-error').classList.contains('active')) showScreen('screen-error'); }
-            } catch (err) { if(!isOfflineMode && !document.getElementById('screen-error').classList.contains('active')) showScreen('screen-error'); }
+        async function saveToServer() {
+    if (isOfflineMode) return;
+    try {
+        await fetch(`${API_URL}/save-data`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ projectData: appState })
+        });
+    } catch (err) {
+        console.error("Veri kaydedilemedi:", err);
+    }
+}
+       async function loadFromServer() {
+    try {
+        const res = await fetch(`${API_URL}/load-data`);
+        if (res.ok) {
+            const data = await res.json();
+            if (data.projectData) {
+                appState = { ...appState, ...data.projectData };
+                if(data.projectData.positions) appState.positions = { ...appState.positions, ...data.projectData.positions };
+                if(data.projectData.particleMode === undefined) appState.particleMode = 0; 
+                if(data.projectData.particleSpeed === undefined) appState.particleSpeed = 5; 
+            }
+            renderAllData(); 
+            if(document.getElementById('tab-dressup').classList.contains('tab-active')) renderWardrobeOptions();
+            if(document.getElementById('screen-mood').classList.contains('active')) renderMoodButtons();
+        } else { 
+            if(!isOfflineMode && !document.getElementById('screen-error').classList.contains('active')) showScreen('screen-error'); 
         }
+    } catch (err) { 
+        if(!isOfflineMode && !document.getElementById('screen-error').classList.contains('active')) showScreen('screen-error'); 
+    }
+}
 
         window.onload = () => {
             appState.tasks.ortak = [{text: "Aynı Anda Film İzleme 🎬", done: false}, {text: "Discord Sesli Konuşma 📞", done: false}];
